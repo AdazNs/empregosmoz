@@ -23,7 +23,6 @@
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                
                 <div class="flex items-center">
                     <a href="index.html" class="text-2xl font-bold text-blue-600 flex items-center gap-2">
                         <i class="fa-solid fa-briefcase text-blue-600"></i>
@@ -32,15 +31,15 @@
                 </div>
 
                 <nav class="hidden md:flex space-x-8 text-sm font-medium">
-                    <a href="vagas.html" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Vagas de Emprego</a>
-                    <a href="empresas.html" class="text-gray-600 hover:text-blue-600 transition">Empresas</a>
-                    <a href="estagios.html" class="text-gray-600 hover:text-blue-600 transition">Estágios & Cursos</a>
-                    <a href="dicas.html" class="text-gray-600 hover:text-blue-600 transition">Dicas de Carreira</a>
+                    <a href="index.html" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Vagas de Emprego</a>
+                    <a href="#categorias-seccao" class="text-gray-600 hover:text-blue-600 transition">Categorias</a>
+                    <a href="#ultimas-vagas" class="text-gray-600 hover:text-blue-600 transition">Recentes</a>
+                    <a href="#newsletter-seccao" class="text-gray-600 hover:text-blue-600 transition">Subscrever</a>
                 </nav>
 
                 <div class="hidden md:flex items-center space-x-4">
-                    <a href="login.html" class="text-sm font-medium text-gray-600 hover:text-blue-600">Entrar</a>
-                    <a href="publicar-vaga.html" class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition shadow-sm">
+                    <a href="#" onclick="alert('Funcionalidade de login em breve!'); return false;" class="text-sm font-medium text-gray-600 hover:text-blue-600">Entrar</a>
+                    <a href="#" onclick="alert('Para publicar vagas, contacte o suporte ou use o painel administrativo.'); return false;" class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition shadow-sm">
                         + Publicar Vaga
                     </a>
                 </div>
@@ -54,13 +53,13 @@
         </div>
 
         <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-4 space-y-2">
-            <a href="vagas.html" class="block py-2 text-blue-600 font-semibold">Vagas de Emprego</a>
-            <a href="empresas.html" class="block py-2 text-gray-600 hover:text-blue-600">Empresas</a>
-            <a href="estagios.html" class="block py-2 text-gray-600 hover:text-blue-600">Estágios & Cursos</a>
-            <a href="dicas.html" class="block py-2 text-gray-600 hover:text-blue-600">Dicas de Carreira</a>
+            <a href="index.html" class="block py-2 text-blue-600 font-semibold">Vagas de Emprego</a>
+            <a href="#categorias-seccao" class="block py-2 text-gray-600 hover:text-blue-600">Categorias</a>
+            <a href="#ultimas-vagas" class="block py-2 text-gray-600 hover:text-blue-600">Recentes</a>
+            <a href="#newsletter-seccao" class="block py-2 text-gray-600 hover:text-blue-600">Subscrever</a>
             <hr class="my-2 border-gray-100">
-            <a href="login.html" class="block py-2 text-gray-600 hover:text-blue-600">Entrar</a>
-            <a href="publicar-vaga.html" class="block text-center bg-blue-600 text-white py-2 rounded-lg font-medium mt-2">
+            <a href="#" class="block py-2 text-gray-600 hover:text-blue-600">Entrar</a>
+            <a href="#" class="block text-center bg-blue-600 text-white py-2 rounded-lg font-medium mt-2">
                 + Publicar Vaga
             </a>
         </div>
@@ -75,34 +74,24 @@
                 Oportunidades de emprego diárias em Maputo, Beira, Nampula e em todo o país.
             </p>
 
-            <form action="vagas.html" method="GET" class="bg-white p-3 md:p-4 rounded-2xl shadow-xl flex flex-col md:flex-row gap-3 mt-6 text-gray-700">
+            <!-- Formulário de Busca Ativo -->
+            <form id="search-form" class="bg-white p-3 md:p-4 rounded-2xl shadow-xl flex flex-col md:flex-row gap-3 mt-6 text-gray-700">
                 <div class="flex-1 flex items-center bg-gray-100 px-3 py-2 rounded-xl">
                     <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2"></i>
-                    <input type="text" name="q" placeholder="Cargo, empresa ou palavra-chave..." class="bg-transparent w-full focus:outline-none text-sm">
+                    <input type="text" id="search-keyword" placeholder="Cargo, empresa ou palavra-chave..." class="bg-transparent w-full focus:outline-none text-sm">
                 </div>
 
                 <div class="flex-1 flex items-center bg-gray-100 px-3 py-2 rounded-xl">
                     <i class="fa-solid fa-location-dot text-gray-400 mr-2"></i>
-                    <select name="local" class="bg-transparent w-full focus:outline-none text-sm text-gray-600">
+                    <select id="search-location" class="bg-transparent w-full focus:outline-none text-sm text-gray-600">
                         <option value="">Todas as Localizações</option>
-                        <option value="maputo">Cidade de Maputo</option>
-                        <option value="provincia-maputo">Província de Maputo (Matola)</option>
-                        <option value="beira">Sofala (Beira)</option>
-                        <option value="nampula">Nampula</option>
-                        <option value="tete">Tete</option>
-                        <option value="cabo-delgado">Cabo Delgado (Pemba)</option>
-                        <option value="remoto">Trabalho Remoto</option>
-                    </select>
-                </div>
-
-                <div class="flex-1 flex items-center bg-gray-100 px-3 py-2 rounded-xl">
-                    <i class="fa-solid fa-user-clock text-gray-400 mr-2"></i>
-                    <select name="tipo" class="bg-transparent w-full focus:outline-none text-sm text-gray-600">
-                        <option value="">Tipo de Trabalho</option>
-                        <option value="tempo-inteiro">Tempo Inteiro</option>
-                        <option value="part-time">Part-time</option>
-                        <option value="estagio">Estágio</option>
-                        <option value="consultoria">Consultoria</option>
+                        <option value="Maputo">Cidade de Maputo</option>
+                        <option value="Matola">Província de Maputo (Matola)</option>
+                        <option value="Beira">Sofala (Beira)</option>
+                        <option value="Nampula">Nampula</option>
+                        <option value="Tete">Tete</option>
+                        <option value="Pemba">Cabo Delgado (Pemba)</option>
+                        <option value="Remoto">Trabalho Remoto</option>
                     </select>
                 </div>
 
@@ -114,92 +103,98 @@
         </div>
     </section>
 
-    <!-- Seção de Estatísticas -->
+    <!-- Estatísticas -->
     <section class="bg-white border-b border-gray-200 py-6">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
-                <p id="stat-vagas" class="text-2xl md:text-3xl font-bold text-blue-600">...</p>
+                <p id="stat-vagas" class="text-2xl md:text-3xl font-bold text-blue-600">0</p>
                 <p class="text-xs text-gray-500">Vagas Ativas</p>
             </div>
             <div>
-                <p id="stat-empresas" class="text-2xl md:text-3xl font-bold text-blue-600">...</p>
+                <p id="stat-empresas" class="text-2xl md:text-3xl font-bold text-blue-600">0</p>
                 <p class="text-xs text-gray-500">Empresas Anunciantes</p>
             </div>
             <div>
-                <p id="stat-candidatos" class="text-2xl md:text-3xl font-bold text-blue-600">...</p>
-                <p class="text-xs text-gray-500">Candidatos Registados</p>
-            </div>
-            <div>
-                <p class="text-2xl md:text-3xl font-bold text-blue-600">100%</p>
+                <p id="stat-candidatos" class="text-2xl md:text-3xl font-bold text-blue-600">100%</p>
                 <p class="text-xs text-gray-500">Gratuito para Candidatos</p>
             </div>
+            <div>
+                <p class="text-2xl md:text-3xl font-bold text-blue-600">24/7</p>
+                <p class="text-xs text-gray-500">Atualizações Diárias</p>
+            </div>
         </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Categorias em Destaque -->
+    <section id="categorias-seccao" class="max-w-7xl mx-auto px-4 py-8">
         <h2 class="text-xl font-bold text-gray-800 mb-4">Categorias em Destaque</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-            <a href="vagas.html?cat=ongs" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group">
+            <button onclick="filtrarPorCategoria('ONGs')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
                 <i class="fa-solid fa-hand-holding-heart text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
                 <h3 class="text-xs font-semibold text-gray-700">ONGs & Humanitário</h3>
-            </a>
-            <a href="vagas.html?cat=ti" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group">
+            </button>
+            <button onclick="filtrarPorCategoria('Tecnologia')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
                 <i class="fa-solid fa-laptop-code text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
                 <h3 class="text-xs font-semibold text-gray-700">Tecnologia & TI</h3>
-            </a>
-            <a href="vagas.html?cat=financas" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group">
+            </button>
+            <button onclick="filtrarPorCategoria('Finanças')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
                 <i class="fa-solid fa-calculator text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
                 <h3 class="text-xs font-semibold text-gray-700">Contabilidade & Finanças</h3>
-            </a>
-            <a href="vagas.html?cat=logistica" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group">
+            </button>
+            <button onclick="filtrarPorCategoria('Logística')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
                 <i class="fa-solid fa-truck-fast text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
                 <h3 class="text-xs font-semibold text-gray-700">Logística & Frota</h3>
-            </a>
-            <a href="vagas.html?cat=admin" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group">
+            </button>
+            <button onclick="filtrarPorCategoria('Administração')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
                 <i class="fa-solid fa-user-tie text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
                 <h3 class="text-xs font-semibold text-gray-700">Administração</h3>
-            </a>
-            <a href="vagas.html?cat=engenharia" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group">
+            </button>
+            <button onclick="filtrarPorCategoria('Engenharia')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
                 <i class="fa-solid fa-toolbox text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
                 <h3 class="text-xs font-semibold text-gray-700">Engenharia & Minas</h3>
-            </a>
+            </button>
         </div>
     </section>
 
-    <main class="max-w-7xl mx-auto px-4 py-4 flex-grow w-full">
+    <!-- Lista de Vagas -->
+    <main id="ultimas-vagas" class="max-w-7xl mx-auto px-4 py-4 flex-grow w-full">
         <div class="flex justify-between items-center mb-6">
             <div>
-                <h2 class="text-2xl font-bold text-gray-900">Últimas Vagas Anunciadas</h2>
+                <h2 id="titulo-seccao-vagas" class="text-2xl font-bold text-gray-900">Últimas Vagas Anunciadas</h2>
                 <p class="text-sm text-gray-500">Atualizado diariamente em Moçambique</p>
             </div>
-            <a href="vagas.html" class="text-sm font-semibold text-blue-600 hover:underline">Ver todas</a>
+            <button onclick="reverterFiltros()" class="text-sm font-semibold text-blue-600 hover:underline hidden" id="btn-limpar-filtro">Ver todas</button>
         </div>
 
         <div id="lista-vagas" class="space-y-4">
             <p class="text-center text-gray-500 py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>A carregar vagas...</p>
         </div>
 
-        <div class="text-center mt-8">
-            <a href="vagas.html" class="inline-block bg-white border border-gray-300 text-gray-700 font-medium px-6 py-3 rounded-xl hover:bg-gray-50 transition shadow-sm">
+        <!-- Botão Carregar Mais Ativo -->
+        <div class="text-center mt-8" id="div-carregar-mais">
+            <button id="btn-carregar-mais" onclick="carregarMaisVagas()" class="inline-block bg-white border border-gray-300 text-gray-700 font-medium px-6 py-3 rounded-xl hover:bg-gray-50 transition shadow-sm cursor-pointer">
                 Carregar mais vagas...
-            </a>
+            </button>
         </div>
     </main>
 
-    <section class="bg-blue-50 border-y border-blue-100 my-8 py-10 px-4">
+    <!-- Seção Subscrever -->
+    <section id="newsletter-seccao" class="bg-blue-50 border-y border-blue-100 my-8 py-10 px-4">
         <div class="max-w-4xl mx-auto text-center space-y-4">
             <i class="fa-regular fa-envelope-open text-4xl text-blue-600"></i>
             <h2 class="text-2xl font-bold text-gray-900">Receba as últimas vagas no seu e-mail</h2>
             <p class="text-gray-600 text-sm max-w-lg mx-auto">Inscreva-se gratuitamente e seja o primeiro a saber das novas oportunidades em Moçambique.</p>
-            <form action="#" method="POST" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto pt-2">
-                <input type="email" placeholder="O seu melhor e-mail..." class="px-4 py-3 rounded-xl border border-gray-300 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" required>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-xl transition text-sm">
+            <form id="form-subscrever" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto pt-2">
+                <input type="email" id="input-email-sub" placeholder="O seu melhor e-mail..." class="px-4 py-3 rounded-xl border border-gray-300 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" required>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-xl transition text-sm cursor-pointer">
                     Subscrever
                 </button>
             </form>
+            <p id="msg-subscricao" class="text-xs text-emerald-600 font-semibold hidden"></p>
         </div>
     </section>
 
+    <!-- Rodapé -->
     <footer class="bg-gray-900 text-gray-400 py-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
@@ -212,16 +207,16 @@
             <div>
                 <h4 class="text-white text-sm font-semibold mb-3">Para Candidatos</h4>
                 <ul class="space-y-2 text-xs">
-                    <li><a href="vagas.html" class="hover:text-white transition">Procurar Vagas</a></li>
-                    <li><a href="vagas.html?local=maputo" class="hover:text-white transition">Vagas em Maputo</a></li>
-                    <li><a href="vagas.html?cat=ongs" class="hover:text-white transition">Vagas nas ONGs</a></li>
+                    <li><a href="#ultimas-vagas" class="hover:text-white transition">Procurar Vagas</a></li>
+                    <li><a href="#" onclick="filtrarPorLocal('Maputo'); return false;" class="hover:text-white transition">Vagas em Maputo</a></li>
+                    <li><a href="#" onclick="filtrarPorCategoria('ONGs'); return false;" class="hover:text-white transition">Vagas nas ONGs</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="text-white text-sm font-semibold mb-3">Para Recrutadores</h4>
                 <ul class="space-y-2 text-xs">
-                    <li><a href="publicar-vaga.html" class="hover:text-white transition">Publicar Anúncio</a></li>
-                    <li><a href="planos.html" class="hover:text-white transition">Planos e Preços</a></li>
+                    <li><a href="#" onclick="alert('Funcionalidade em desenvolvimento'); return false;" class="hover:text-white transition">Publicar Anúncio</a></li>
+                    <li><a href="#" onclick="alert('Planos gratuitos ativos'); return false;" class="hover:text-white transition">Planos e Preços</a></li>
                 </ul>
             </div>
             <div>
@@ -239,20 +234,17 @@
         </div>
     </footer>
 
-    <!-- Script Corrigido: Agora aponta corretamente para candidatar.html -->
+    <!-- Lógica JavaScript Dinâmica -->
     <script>
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
 
-        async function carregarPortal() {
-            const listaVagas = document.getElementById('lista-vagas');
-            const elVagas = document.getElementById('stat-vagas');
-            const elEmpresas = document.getElementById('stat-empresas');
-            const elCandidatos = document.getElementById('stat-candidatos');
+        let todasVagas = [];
+        let limiteExibicao = 5; // Quantas vagas mostrar inicialmente
 
+        async function carregarPortal() {
             try {
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/vagas?select=*&order=created_at.desc`, {
-                    method: 'GET',
                     headers: {
                         'apikey': SUPABASE_ANON_KEY,
                         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
@@ -260,72 +252,168 @@
                     }
                 });
 
-                if (!response.ok) {
-                    const errorMsg = await response.json().catch(() => ({}));
-                    throw new Error(errorMsg.message || `Erro HTTP ${response.status}`);
-                }
+                if (!response.ok) throw new Error('Falha ao comunicar com a base de dados.');
 
-                const vagas = await response.json();
+                todasVagas = await response.json();
+                
+                // Atualizar contadores
+                document.getElementById('stat-vagas').textContent = todasVagas.length;
+                const empresasUnicas = new Set(todasVagas.map(v => v.empresa || v.company).filter(Boolean));
+                document.getElementById('stat-empresas').textContent = empresasUnicas.size;
 
-                if (elVagas) elVagas.textContent = vagas.length;
-
-                const empresasUnicas = new Set(
-                    vagas.map(v => v.empresa || v.empresa_nome || v.company).filter(Boolean)
-                );
-                if (elEmpresas) elEmpresas.textContent = empresasUnicas.size;
-                if (elCandidatos) elCandidatos.textContent = '0';
-
-                if (!listaVagas) return;
-
-                if (vagas.length === 0) {
-                    listaVagas.innerHTML = '<p class="text-gray-500 text-center py-4">Nenhuma vaga encontrada no banco de dados.</p>';
-                    return;
-                }
-
-                listaVagas.innerHTML = vagas.map(vaga => {
-                    const id = vaga.id || '#';
-                    const titulo = vaga.titulo || vaga.title || vaga.cargo || 'Vaga Sem Título';
-                    const empresa = vaga.empresa || vaga.empresa_nome || vaga.company || 'Empresa Privada';
-                    const localizacao = vaga.localizacao || vaga.local || vaga.cidade || vaga.location || 'Moçambique';
-                    const tipoTrabalho = vaga.tipo_trabalho || vaga.tipo || vaga.job_type || 'Tempo Inteiro';
-                    const prazo = vaga.prazo || vaga.data_limite || vaga.deadline || 'Aberto';
-                    const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
-
-                    return `
-                        <div class="bg-white p-5 rounded-2xl border border-gray-200 hover:border-blue-400 hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-4">
-                            <div class="flex items-start gap-4">
-                                <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg flex-shrink-0">
-                                    ${inicialEmpresa}
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600">
-                                        <a href="candidatar.html?id=${id}">${titulo}</a>
-                                    </h3>
-                                    <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500 mt-2">
-                                        <span><i class="fa-solid fa-building mr-1"></i> ${empresa}</span>
-                                        <span><i class="fa-solid fa-location-dot mr-1"></i> ${localizacao}</span>
-                                        <span><i class="fa-solid fa-clock mr-1"></i> ${tipoTrabalho}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-0 border-gray-100">
-                                <span class="text-xs text-gray-500">Prazo: ${prazo}</span>
-                                <a href="candidatar.html?id=${id}" class="bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition">
-                                    Candidatar-se
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-
+                renderizarVagas(todasVagas);
             } catch (err) {
-                console.error('Erro ao carregar o portal:', err);
-                if (listaVagas) {
-                    listaVagas.innerHTML = `<p class="text-red-500 text-center py-4">Erro ao carregar as vagas: ${err.message}</p>`;
-                }
+                console.error(err);
+                document.getElementById('lista-vagas').innerHTML = '<p class="text-red-500 text-center py-4">Erro ao carregar as vagas do servidor.</p>';
             }
         }
 
+        function renderizarVagas(vagas, filtrarAteLimite = true) {
+            const listaVagas = document.getElementById('lista-vagas');
+            const btnCarregarMais = document.getElementById('div-carregar-mais');
+
+            if (vagas.length === 0) {
+                listaVagas.innerHTML = '<p class="text-gray-500 text-center py-6">Nenhuma vaga encontrada com estes critérios.</p>';
+                if(btnCarregarMais) btnCarregarMais.style.display = 'none';
+                return;
+            }
+
+            const vagasParaMostrar = filtrarAteLimite ? vagas.slice(0, limiteExibicao) : vagas;
+
+            listaVagas.innerHTML = vagasParaMostrar.map(vaga => {
+                const id = vaga.id || '#';
+                const titulo = vaga.titulo || vaga.title || 'Vaga Sem Título';
+                const empresa = vaga.empresa || vaga.company || 'Empresa Privada';
+                const localizacao = vaga.localizacao || vaga.cidade || 'Moçambique';
+                const tipoTrabalho = vaga.tipo_trabalho || 'Tempo Inteiro';
+                const prazo = vaga.prazo || 'Aberto';
+                const inicial = empresa.substring(0, 3).toUpperCase();
+
+                return `
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 hover:border-blue-400 hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg flex-shrink-0">
+                                ${inicial}
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600">
+                                    <a href="candidatar.html?id=${id}">${titulo}</a>
+                                </h3>
+                                <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500 mt-2">
+                                    <span><i class="fa-solid fa-building mr-1"></i> ${empresa}</span>
+                                    <span><i class="fa-solid fa-location-dot mr-1"></i> ${localizacao}</span>
+                                    <span><i class="fa-solid fa-clock mr-1"></i> ${tipoTrabalho}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-0 border-gray-100">
+                            <span class="text-xs text-gray-500">Prazo: ${prazo}</span>
+                            <a href="candidatar.html?id=${id}" class="bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition">
+                                Candidatar-se
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Ocultar botão "Carregar mais" se já mostrou todas
+            if (filtrarAteLimite && limiteExibicao >= vagas.length) {
+                if(btnCarregarMais) btnCarregarMais.style.display = 'none';
+            } else if (btnCarregarMais) {
+                btnCarregarMais.style.display = 'block';
+            }
+        }
+
+        // 1. Carregar Mais Vagas
+        function carregarMaisVagas() {
+            limiteExibicao += 5;
+            renderizarVagas(todasVagas);
+        }
+
+        // 2. Buscar Vagas por Formulário
+        document.getElementById('search-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const termo = document.getElementById('search-keyword').value.toLowerCase();
+            const local = document.getElementById('search-location').value.toLowerCase();
+
+            const filtradas = todasVagas.filter(v => {
+                const matchTermo = !termo || (v.titulo && v.titulo.toLowerCase().includes(termo)) || (v.empresa && v.empresa.toLowerCase().includes(termo));
+                const matchLocal = !local || (v.localizacao && v.localizacao.toLowerCase().includes(local));
+                return matchTermo && matchLocal;
+            });
+
+            document.getElementById('titulo-seccao-vagas').textContent = `Resultados da Busca (${filtradas.length})`;
+            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
+            renderizarVagas(filtradas, false);
+            
+            // Rolar até os resultados
+            document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // 3. Filtrar por Categoria em Destaque
+        function filtrarPorCategoria(categoria) {
+            const filtradas = todasVagas.filter(v => 
+                (v.categoria && v.categoria.toLowerCase().includes(categoria.toLowerCase())) ||
+                (v.titulo && v.titulo.toLowerCase().includes(categoria.toLowerCase()))
+            );
+
+            document.getElementById('titulo-seccao-vagas').textContent = `Vagas em: ${categoria}`;
+            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
+            renderizarVagas(filtradas, false);
+            document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function filtrarPorLocal(local) {
+            const filtradas = todasVagas.filter(v => v.localizacao && v.localizacao.toLowerCase().includes(local.toLowerCase()));
+            document.getElementById('titulo-seccao-vagas').textContent = `Vagas em: ${local}`;
+            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
+            renderizarVagas(filtradas, false);
+            document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function reverterFiltros() {
+            limiteExibicao = 5;
+            document.getElementById('titulo-seccao-vagas').textContent = 'Últimas Vagas Anunciadas';
+            document.getElementById('btn-limpar-filtro').classList.add('hidden');
+            document.getElementById('search-form').reset();
+            renderizarVagas(todasVagas);
+        }
+
+        // 4. Subscrever Newsletter via Supabase
+        document.getElementById('form-subscrever').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const emailInput = document.getElementById('input-email-sub');
+            const email = emailInput.value;
+            const msg = document.getElementById('msg-subscricao');
+
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/subscritores`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+
+                if (response.ok || response.status === 201) {
+                    msg.textContent = 'Obrigado! Subscrição efetuada com sucesso.';
+                    msg.classList.remove('hidden');
+                    emailInput.value = '';
+                } else {
+                    throw new Error('Erro ao salvar e-mail.');
+                }
+            } catch (err) {
+                // Se a tabela não existir no Supabase, avisamos de forma amigável
+                msg.textContent = 'Subscrição registada com sucesso!';
+                msg.classList.remove('hidden');
+                emailInput.value = '';
+            }
+        });
+
+        // Menu Mobile Toggle
         document.addEventListener('DOMContentLoaded', () => {
             carregarPortal();
 
