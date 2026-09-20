@@ -176,7 +176,7 @@
         </div>
     </main>
 
-    <!-- Modal Geral (Conteúdo Dinâmico para Política, Sobre, Contacto e Dicas) -->
+    <!-- Modal Geral -->
     <div id="modal-geral" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="fecharModalGeral()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-lg">
@@ -210,7 +210,6 @@
                     <li><a href="#" onclick="abrirPagina('curriculo'); return false;" class="hover:text-white transition">Como Criar um Currículo Vencedor</a></li>
                     <li><a href="#" onclick="abrirPagina('entrevista'); return false;" class="hover:text-white transition">Dominar a Entrevista</a></li>
                     <li><a href="#" onclick="abrirPagina('cursos'); return false;" class="hover:text-white transition">Cursos Técnicos Recomendados</a></li>
-                    <li><a href="#" onclick="filtrarPorCategoria('ONGs'); return false;" class="hover:text-white transition">Vagas nas ONGs</a></li>
                 </ul>
             </div>
             <div>
@@ -327,7 +326,6 @@
             renderizarVagas(todasVagas);
         }
 
-        // Gestão de Páginas Institucionais e Dicas (Modal)
         function abrirPagina(tipo) {
             const modal = document.getElementById('modal-geral');
             const conteudo = document.getElementById('conteudo-modal');
