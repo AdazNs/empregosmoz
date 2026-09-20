@@ -190,7 +190,6 @@
                 <h4 class="text-white text-sm font-semibold mb-3">Para Candidatos</h4>
                 <ul class="space-y-2 text-xs">
                     <li><a href="#ultimas-vagas" class="hover:text-white transition">Procurar Vagas</a></li>
-                    <li><a href="#" onclick="filtrarPorLocal('Maputo'); return false;" class="hover:text-white transition">Vagas em Maputo</a></li>
                     <li><a href="#" onclick="filtrarPorCategoria('ONGs'); return false;" class="hover:text-white transition">Vagas nas ONGs</a></li>
                 </ul>
             </div>
@@ -318,7 +317,6 @@
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // Filtro Inteligente de Categorias (Verifica a coluna categoria ou o título)
         function filtrarPorCategoria(categoria) {
             const termoBusca = categoria.toLowerCase();
             
@@ -331,14 +329,6 @@
             });
 
             document.getElementById('titulo-seccao-vagas').textContent = `Vagas em: ${categoria}`;
-            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
-            renderizarVagas(filtradas, false);
-            document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function filtrarPorLocal(local) {
-            const filtradas = todasVagas.filter(v => v.localizacao && v.localizacao.toLowerCase().includes(local.toLowerCase()));
-            document.getElementById('titulo-seccao-vagas').textContent = `Vagas em: ${local}`;
             document.getElementById('btn-limpar-filtro').classList.remove('hidden');
             renderizarVagas(filtradas, false);
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
