@@ -331,21 +331,38 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            carregarVagas();
+    // Carregamento inicial
+    carregarVagas();
 
-            // Menu Mobile
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('mobile-menu-icon');
+    // Ativar escuta em Tempo Real
+    if (supabase) {
+        supabase
+            .channel('mudancas-vagas')
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'vagas' },
+                (payload) => {
+                    console.log('Alteração detetada no banco de dados:', payload);
+                    // Recarrega a lista de vagas automaticamente
+                    carregarVagas();
+                }
+            )
+            .subscribe();
+    }
 
-            if (btn && menu && icon) {
-                btn.addEventListener('click', () => {
-                    menu.classList.toggle('hidden');
-                    icon.classList.toggle('fa-bars');
-                    icon.classList.toggle('fa-xmark');
-                });
-            }
+    // Menu Mobile
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const icon = document.getElementById('mobile-menu-icon');
+
+    if (btn && menu && icon) {
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
         });
+    }
+});
     </script>
 </body>
 </html>
