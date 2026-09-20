@@ -117,19 +117,19 @@
         </div>
     </section>
 
-    <!-- Seção de Estatísticas -->
+    <!-- Seção de Estatísticas (DINÂMICAS) -->
     <section class="bg-white border-b border-gray-200 py-6">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
-                <p class="text-2xl md:text-3xl font-bold text-blue-600">1,200+</p>
+                <p id="stat-vagas" class="text-2xl md:text-3xl font-bold text-blue-600">...</p>
                 <p class="text-xs text-gray-500">Vagas Ativas</p>
             </div>
             <div>
-                <p class="text-2xl md:text-3xl font-bold text-blue-600">450+</p>
+                <p id="stat-empresas" class="text-2xl md:text-3xl font-bold text-blue-600">...</p>
                 <p class="text-xs text-gray-500">Empresas Registadas</p>
             </div>
             <div>
-                <p class="text-2xl md:text-3xl font-bold text-blue-600">15,000+</p>
+                <p id="stat-candidatos" class="text-2xl md:text-3xl font-bold text-blue-600">...</p>
                 <p class="text-xs text-gray-500">Candidatos Registados</p>
             </div>
             <div>
@@ -175,7 +175,7 @@
                 <h2 class="text-2xl font-bold text-gray-900">Últimas Vagas Anunciadas</h2>
                 <p class="text-sm text-gray-500">Atualizado diariamente em Moçambique</p>
             </div>
-            <a href="vagas.html" class="text-sm font-semibold text-blue-600 hover:underline">Ver todas (120+)</a>
+            <a href="vagas.html" class="text-sm font-semibold text-blue-600 hover:underline">Ver todas</a>
         </div>
 
         <!-- Container dinâmico das vagas -->
@@ -245,7 +245,7 @@
         </div>
     </footer>
 
-    <!-- Script JavaScript com Fallbacks e Tratamento de Erros -->
+    <!-- Script JavaScript com estatísticas dinâmicas e Realtime -->
     <script>
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
@@ -255,6 +255,40 @@
             supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         } else {
             console.error('O SDK do Supabase não foi carregado corretamente.');
+        }
+
+        // Função para calcular estatísticas reais direto do Supabase
+        async function carregarEstatisticas() {
+            if (!supabase) return;
+
+            try {
+                // 1. Contagem real de vagas ativas
+                const { count: totalVagas } = await supabase
+                    .from('vagas')
+                    .select('*', { count: 'exact', head: true });
+
+                const elVagas = document.getElementById('stat-vagas');
+                if (elVagas) elVagas.textContent = totalVagas !== null ? totalVagas : '0';
+
+                // 2. Contagem de Empresas (tabela 'empresas' se existir, ou fallback)
+                const { count: totalEmpresas } = await supabase
+                    .from('empresas')
+                    .select('*', { count: 'exact', head: true });
+
+                const elEmpresas = document.getElementById('stat-empresas');
+                if (elEmpresas) elEmpresas.textContent = totalEmpresas !== null ? totalEmpresas : (totalVagas > 0 ? '1+' : '0');
+
+                // 3. Contagem de Candidatos (tabela 'candidatos' ou 'profiles' se existir)
+                const { count: totalCandidatos } = await supabase
+                    .from('candidatos')
+                    .select('*', { count: 'exact', head: true });
+
+                const elCandidatos = document.getElementById('stat-candidatos');
+                if (elCandidatos) elCandidatos.textContent = totalCandidatos !== null ? totalCandidatos : '0';
+
+            } catch (err) {
+                console.warn('Estatísticas em tempo real parcialmente indisponíveis:', err);
+            }
         }
 
         async function carregarVagas() {
@@ -269,7 +303,8 @@
             try {
                 const { data: vagas, error } = await supabase
                     .from('vagas')
-                    .select('*');
+                    .select('*')
+                    .order('created_at', { ascending: false });
 
                 if (error) {
                     console.error('Erro ao consultar a tabela vagas:', error);
@@ -283,7 +318,6 @@
                 }
 
                 listaVagas.innerHTML = vagas.map(vaga => {
-                    // Mapeamento dinâmico para aceitar colunas em Português ou Inglês
                     const id = vaga.id || '#';
                     const titulo = vaga.titulo || vaga.title || vaga.cargo || 'Vaga Sem Título';
                     const empresa = vaga.empresa || vaga.empresa_nome || vaga.company || 'Empresa Privada';
@@ -331,38 +365,38 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-    // Carregamento inicial
-    carregarVagas();
+            // Carrega vagas e calcula estatísticas reais
+            carregarVagas();
+            carregarEstatisticas();
 
-    // Ativar escuta em Tempo Real
-    if (supabase) {
-        supabase
-            .channel('mudancas-vagas')
-            .on(
-                'postgres_changes',
-                { event: '*', schema: 'public', table: 'vagas' },
-                (payload) => {
-                    console.log('Alteração detetada no banco de dados:', payload);
-                    // Recarrega a lista de vagas automaticamente
-                    carregarVagas();
-                }
-            )
-            .subscribe();
-    }
+            // Ativar escuta em Tempo Real no Supabase
+            if (supabase) {
+                supabase
+                    .channel('mudancas-vagas')
+                    .on(
+                        'postgres_changes',
+                        { event: '*', schema: 'public', table: 'vagas' },
+                        (payload) => {
+                            carregarVagas();
+                            carregarEstatisticas();
+                        }
+                    )
+                    .subscribe();
+            }
 
-    // Menu Mobile
-    const btn = document.getElementById('mobile-menu-btn');
-    const menu = document.getElementById('mobile-menu');
-    const icon = document.getElementById('mobile-menu-icon');
+            // Menu Mobile
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
 
-    if (btn && menu && icon) {
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-xmark');
+            if (btn && menu && icon) {
+                btn.addEventListener('click', () => {
+                    menu.classList.toggle('hidden');
+                    icon.classList.toggle('fa-bars');
+                    icon.classList.toggle('fa-xmark');
+                });
+            }
         });
-    }
-});
     </script>
 </body>
 </html>
