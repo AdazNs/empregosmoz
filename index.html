@@ -33,7 +33,6 @@
                 <nav class="hidden md:flex space-x-8 text-sm font-medium">
                     <a href="index.html" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Vagas de Emprego</a>
                     <a href="#categorias-seccao" class="text-gray-600 hover:text-blue-600 transition">Categorias</a>
-                    <a href="#dicas-carreira" class="text-gray-600 hover:text-blue-600 transition">Dica & Carreira</a>
                     <a href="#ultimas-vagas" class="text-gray-600 hover:text-blue-600 transition">Recentes</a>
                 </nav>
 
@@ -55,7 +54,6 @@
         <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-4 space-y-2">
             <a href="index.html" class="block py-2 text-blue-600 font-semibold">Vagas de Emprego</a>
             <a href="#categorias-seccao" class="block py-2 text-gray-600 hover:text-blue-600">Categorias</a>
-            <a href="#dicas-carreira" class="block py-2 text-gray-600 hover:text-blue-600">Dicas & Carreira</a>
             <a href="#ultimas-vagas" class="block py-2 text-gray-600 hover:text-blue-600">Recentes</a>
             <hr class="my-2 border-gray-100">
             <a href="#" class="block py-2 text-gray-600 hover:text-blue-600">Entrar</a>
@@ -156,48 +154,6 @@
         </div>
     </section>
 
-    <!-- Secção Dedicada a Dicas de Carreira, Entrevistas e Cursos Técnicos -->
-    <section id="dicas-carreira" class="max-w-7xl mx-auto px-4 py-6">
-        <div class="flex items-center justify-between mb-4">
-            <div>
-                <h2 class="text-xl font-bold text-gray-800">Dicas & Cursos para Destacar-se</h2>
-                <p class="text-xs text-gray-500">Orientações práticas para o mercado de trabalho em Moçambique</p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <!-- Card 1: Currículo Vencedor -->
-            <div onclick="abrirModalDica('curriculo')" class="bg-white p-5 rounded-2xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition cursor-pointer group">
-                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-base mb-3 group-hover:bg-blue-600 group-hover:text-white transition">
-                    <i class="fa-solid fa-file-lines"></i>
-                </div>
-                <h3 class="text-base font-semibold text-gray-900 mb-1">Como Criar um Currículo Vencedor</h3>
-                <p class="text-xs text-gray-500 leading-relaxed">Descubra os erros mais comuns a evitar, a estrutura ideal e o que os recrutadores em Moçambique mais valorizam.</p>
-                <span class="inline-block text-xs font-semibold text-blue-600 mt-3 group-hover:underline">Ler dicas completas &rarr;</span>
-            </div>
-
-            <!-- Card 2: Entrevista de Emprego -->
-            <div onclick="abrirModalDica('entrevista')" class="bg-white p-5 rounded-2xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition cursor-pointer group">
-                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-base mb-3 group-hover:bg-emerald-600 group-hover:text-white transition">
-                    <i class="fa-solid fa-handshake"></i>
-                </div>
-                <h3 class="text-base font-semibold text-gray-900 mb-1">Dominar a Entrevista de Emprego</h3>
-                <p class="text-xs text-gray-500 leading-relaxed">Prepare-se para as perguntas mais frequentes, linguagem corporal correta e saiba como causar uma excelente primeira impressão.</p>
-                <span class="inline-block text-xs font-semibold text-emerald-600 mt-3 group-hover:underline">Ver orientações &rarr;</span>
-            </div>
-
-            <!-- Card 3: Cursos Técnicos Recomendados -->
-            <div onclick="abrirModalDica('cursos')" class="bg-white p-5 rounded-2xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition cursor-pointer group">
-                <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-base mb-3 group-hover:bg-indigo-600 group-hover:text-white transition">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-                <h3 class="text-base font-semibold text-gray-900 mb-1">Cursos Técnicos que Empregam</h3>
-                <p class="text-xs text-gray-500 leading-relaxed">Conheça as áreas de formação rápida mais procuradas pelas empresas (Contabilidade Prática, Logística, Excel Avançado e Idiomas).</p>
-                <span class="inline-block text-xs font-semibold text-indigo-600 mt-3 group-hover:underline">Ver recomendações &rarr;</span>
-            </div>
-        </div>
-    </section>
-
     <!-- Lista de Vagas -->
     <main id="ultimas-vagas" class="max-w-7xl mx-auto px-4 py-4 flex-grow w-full">
         <div class="flex justify-between items-center mb-6">
@@ -251,7 +207,9 @@
                 <h4 class="text-white text-sm font-semibold mb-3">Para Candidatos</h4>
                 <ul class="space-y-2 text-xs">
                     <li><a href="#ultimas-vagas" class="hover:text-white transition">Procurar Vagas</a></li>
-                    <li><a href="#dicas-carreira" class="hover:text-white transition">Dicas e Carreira</a></li>
+                    <li><a href="#" onclick="abrirModalDica('curriculo'); return false;" class="hover:text-white transition"><i class="fa-solid fa-file-lines mr-1 text-blue-400"></i> Como Criar um Currículo Vencedor</a></li>
+                    <li><a href="#" onclick="abrirModalDica('entrevista'); return false;" class="hover:text-white transition"><i class="fa-solid fa-handshake mr-1 text-emerald-400"></i> Dominar a Entrevista</a></li>
+                    <li><a href="#" onclick="abrirModalDica('cursos'); return false;" class="hover:text-white transition"><i class="fa-solid fa-graduation-cap mr-1 text-indigo-400"></i> Cursos Técnicos Recomendados</a></li>
                     <li><a href="#" onclick="filtrarPorCategoria('ONGs'); return false;" class="hover:text-white transition">Vagas nas ONGs</a></li>
                 </ul>
             </div>
@@ -264,7 +222,7 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
-            &copy; 2026 EmpregosMoz. Todos os direitos reservados. Maputo, Moçambique.
+            &copy; 2026 EmpregosMoz. Todos os direitos reservados. Moçambique.
         </div>
     </footer>
 
