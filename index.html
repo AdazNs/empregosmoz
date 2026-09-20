@@ -192,7 +192,7 @@
             <h2 class="text-2xl font-bold text-gray-900">Receba as últimas vagas no seu e-mail</h2>
             <p class="text-gray-600 text-sm max-w-lg mx-auto">Inscreva-se gratuitamente e seja o primeiro a saber das novas oportunidades em Moçambique.</p>
             <form action="#" method="POST" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto pt-2">
-                <input type="email" placeholder="O seu e-mail melhor..." class="px-4 py-3 rounded-xl border border-gray-300 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" required>
+                <input type="email" placeholder="O seu melhor e-mail..." class="px-4 py-3 rounded-xl border border-gray-300 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" required>
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-xl transition text-sm">
                     Subscrever
                 </button>
@@ -215,7 +215,6 @@
                     <li><a href="vagas.html" class="hover:text-white transition">Procurar Vagas</a></li>
                     <li><a href="vagas.html?local=maputo" class="hover:text-white transition">Vagas em Maputo</a></li>
                     <li><a href="vagas.html?cat=ongs" class="hover:text-white transition">Vagas nas ONGs</a></li>
-                    <li><a href="modelos-cv.html" class="hover:text-white transition">Modelos de CV</a></li>
                 </ul>
             </div>
             <div>
@@ -223,7 +222,6 @@
                 <ul class="space-y-2 text-xs">
                     <li><a href="publicar-vaga.html" class="hover:text-white transition">Publicar Anúncio</a></li>
                     <li><a href="planos.html" class="hover:text-white transition">Planos e Preços</a></li>
-                    <li><a href="banco-cvs.html" class="hover:text-white transition">Banco de CVs</a></li>
                 </ul>
             </div>
             <div>
@@ -241,7 +239,7 @@
         </div>
     </footer>
 
-    <!-- Script Corrigido e Otimizado -->
+    <!-- Script Corrigido: Agora aponta corretamente para candidatar.html -->
     <script>
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
@@ -269,7 +267,6 @@
 
                 const vagas = await response.json();
 
-                // Atualizar Estatísticas Dinâmicas
                 if (elVagas) elVagas.textContent = vagas.length;
 
                 const empresasUnicas = new Set(
@@ -278,7 +275,6 @@
                 if (elEmpresas) elEmpresas.textContent = empresasUnicas.size;
                 if (elCandidatos) elCandidatos.textContent = '0';
 
-                // Renderizar Vagas
                 if (!listaVagas) return;
 
                 if (vagas.length === 0) {
@@ -293,7 +289,6 @@
                     const localizacao = vaga.localizacao || vaga.local || vaga.cidade || vaga.location || 'Moçambique';
                     const tipoTrabalho = vaga.tipo_trabalho || vaga.tipo || vaga.job_type || 'Tempo Inteiro';
                     const prazo = vaga.prazo || vaga.data_limite || vaga.deadline || 'Aberto';
-
                     const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
 
                     return `
@@ -304,7 +299,7 @@
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600">
-                                        <a href="vaga-detalhes.html?id=${id}">${titulo}</a>
+                                        <a href="candidatar.html?id=${id}">${titulo}</a>
                                     </h3>
                                     <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500 mt-2">
                                         <span><i class="fa-solid fa-building mr-1"></i> ${empresa}</span>
@@ -315,7 +310,7 @@
                             </div>
                             <div class="flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-0 border-gray-100">
                                 <span class="text-xs text-gray-500">Prazo: ${prazo}</span>
-                                <a href="vaga-detalhes.html?id=${id}" class="bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition">
+                                <a href="candidatar.html?id=${id}" class="bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition">
                                     Candidatar-se
                                 </a>
                             </div>
@@ -334,7 +329,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             carregarPortal();
 
-            // Menu Mobile
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('mobile-menu-icon');
