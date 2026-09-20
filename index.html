@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EmpregosMoz - O Seu Portal de Emprego em Moçambique</title>
 
+    <!-- SDK Oficial do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -47,7 +50,7 @@
 
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn" aria-label="Abrir Menu" class="text-gray-600 focus:outline-none p-2">
-                        <i class="fa-solid fa-bars text-xl"></i>
+                        <i id="mobile-menu-icon" class="fa-solid fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
@@ -95,11 +98,44 @@
                     </select>
                 </div>
 
+                <div class="flex-1 flex items-center bg-gray-100 px-3 py-2 rounded-xl">
+                    <i class="fa-solid fa-user-clock text-gray-400 mr-2"></i>
+                    <select name="tipo" class="bg-transparent w-full focus:outline-none text-sm text-gray-600">
+                        <option value="">Tipo de Trabalho</option>
+                        <option value="tempo-inteiro">Tempo Inteiro</option>
+                        <option value="part-time">Part-time</option>
+                        <option value="estagio">Estágio</option>
+                        <option value="consultoria">Consultoria</option>
+                    </select>
+                </div>
+
                 <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-3 rounded-xl transition flex items-center justify-center gap-2">
                     <i class="fa-solid fa-search"></i>
                     <span>Buscar Vagas</span>
                 </button>
             </form>
+        </div>
+    </section>
+
+    <!-- Seção de Estatísticas -->
+    <section class="bg-white border-b border-gray-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+                <p class="text-2xl md:text-3xl font-bold text-blue-600">1,200+</p>
+                <p class="text-xs text-gray-500">Vagas Ativas</p>
+            </div>
+            <div>
+                <p class="text-2xl md:text-3xl font-bold text-blue-600">450+</p>
+                <p class="text-xs text-gray-500">Empresas Registadas</p>
+            </div>
+            <div>
+                <p class="text-2xl md:text-3xl font-bold text-blue-600">15,000+</p>
+                <p class="text-xs text-gray-500">Candidatos Registados</p>
+            </div>
+            <div>
+                <p class="text-2xl md:text-3xl font-bold text-blue-600">100%</p>
+                <p class="text-xs text-gray-500">Gratuito para Candidatos</p>
+            </div>
         </div>
     </section>
 
@@ -325,13 +361,22 @@
     </footer>
 
     <script>
+        // Configuração e Inicialização do Supabase
+        const SUPABASE_URL = 'SUA_SUPABASE_URL'sb_publishable_JLS98QzN7YhnYueO1y42CQ_-49wNp-a;
+        const SUPABASE_ANON_KEY = 'SUA_SUPABASE_ANON_KEY'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA;
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Controle do Menu Mobile
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
 
-            if (btn && menu) {
+            if (btn && menu && icon) {
                 btn.addEventListener('click', () => {
                     menu.classList.toggle('hidden');
+                    icon.classList.toggle('fa-bars');
+                    icon.classList.toggle('fa-xmark');
                 });
             }
         });
