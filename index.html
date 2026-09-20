@@ -178,7 +178,7 @@
             <a href="vagas.html" class="text-sm font-semibold text-blue-600 hover:underline">Ver todas (120+)</a>
         </div>
 
-        <!-- ID adicionado aqui para permitir o carregamento das vagas pelo JS -->
+        <!-- Container dinâmico das vagas -->
         <div id="lista-vagas" class="space-y-4">
             <p class="text-center text-gray-500 py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>A carregar vagas...</p>
         </div>
@@ -245,63 +245,89 @@
         </div>
     </footer>
 
-    <!-- Script JavaScript Único e Corrigido -->
+    <!-- Script JavaScript com Fallbacks e Tratamento de Erros -->
     <script>
-        // Configuração do Supabase
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
-        
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Função para carregar vagas do banco de dados
+        let supabase = null;
+        if (window.supabase && typeof window.supabase.createClient === 'function') {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } else {
+            console.error('O SDK do Supabase não foi carregado corretamente.');
+        }
+
         async function carregarVagas() {
             const listaVagas = document.getElementById('lista-vagas');
             if (!listaVagas) return;
 
-            const { data: vagas, error } = await supabase
-                .from('vagas')
-                .select('*')
-                .order('created_at', { ascending: false });
-
-            if (error) {
-                console.error('Erro ao buscar vagas:', error.message);
-                listaVagas.innerHTML = '<p class="text-red-500 text-center py-4">Erro ao carregar as vagas.</p>';
+            if (!supabase) {
+                listaVagas.innerHTML = '<p class="text-red-500 text-center py-4">Erro: Biblioteca do Supabase não inicializada.</p>';
                 return;
             }
 
-            if (!vagas || vagas.length === 0) {
-                listaVagas.innerHTML = '<p class="text-gray-500 text-center py-4">Nenhuma vaga encontrada no banco de dados.</p>';
-                return;
-            }
+            try {
+                const { data: vagas, error } = await supabase
+                    .from('vagas')
+                    .select('*');
 
-            listaVagas.innerHTML = vagas.map(vaga => `
-                <div class="bg-white p-5 rounded-2xl border border-gray-200 hover:border-blue-400 hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg flex-shrink-0">
-                            ${vaga.empresa ? vaga.empresa.substring(0, 3).toUpperCase() : 'JOB'}
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-0.5 rounded-full font-medium">${vaga.tag || 'Novo'}</span>
+                if (error) {
+                    console.error('Erro ao consultar a tabela vagas:', error);
+                    listaVagas.innerHTML = `<p class="text-red-500 text-center py-4">Erro ao carregar as vagas: ${error.message}</p>`;
+                    return;
+                }
+
+                if (!vagas || vagas.length === 0) {
+                    listaVagas.innerHTML = '<p class="text-gray-500 text-center py-4">Nenhuma vaga encontrada no banco de dados.</p>';
+                    return;
+                }
+
+                listaVagas.innerHTML = vagas.map(vaga => {
+                    // Mapeamento dinâmico para aceitar colunas em Português ou Inglês
+                    const id = vaga.id || '#';
+                    const titulo = vaga.titulo || vaga.title || vaga.cargo || 'Vaga Sem Título';
+                    const empresa = vaga.empresa || vaga.empresa_nome || vaga.company || 'Empresa Privada';
+                    const localizacao = vaga.localizacao || vaga.local || vaga.cidade || vaga.location || 'Moçambique';
+                    const tipoTrabalho = vaga.tipo_trabalho || vaga.tipo || vaga.job_type || 'Tempo Inteiro';
+                    const prazo = vaga.prazo || vaga.data_limite || vaga.deadline || 'Aberto';
+                    const tag = vaga.tag || vaga.categoria || vaga.category || 'Novo';
+
+                    const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
+
+                    return `
+                        <div class="bg-white p-5 rounded-2xl border border-gray-200 hover:border-blue-400 hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg flex-shrink-0">
+                                    ${inicialEmpresa}
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-0.5 rounded-full font-medium">${tag}</span>
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mt-1 hover:text-blue-600">
+                                        <a href="vaga-detalhes.html?id=${id}">${titulo}</a>
+                                    </h3>
+                                    <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500 mt-2">
+                                        <span><i class="fa-solid fa-building mr-1"></i> ${empresa}</span>
+                                        <span><i class="fa-solid fa-location-dot mr-1"></i> ${localizacao}</span>
+                                        <span><i class="fa-solid fa-clock mr-1"></i> ${tipoTrabalho}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <h3 class="text-lg font-semibold text-gray-900 mt-1 hover:text-blue-600">
-                                <a href="vaga-detalhes.html?id=${vaga.id}">${vaga.titulo}</a>
-                            </h3>
-                            <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500 mt-2">
-                                <span><i class="fa-solid fa-building mr-1"></i> ${vaga.empresa}</span>
-                                <span><i class="fa-solid fa-location-dot mr-1"></i> ${vaga.localizacao}</span>
-                                <span><i class="fa-solid fa-clock mr-1"></i> ${vaga.tipo_trabalho || 'Tempo Inteiro'}</span>
+                            <div class="flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-0 border-gray-100">
+                                <span class="text-xs text-gray-500">Prazo: ${prazo}</span>
+                                <a href="vaga-detalhes.html?id=${id}" class="bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition">
+                                    Candidatar-se
+                                </a>
                             </div>
                         </div>
-                    </div>
-                    <div class="flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-0 border-gray-100">
-                        <span class="text-xs text-gray-500">Prazo: ${vaga.prazo || 'Aberto'}</span>
-                        <a href="vaga-detalhes.html?id=${vaga.id}" class="bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition">
-                            Candidatar-se
-                        </a>
-                    </div>
-                </div>
-            `).join('');
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error('Erro de execução inesperado:', err);
+                listaVagas.innerHTML = `<p class="text-red-500 text-center py-4">Erro ao processar dados: ${err.message}</p>`;
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
