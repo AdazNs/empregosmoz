@@ -65,6 +65,29 @@
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
 
+        // Função para transformar URLs e emails em links clicáveis automaticamente
+        function formatarLinksNaDescricao(texto) {
+            if (!texto) return '';
+
+            // Escapar HTML básico para segurança, mantendo quebras de linha limpas
+            // (Opcional, mas substitui caracteres perigosos se necessário)
+            let textoFormatado = texto;
+
+            // Regex para detetar URLs web
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            textoFormatado = textoFormatado.replace(urlRegex, function(url) {
+                return `<a href="${url}" target="_blank" class="text-blue-600 underline hover:text-blue-800 break-all font-semibold" rel="noopener noreferrer">${url}</a>`;
+            });
+
+            // Regex para detetar endereços de email
+            const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
+            textoFormatado = textoFormatado.replace(emailRegex, function(email) {
+                return `<a href="mailto:${email}" class="text-blue-600 underline hover:text-blue-800 font-semibold">${email}</a>`;
+            });
+
+            return textoFormatado;
+        }
+
         async function carregarDetalhesVaga() {
             const container = document.getElementById('container-candidatura');
             
@@ -113,11 +136,10 @@
                 const tipoTrabalho = vaga.tipo_trabalho || vaga.tipo || vaga.job_type || 'Tempo Inteiro';
                 const prazo = vaga.prazo || vaga.data_limite || vaga.deadline || 'Aberto';
                 
-                // O conteúdo do campo tag (que já traz as instruções e e-mail)
                 const tagInfo = vaga.tag && vaga.tag.trim() !== '' ? vaga.tag : 'Nenhuma instrução detalhada disponível para esta vaga.';
                 const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
 
-                // Renderiza o layout limpo focado na tag
+                // Renderiza o layout
                 container.innerHTML = `
                     <div class="space-y-6">
                         <!-- Cabeçalho da Vaga -->
@@ -148,7 +170,7 @@
                                 </div>
                             </div>
 
-                            <!-- Texto da Tag formatado (preserva quebras de linha se houver) -->
+                            <!-- Texto da Tag com formatação automática de links -->
                             <div class="bg-white border border-blue-100 p-5 rounded-xl text-gray-800 text-sm leading-relaxed whitespace-pre-line shadow-sm" id="txt-tag">
                             </div>
 
@@ -161,10 +183,12 @@
                     </div>
                 `;
 
-                // Atribuição segura ao DOM
+                // Atribuição de textos normais e inserção da tag formatada com links clicáveis
                 document.getElementById('txt-titulo').textContent = titulo;
                 document.getElementById('txt-empresa').textContent = empresa;
-                document.getElementById('txt-tag').textContent = tagInfo;
+                
+                // Aplicar a função que converte links e emails em elementos clicáveis
+                document.getElementById('txt-tag').innerHTML = formatarLinksNaDescricao(tagInfo);
 
             } catch (err) {
                 console.error('Erro:', err);
