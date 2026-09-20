@@ -68,17 +68,16 @@
 
     <!-- Conteúdo Principal -->
     <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
-        <!-- Voltar -->
         <div class="mb-6">
             <a href="index.html" class="text-sm text-blue-600 hover:underline flex items-center gap-2">
-                <i class="fa-solid fa-arrow-left"></i> Voltar para as vagas
+                <i class="fa-solid fa-arrow-left"></i> Voltar para a página inicial
             </a>
         </div>
 
         <div id="container-candidatura">
-            <div class="text-center py-12">
+            <div class="text-center py-12 bg-white rounded-2xl border border-gray-200 shadow-sm">
                 <i class="fa-solid fa-spinner fa-spin text-3xl text-blue-600 mb-3"></i>
-                <p class="text-gray-500">A carregar detalhes da candidatura...</p>
+                <p class="text-gray-500 font-medium">A carregar detalhes da vaga...</p>
             </div>
         </div>
     </main>
@@ -90,7 +89,7 @@
         </div>
     </footer>
 
-    <!-- Script JavaScript da Página de Candidatura -->
+    <!-- Script JavaScript Blindado -->
     <script>
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
@@ -98,23 +97,22 @@
         async function carregarCandidatura() {
             const container = document.getElementById('container-candidatura');
             
-            // Pega o ID da vaga via URL (?id=...)
-            const urlParams = new URLSearchParams(window.location.search);
-            const vagaId = urlParams.get('id');
-
-            if (!vagaId) {
-                container.innerHTML = `
-                    <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 p-6 rounded-2xl text-center">
-                        <i class="fa-solid fa-circle-exclamation text-3xl mb-2"></i>
-                        <p class="font-medium">Nenhuma vaga foi selecionada para candidatura.</p>
-                        <a href="index.html" class="inline-block mt-4 text-sm text-blue-600 font-semibold underline">Ver lista de vagas</a>
-                    </div>
-                `;
-                return;
-            }
-
             try {
-                // Consulta os detalhes da vaga selecionada na API REST do Supabase
+                const urlParams = new URLSearchParams(window.location.search);
+                const vagaId = urlParams.get('id');
+
+                if (!vagaId) {
+                    container.innerHTML = `
+                        <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 p-6 rounded-2xl text-center shadow-sm">
+                            <i class="fa-solid fa-circle-exclamation text-3xl mb-2 text-yellow-600"></i>
+                            <p class="font-bold text-base">Nenhuma vaga especificada.</p>
+                            <p class="text-sm text-yellow-700 mt-1">Por favor, escolha uma vaga a partir da lista principal.</p>
+                            <a href="index.html" class="inline-block mt-4 bg-yellow-600 text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-yellow-700 transition">Ver Vagas Disponíveis</a>
+                        </div>
+                    `;
+                    return;
+                }
+
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/vagas?id=eq.${vagaId}`, {
                     method: 'GET',
                     headers: {
@@ -124,16 +122,19 @@
                     }
                 });
 
-                if (!response.ok) throw new Error(`Erro HTTP ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`Erro de comunicação com o servidor (${response.status})`);
+                }
 
                 const data = await response.json();
 
                 if (!data || data.length === 0) {
                     container.innerHTML = `
-                        <div class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-2xl text-center">
-                            <i class="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
-                            <p class="font-medium">Vaga não encontrada ou não está mais disponível.</p>
-                            <a href="index.html" class="inline-block mt-4 text-sm text-blue-600 font-semibold underline">Voltar ao portal</a>
+                        <div class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-2xl text-center shadow-sm">
+                            <i class="fa-solid fa-triangle-exclamation text-3xl mb-2 text-red-500"></i>
+                            <p class="font-bold text-base">Vaga não encontrada</p>
+                            <p class="text-sm text-red-600 mt-1">A vaga que procura pode ter sido removida ou o link está incorreto.</p>
+                            <a href="index.html" class="inline-block mt-4 bg-red-600 text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-red-700 transition">Voltar ao Início</a>
                         </div>
                     `;
                     return;
@@ -141,7 +142,7 @@
 
                 const vaga = data[0];
 
-                // Extração dos campos com fallback
+                // Extração segura de dados com fallbacks
                 const titulo = vaga.titulo || vaga.title || vaga.cargo || 'Vaga Sem Título';
                 const empresa = vaga.empresa || vaga.empresa_nome || vaga.company || 'Empresa Privada';
                 const localizacao = vaga.localizacao || vaga.local || vaga.cidade || vaga.location || 'Moçambique';
@@ -149,16 +150,14 @@
                 const prazo = vaga.prazo || vaga.data_limite || vaga.deadline || 'Aberto';
                 const emailContato = vaga.email || vaga.contato || 'candidaturas@empregosmoz.com';
                 
-                // CAMPO TAG (Processamento e Destaque)
-                const tagInfo = vaga.tag || vaga.categoria || vaga.category || 'Nenhuma informação especial especificada.';
-
+                // Campo TAG com verificação de existência
+                const tagInfo = vaga.tag && vaga.tag.trim() !== '' ? vaga.tag : 'Nenhuma instrução ou detalhe especial especificado para esta vaga.';
                 const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
 
-                // Renderiza o painel de candidatura contendo a TAG em evidência
+                // Montagem do HTML Dinâmico Seguro
                 container.innerHTML = `
                     <div class="space-y-6">
-                        
-                        <!-- Resumo da Vaga -->
+                        <!-- Cabeçalho da Vaga -->
                         <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
                             <div class="flex items-start gap-4">
                                 <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xl flex-shrink-0">
@@ -176,52 +175,52 @@
                             </div>
                         </div>
 
-                        <!-- PAINEL DE DESTAQUE: INFORMAÇÃO / TAG DA VAGA -->
-                        <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-6 shadow-sm">
-                            <div class="flex items-center gap-3 mb-2">
-                                <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-sm">
-                                    <i class="fa-solid fa-tag"></i>
+                        <!-- PAINEL DE DESTAQUE: CAMPO TAG -->
+                        <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-6 shadow-sm">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 rounded-lg bg-amber-200 text-amber-800 flex items-center justify-center font-bold text-sm">
+                                    <i class="fa-solid fa-circle-info"></i>
                                 </div>
-                                <h2 class="text-base font-bold text-amber-900">Nota / Instruções do Recrutador (Campo Tag):</h2>
+                                <h2 class="text-base font-bold text-amber-900">Instruções Importantes / Detalhes (Campo Tag):</h2>
                             </div>
-                            <div class="text-amber-900 text-sm leading-relaxed pl-11">
-                                <span class="inline-block bg-amber-200 text-amber-900 font-semibold px-3 py-1 rounded-lg text-xs mr-2">
+                            <div class="text-amber-900 text-sm leading-relaxed pl-11 space-y-2">
+                                <div class="bg-amber-100/70 border border-amber-200 p-3 rounded-xl font-medium text-amber-950">
                                     ${tagInfo}
-                                </span>
-                                Leia atentamente este aviso antes de submeter a sua candidatura para garantir que cumpre todos os requisitos definidos.
+                                </div>
+                                <p class="text-xs text-amber-800 italic">Certifique-se de ler e cumprir estes requisitos antes de formalizar a sua candidatura.</p>
                             </div>
                         </div>
 
-                        <!-- Formulário / Opções de Candidatura -->
+                        <!-- Formulário de Submissão -->
                         <div class="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-sm space-y-6">
-                            <h2 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3">Submeter Candidatura</h2>
+                            <h2 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3">Formulário de Candidatura</h2>
 
-                            <form id="form-candidatura-direta" class="space-y-4">
+                            <form id="form-candidatura" class="space-y-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-1">Seu Nome Completo *</label>
-                                    <input type="text" id="cand-nome" required placeholder="Digite o seu nome completo" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nome Completo *</label>
+                                    <input type="text" id="cand-nome" required placeholder="Insira o seu nome completo" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label class="block text-sm font-semibold text-gray-700 mb-1">Seu E-mail *</label>
-                                        <input type="email" id="cand-email" required placeholder="seu.email@exemplo.com" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                                        <label class="block text-sm font-semibold text-gray-700 mb-1">E-mail de Contacto *</label>
+                                        <input type="email" id="cand-email" required placeholder="exemplo@email.com" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-semibold text-gray-700 mb-1">Contacto Telefónico / WhatsApp *</label>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-1">Telemóvel / WhatsApp *</label>
                                         <input type="tel" id="cand-telefone" required placeholder="+258 84 000 0000" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-1">Carta de Apresentação / Observações</label>
-                                    <textarea id="cand-mensagem" rows="4" placeholder="Apresente brevemente o seu perfil e por que é o candidato ideal..." class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm leading-relaxed"></textarea>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1">Mensagem ou Breve Resumo</label>
+                                    <textarea id="cand-mensagem" rows="4" placeholder="Descreva sucintamente porque é o candidato ideal..." class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm leading-relaxed"></textarea>
                                 </div>
 
-                                <div class="pt-4 flex flex-col sm:flex-row gap-3">
-                                    <a id="btn-envio-email" href="mailto:${emailContato}?subject=Candidatura: ${encodeURIComponent(titulo)} - [Tag: ${encodeURIComponent(tagInfo)}]" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl text-center text-sm transition flex items-center justify-center gap-2 shadow-sm">
-                                        <i class="fa-solid fa-paper-plane"></i>
-                                        <span>Enviar Candidatura por E-mail</span>
+                                <div class="pt-4">
+                                    <a href="mailto:${emailContato}?subject=Candidatura: ${encodeURIComponent(titulo)}&body=Olá,%0A%0ASubmeto a minha candidatura para a vaga de ${encodeURIComponent(titulo)}.%0A%0ANotas da Vaga (Tag): ${encodeURIComponent(tagInfo)}" 
+                                       class="w-full block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl text-center text-sm transition shadow-sm">
+                                        <i class="fa-solid fa-paper-plane mr-2"></i> Enviar Candidatura por E-mail
                                     </a>
                                 </div>
                             </form>
@@ -230,11 +229,13 @@
                 `;
 
             } catch (err) {
-                console.error('Erro ao carregar dados da candidatura:', err);
+                console.error('Erro fatal ao carregar a candidatura:', err);
                 container.innerHTML = `
-                    <div class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-2xl text-center">
-                        <p class="font-medium">Erro ao carregar os dados da vaga para candidatura.</p>
-                        <p class="text-xs text-red-500 mt-1">${err.message}</p>
+                    <div class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-2xl text-center shadow-sm">
+                        <i class="fa-solid fa-triangle-exclamation text-3xl mb-2 text-red-500"></i>
+                        <p class="font-bold text-base">Ocorreu um erro ao processar a página</p>
+                        <p class="text-xs text-red-600 mt-1">${err.message}</p>
+                        <a href="index.html" class="inline-block mt-4 bg-red-600 text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-red-700 transition">Voltar ao Início</a>
                     </div>
                 `;
             }
@@ -243,7 +244,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             carregarCandidatura();
 
-            // Menu Mobile
+            // Menu Mobile Toggle
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('mobile-menu-icon');
