@@ -293,7 +293,6 @@
                     const localizacao = vaga.localizacao || vaga.local || vaga.cidade || vaga.location || 'Moçambique';
                     const tipoTrabalho = vaga.tipo_trabalho || vaga.tipo || vaga.job_type || 'Tempo Inteiro';
                     const prazo = vaga.prazo || vaga.data_limite || vaga.deadline || 'Aberto';
-                    const tag = vaga.tag || vaga.categoria || vaga.category || 'Novo';
 
                     const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
 
@@ -304,10 +303,7 @@
                                     ${inicialEmpresa}
                                 </div>
                                 <div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-0.5 rounded-full font-medium">${tag}</span>
-                                    </div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mt-1 hover:text-blue-600">
+                                    <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600">
                                         <a href="vaga-detalhes.html?id=${id}">${titulo}</a>
                                     </h3>
                                     <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500 mt-2">
