@@ -176,7 +176,7 @@
         </div>
     </main>
 
-    <!-- Rodapé (Sem seção de subscrever e sem redes sociais) -->
+    <!-- Rodapé -->
     <footer class="bg-gray-900 text-gray-400 py-10 mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
@@ -318,11 +318,17 @@
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         });
 
+        // Filtro Inteligente de Categorias (Verifica a coluna categoria ou o título)
         function filtrarPorCategoria(categoria) {
-            const filtradas = todasVagas.filter(v => 
-                (v.categoria && v.categoria.toLowerCase().includes(categoria.toLowerCase())) ||
-                (v.titulo && v.titulo.toLowerCase().includes(categoria.toLowerCase()))
-            );
+            const termoBusca = categoria.toLowerCase();
+            
+            const filtradas = todasVagas.filter(v => {
+                const catVaga = v.categoria ? v.categoria.toLowerCase() : '';
+                const tituloVaga = v.titulo ? v.titulo.toLowerCase() : '';
+                const descVaga = v.descricao ? v.descricao.toLowerCase() : '';
+
+                return catVaga.includes(termoBusca) || tituloVaga.includes(termoBusca) || descVaga.includes(termoBusca);
+            });
 
             document.getElementById('titulo-seccao-vagas').textContent = `Vagas em: ${categoria}`;
             document.getElementById('btn-limpar-filtro').classList.remove('hidden');
