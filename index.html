@@ -176,18 +176,18 @@
         </div>
     </main>
 
-    <!-- Modal Dinâmico para Dicas de Carreira -->
-    <div id="modal-dica" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
-            <button onclick="fecharModalDica()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-lg">
+    <!-- Modal Geral (Conteúdo Dinâmico para Política, Sobre, Contacto e Dicas) -->
+    <div id="modal-geral" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="fecharModalGeral()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-lg">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div id="conteudo-modal" class="space-y-3">
+            <div id="conteudo-modal" class="space-y-3 text-xs md:text-sm text-gray-700">
                 <!-- Conteúdo injetado via JS -->
             </div>
             <div class="mt-6 text-right">
-                <button onclick="fecharModalDica()" class="bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-xl hover:bg-blue-700 transition">
-                    Entendido
+                <button onclick="fecharModalGeral()" class="bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-xl hover:bg-blue-700 transition cursor-pointer">
+                    Fechar
                 </button>
             </div>
         </div>
@@ -195,7 +195,7 @@
 
     <!-- Rodapé -->
     <footer class="bg-gray-900 text-gray-400 py-10 mt-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
                 <a href="index.html" class="text-2xl font-bold text-white flex items-center gap-2 mb-3">
                     <i class="fa-solid fa-briefcase text-blue-500"></i>
@@ -207,10 +207,18 @@
                 <h4 class="text-white text-sm font-semibold mb-3">Para Candidatos</h4>
                 <ul class="space-y-2 text-xs">
                     <li><a href="#ultimas-vagas" class="hover:text-white transition">Procurar Vagas</a></li>
-                    <li><a href="#" onclick="abrirModalDica('curriculo'); return false;" class="hover:text-white transition"><i class="fa-solid fa-file-lines mr-1 text-blue-400"></i> Como Criar um Currículo Vencedor</a></li>
-                    <li><a href="#" onclick="abrirModalDica('entrevista'); return false;" class="hover:text-white transition"><i class="fa-solid fa-handshake mr-1 text-emerald-400"></i> Dominar a Entrevista</a></li>
-                    <li><a href="#" onclick="abrirModalDica('cursos'); return false;" class="hover:text-white transition"><i class="fa-solid fa-graduation-cap mr-1 text-indigo-400"></i> Cursos Técnicos Recomendados</a></li>
+                    <li><a href="#" onclick="abrirPagina('curriculo'); return false;" class="hover:text-white transition">Como Criar um Currículo Vencedor</a></li>
+                    <li><a href="#" onclick="abrirPagina('entrevista'); return false;" class="hover:text-white transition">Dominar a Entrevista</a></li>
+                    <li><a href="#" onclick="abrirPagina('cursos'); return false;" class="hover:text-white transition">Cursos Técnicos Recomendados</a></li>
                     <li><a href="#" onclick="filtrarPorCategoria('ONGs'); return false;" class="hover:text-white transition">Vagas nas ONGs</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white text-sm font-semibold mb-3">Institucional</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#" onclick="abrirPagina('sobre'); return false;" class="hover:text-white transition">Sobre Nós</a></li>
+                    <li><a href="#" onclick="abrirPagina('privacidade'); return false;" class="hover:text-white transition">Política de Privacidade</a></li>
+                    <li><a href="#" onclick="abrirPagina('contacto'); return false;" class="hover:text-white transition">Contacto</a></li>
                 </ul>
             </div>
             <div>
@@ -319,40 +327,66 @@
             renderizarVagas(todasVagas);
         }
 
-        // Sistema de Modais para Dicas
-        function abrirModalDica(tipo) {
-            const modal = document.getElementById('modal-dica');
+        // Gestão de Páginas Institucionais e Dicas (Modal)
+        function abrirPagina(tipo) {
+            const modal = document.getElementById('modal-geral');
             const conteudo = document.getElementById('conteudo-modal');
 
             let html = '';
-            if (tipo === 'curriculo') {
+
+            if (tipo === 'privacidade') {
+                html = `
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Política de Privacidade para EmpregosMoz</h3>
+                    <p>A sua privacidade é importante para nós. No <strong>EmpregosMoz</strong>, recolhemos e utilizamos informações conforme descrito abaixo para garantir o funcionamento do portal.</p>
+                    <h4 class="font-semibold text-gray-900 mt-3">1. Cookies e Publicidade (Google AdSense)</h4>
+                    <p>O EmpregosMoz utiliza serviços de publicidade de terceiros, incluindo o <strong>Google AdSense</strong>, para exibir anúncios quando visita o nosso site. Estes fornecedores podem utilizar cookies (incluindo o cookie DART) para exibir anúncios com base nas suas visitas anteriores ao EmpregosMoz ou a outros sítios Web.</p>
+                    <p>Pode optar por desativar a utilização do cookie DART visitando a política de privacidade da rede de conteúdo e dos anúncios do Google.</p>
+                    <h4 class="font-semibold text-gray-900 mt-3">2. Recolha de Dados</h4>
+                    <p>Não armazenamos dados pessoais sensíveis sem o seu consentimento explícito. Os formulários de candidatura redirecionam ou processam apenas as informações necessárias para as vagas de emprego.</p>
+                    <h4 class="font-semibold text-gray-900 mt-3">3. Contacto</h4>
+                    <p>Se tiver dúvidas sobre esta Política de Privacidade, entre em contacto connosco através da nossa página de suporte.</p>
+                `;
+            } else if (tipo === 'sobre') {
+                html = `
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Sobre o EmpregosMoz</h3>
+                    <p>O <strong>EmpregosMoz</strong> é a plataforma líder dedicada a ligar profissionais qualificados a oportunidades de emprego, estágios e carreiras em Moçambique.</p>
+                    <p class="mt-2">A nossa missão é democratizar o acesso à informação sobre o mercado de trabalho moçambicano, reunindo diariamente vagas em Maputo, Beira, Nampula e demais províncias, de forma 100% gratuita para os candidatos.</p>
+                `;
+            } else if (tipo === 'contacto') {
+                html = `
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Contacto</h3>
+                    <p>Tem alguma dúvida, sugestão ou empresa que deseja publicar vagas no EmpregosMoz? Entre em contacto connosco:</p>
+                    <div class="bg-gray-50 p-4 rounded-xl mt-3 space-y-2 text-xs">
+                        <p><i class="fa-solid fa-envelope text-blue-600 mr-2"></i><strong>Email:</strong> suporte@empregosmoz.com</p>
+                        <p><i class="fa-solid fa-location-dot text-blue-600 mr-2"></i><strong>Localização:</strong> Maputo / Beira, Moçambique</p>
+                    </div>
+                `;
+            } else if (tipo === 'curriculo') {
                 html = `
                     <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-file-lines text-blue-600"></i> Como Criar um Currículo Vencedor</h3>
-                    <ul class="text-xs text-gray-600 space-y-2 list-disc pl-4">
+                    <ul class="space-y-2 list-disc pl-4 text-xs">
                         <li><strong>Seja Conciso:</strong> O CV ideal em Moçambique deve ter no máximo 2 páginas.</li>
-                        <li><strong>Informações de Contacto:</strong> Certifique-se de que o seu número de telemóvel e email estão atualizados e ativos.</li>
-                        <li><strong>Foco em Resultados:</strong> Em vez de apenas listar funções anteriores, destaque as suas principais realizações.</li>
-                        <li><strong>Formato PDF:</strong> Salve e envie sempre o seu currículo em formato PDF para preservar a formatação profissional.</li>
+                        <li><strong>Informações de Contacto:</strong> Certifique-se de que o seu número e email estão ativos.</li>
+                        <li><strong>Foco em Resultados:</strong> Destaque realizações e impacto nas funções anteriores.</li>
+                        <li><strong>Formato PDF:</strong> Envie sempre em PDF para preservar a formatação profissional.</li>
                     </ul>
                 `;
             } else if (tipo === 'entrevista') {
                 html = `
                     <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-handshake text-emerald-600"></i> Dicas para a Entrevista de Emprego</h3>
-                    <ul class="text-xs text-gray-600 space-y-2 list-disc pl-4">
-                        <li><strong>Pesquise a Empresa:</strong> Conheça a missão, área de atuação e projetos recentes da organização antes de ir à entrevista.</li>
-                        <li><strong>Pontualidade:</strong> Chegue ao local (ou entre na sala virtual) pelo menos 10 a 15 minutos antes da hora marcada.</li>
-                        <li><strong>Linguagem Corporal:</strong> Mantenha contacto visual, postura firme e um tom de voz claro e confiável.</li>
-                        <li><strong>Exemplos Práticos:</strong> Prepare histórias curtas do seu passado profissional que provem as suas competências.</li>
+                    <ul class="space-y-2 list-disc pl-4 text-xs">
+                        <li><strong>Pesquise a Empresa:</strong> Conheça a missão e projetos recentes da organização.</li>
+                        <li><strong>Pontualidade:</strong> Chegue 10 a 15 minutos antes da hora marcada.</li>
+                        <li><strong>Linguagem Corporal:</strong> Mantenha postura firme e contacto visual.</li>
                     </ul>
                 `;
             } else if (tipo === 'cursos') {
                 html = `
                     <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-indigo-600"></i> Cursos Técnicos Recomendados</h3>
-                    <ul class="text-xs text-gray-600 space-y-2 list-disc pl-4">
-                        <li><strong>Microsoft Excel Avançado:</strong> Essencial para quase todas as vagas administrativas, financeiras e logísticas.</li>
-                        <li><strong>Contabilidade Prática e Fiscalidade:</strong> Altamente procurado por empresas de comércio e serviços.</li>
-                        <li><strong>Gestão de Cadeia de Suprimentos & Logística:</strong> Muito valorizado nas províncias com forte atividade industrial e portuária.</li>
-                        <li><strong>Inglês Comercial:</strong> Um diferencial competitivo enorme para se destacar em multinacionais e ONGs.</li>
+                    <ul class="space-y-2 list-disc pl-4 text-xs">
+                        <li><strong>Microsoft Excel Avançado:</strong> Essencial para vagas administrativas e financeiras.</li>
+                        <li><strong>Contabilidade Prática e Fiscalidade:</strong> Altamente procurado no comércio e serviços.</li>
+                        <li><strong>Inglês Comercial:</strong> Diferencial enorme em multinacionais e ONGs.</li>
                     </ul>
                 `;
             }
@@ -361,8 +395,8 @@
             modal.classList.remove('hidden');
         }
 
-        function fecharModalDica() {
-            document.getElementById('modal-dica').classList.add('hidden');
+        function fecharModalGeral() {
+            document.getElementById('modal-geral').classList.add('hidden');
         }
 
         document.getElementById('search-form').addEventListener('submit', (e) => {
