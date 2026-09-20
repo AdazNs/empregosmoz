@@ -34,7 +34,6 @@
                     <a href="index.html" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Vagas de Emprego</a>
                     <a href="#categorias-seccao" class="text-gray-600 hover:text-blue-600 transition">Categorias</a>
                     <a href="#ultimas-vagas" class="text-gray-600 hover:text-blue-600 transition">Recentes</a>
-                    <a href="#newsletter-seccao" class="text-gray-600 hover:text-blue-600 transition">Subscrever</a>
                 </nav>
 
                 <div class="hidden md:flex items-center space-x-4">
@@ -56,7 +55,6 @@
             <a href="index.html" class="block py-2 text-blue-600 font-semibold">Vagas de Emprego</a>
             <a href="#categorias-seccao" class="block py-2 text-gray-600 hover:text-blue-600">Categorias</a>
             <a href="#ultimas-vagas" class="block py-2 text-gray-600 hover:text-blue-600">Recentes</a>
-            <a href="#newsletter-seccao" class="block py-2 text-gray-600 hover:text-blue-600">Subscrever</a>
             <hr class="my-2 border-gray-100">
             <a href="#" class="block py-2 text-gray-600 hover:text-blue-600">Entrar</a>
             <a href="#" class="block text-center bg-blue-600 text-white py-2 rounded-lg font-medium mt-2">
@@ -178,25 +176,9 @@
         </div>
     </main>
 
-    <!-- Seção Subscrever -->
-    <section id="newsletter-seccao" class="bg-blue-50 border-y border-blue-100 my-8 py-10 px-4">
-        <div class="max-w-4xl mx-auto text-center space-y-4">
-            <i class="fa-regular fa-envelope-open text-4xl text-blue-600"></i>
-            <h2 class="text-2xl font-bold text-gray-900">Receba as últimas vagas no seu e-mail</h2>
-            <p class="text-gray-600 text-sm max-w-lg mx-auto">Inscreva-se gratuitamente e seja o primeiro a saber das novas oportunidades em Moçambique.</p>
-            <form id="form-subscrever" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto pt-2">
-                <input type="email" id="input-email-sub" placeholder="O seu melhor e-mail..." class="px-4 py-3 rounded-xl border border-gray-300 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" required>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-xl transition text-sm cursor-pointer">
-                    Subscrever
-                </button>
-            </form>
-            <p id="msg-subscricao" class="text-xs text-emerald-600 font-semibold hidden"></p>
-        </div>
-    </section>
-
-    <!-- Rodapé -->
-    <footer class="bg-gray-900 text-gray-400 py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <!-- Rodapé (Sem seção de subscrever e sem redes sociais) -->
+    <footer class="bg-gray-900 text-gray-400 py-10 mt-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
                 <a href="index.html" class="text-2xl font-bold text-white flex items-center gap-2 mb-3">
                     <i class="fa-solid fa-briefcase text-blue-500"></i>
@@ -219,18 +201,9 @@
                     <li><a href="#" onclick="alert('Planos gratuitos ativos'); return false;" class="hover:text-white transition">Planos e Preços</a></li>
                 </ul>
             </div>
-            <div>
-                <h4 class="text-white text-sm font-semibold mb-3">Contactos & Redes</h4>
-                <div class="flex space-x-3 mb-3">
-                    <a href="https://facebook.com" target="_blank" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fa-brands fa-facebook-f text-xs"></i></a>
-                    <a href="https://linkedin.com" target="_blank" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fa-brands fa-linkedin-in text-xs"></i></a>
-                    <a href="https://wa.me/258840000000" target="_blank" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition"><i class="fa-brands fa-whatsapp text-xs"></i></a>
-                </div>
-                <p class="text-xs">Maputo, Moçambique</p>
-            </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
-            &copy; 2026 EmpregosMoz. Todos os direitos reservados.
+            &copy; 2026 EmpregosMoz. Todos os direitos reservados. Maputo, Moçambique.
         </div>
     </footer>
 
@@ -240,7 +213,7 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
 
         let todasVagas = [];
-        let limiteExibicao = 5; // Quantas vagas mostrar inicialmente
+        let limiteExibicao = 5;
 
         async function carregarPortal() {
             try {
@@ -256,7 +229,6 @@
 
                 todasVagas = await response.json();
                 
-                // Atualizar contadores
                 document.getElementById('stat-vagas').textContent = todasVagas.length;
                 const empresasUnicas = new Set(todasVagas.map(v => v.empresa || v.company).filter(Boolean));
                 document.getElementById('stat-empresas').textContent = empresasUnicas.size;
@@ -316,7 +288,6 @@
                 `;
             }).join('');
 
-            // Ocultar botão "Carregar mais" se já mostrou todas
             if (filtrarAteLimite && limiteExibicao >= vagas.length) {
                 if(btnCarregarMais) btnCarregarMais.style.display = 'none';
             } else if (btnCarregarMais) {
@@ -324,13 +295,11 @@
             }
         }
 
-        // 1. Carregar Mais Vagas
         function carregarMaisVagas() {
             limiteExibicao += 5;
             renderizarVagas(todasVagas);
         }
 
-        // 2. Buscar Vagas por Formulário
         document.getElementById('search-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const termo = document.getElementById('search-keyword').value.toLowerCase();
@@ -346,11 +315,9 @@
             document.getElementById('btn-limpar-filtro').classList.remove('hidden');
             renderizarVagas(filtradas, false);
             
-            // Rolar até os resultados
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // 3. Filtrar por Categoria em Destaque
         function filtrarPorCategoria(categoria) {
             const filtradas = todasVagas.filter(v => 
                 (v.categoria && v.categoria.toLowerCase().includes(categoria.toLowerCase())) ||
@@ -379,41 +346,6 @@
             renderizarVagas(todasVagas);
         }
 
-        // 4. Subscrever Newsletter via Supabase
-        document.getElementById('form-subscrever').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const emailInput = document.getElementById('input-email-sub');
-            const email = emailInput.value;
-            const msg = document.getElementById('msg-subscricao');
-
-            try {
-                const response = await fetch(`${SUPABASE_URL}/rest/v1/subscritores`, {
-                    method: 'POST',
-                    headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                        'Content-Type': 'application/json',
-                        'Prefer': 'return=minimal'
-                    },
-                    body: JSON.stringify({ email: email })
-                });
-
-                if (response.ok || response.status === 201) {
-                    msg.textContent = 'Obrigado! Subscrição efetuada com sucesso.';
-                    msg.classList.remove('hidden');
-                    emailInput.value = '';
-                } else {
-                    throw new Error('Erro ao salvar e-mail.');
-                }
-            } catch (err) {
-                // Se a tabela não existir no Supabase, avisamos de forma amigável
-                msg.textContent = 'Subscrição registada com sucesso!';
-                msg.classList.remove('hidden');
-                emailInput.value = '';
-            }
-        });
-
-        // Menu Mobile Toggle
         document.addEventListener('DOMContentLoaded', () => {
             carregarPortal();
 
