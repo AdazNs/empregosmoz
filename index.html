@@ -46,13 +46,10 @@
                     </a>
                 </div>
 
-                <!-- Navegação Desktop -->
+                <!-- Navegação Desktop (Sem Tradução Ajuramentada no topo) -->
                 <nav class="hidden lg:flex space-x-6 text-sm font-medium">
                     <a href="index.html" class="text-blue-600 dark:text-blue-400 font-semibold border-b-2 border-blue-600 pb-1">Vagas</a>
                     <a href="#categorias-seccao" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Categorias</a>
-                    <a href="#traducao-seccao" class="text-emerald-600 dark:text-emerald-400 font-semibold hover:opacity-85 transition flex items-center gap-1">
-                        <i class="fa-solid fa-language"></i> Tradução Ajuramentada
-                    </a>
                     <a href="#ultimas-vagas" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Recentes</a>
                 </nav>
 
@@ -77,7 +74,7 @@
         </div>
     </header>
 
-    <!-- Gaveta do Menu Lateral (Sidebar Drawer) -->
+    <!-- Gaveta do Menu Lateral (Sidebar Drawer com Tradução Ajuramentada) -->
     <div id="drawer-overlay" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden transition-opacity"></div>
     <div id="drawer-menu" class="fixed top-0 right-0 z-50 h-full w-80 bg-white dark:bg-gray-800 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col justify-between p-6">
         <div>
@@ -96,11 +93,12 @@
                 <a href="#categorias-seccao" onclick="fecharDrawer()" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa-solid fa-layer-group mr-2"></i> Categorias de Vagas
                 </a>
-                <a href="#traducao-seccao" onclick="fecharDrawer()" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 text-emerald-600 dark:text-emerald-400">
-                    <i class="fa-solid fa-language mr-2"></i> Tradução Ajuramentada
-                </a>
                 <a href="#ultimas-vagas" onclick="fecharDrawer()" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa-solid fa-clock-rotate-left mr-2"></i> Vagas Recentes
+                </a>
+                <!-- Tradução Ajuramentada no Menu Lateral -->
+                <a href="#" onclick="fecharDrawer(); abrirPagina('traducao'); return false;" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 text-emerald-600 dark:text-emerald-400 font-semibold">
+                    <i class="fa-solid fa-language mr-2"></i> Tradução Ajuramentada
                 </a>
                 <a href="#" onclick="alert('Funcionalidade de login em breve!'); return false;" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa-solid fa-user mr-2"></i> Entrar / Minha Conta
@@ -184,48 +182,8 @@
         </div>
     </section>
 
-    <!-- Secção em Destaque: Tradução Ajuramentada com Simulador Interativo -->
-    <section id="traducao-seccao" class="max-w-7xl mx-auto px-4 py-8">
-        <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-3xl p-6 md:p-8 text-white shadow-lg flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div class="space-y-3 max-w-xl">
-                <span class="bg-emerald-500/40 text-emerald-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1">
-                    <i class="fa-solid fa-certificate"></i> Serviço Profissional
-                </span>
-                <h2 class="text-2xl md:text-3xl font-bold">Tradução Ajuramentada de Documentos</h2>
-                <p class="text-emerald-100 text-sm md:text-base leading-relaxed">
-                    Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal para processos de emprego e vistos? Faça uma simulação rápida e solicite o seu orçamento.
-                </p>
-                <div class="flex flex-wrap gap-3 pt-1 text-xs">
-                    <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Inglês ⇄ Português</span>
-                    <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Entrega Rápida</span>
-                </div>
-            </div>
-
-            <!-- Simulador Interativo de Tradução (Limitado a Inglês / Português) -->
-            <div class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-5 rounded-2xl shadow-xl w-full max-w-md space-y-3">
-                <h3 class="text-sm font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-2">
-                    <i class="fa-solid fa-calculator"></i> Simulador & Orçamento Rápido
-                </h3>
-                <div>
-                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Nº de Páginas do Documento:</label>
-                    <input type="number" id="sim-paginas" min="1" value="1" class="w-full bg-gray-100 dark:bg-gray-800 border dark:border-gray-700 px-3 py-2 rounded-xl text-sm focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Direção da Tradução:</label>
-                    <select id="sim-idioma" class="w-full bg-gray-100 dark:bg-gray-800 border dark:border-gray-700 px-3 py-2 rounded-xl text-sm focus:outline-none">
-                        <option value="Inglês para Português">Inglês ➔ Português</option>
-                        <option value="Português para Inglês">Português ➔ Inglês</option>
-                    </select>
-                </div>
-                <button onclick="solicitarOrcamento()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl text-xs md:text-sm transition flex items-center justify-center gap-2 shadow-sm cursor-pointer">
-                    <i class="fa-solid fa-file-contract"></i> Solicitar Orçamento
-                </button>
-            </div>
-        </div>
-    </section>
-
     <!-- Categorias em Destaque -->
-    <section id="categorias-seccao" class="max-w-7xl mx-auto px-4 py-4">
+    <section id="categorias-seccao" class="max-w-7xl mx-auto px-4 py-8">
         <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Categorias em Destaque</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
             <button onclick="filtrarPorCategoria('ONGs')" class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
@@ -294,7 +252,7 @@
         </div>
     </div>
 
-    <!-- Rodapé -->
+    <!-- Rodapé (Com Tradução Ajuramentada) -->
     <footer class="bg-gray-900 text-gray-400 py-10 mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
@@ -308,7 +266,8 @@
                 <h4 class="text-white text-sm font-semibold mb-3">Para Candidatos</h4>
                 <ul class="space-y-2 text-xs">
                     <li><a href="#ultimas-vagas" class="hover:text-white transition">Procurar Vagas</a></li>
-                    <li><a href="#traducao-seccao" class="hover:text-white transition">Tradução Ajuramentada</a></li>
+                    <!-- Tradução Ajuramentada no Rodapé -->
+                    <li><a href="#" onclick="abrirPagina('traducao'); return false;" class="hover:text-emerald-400 text-emerald-500 transition font-medium"><i class="fa-solid fa-language mr-1"></i> Tradução Ajuramentada</a></li>
                     <li><a href="#" onclick="abrirPagina('curriculo'); return false;" class="hover:text-white transition">Como Criar um Currículo Vencedor</a></li>
                     <li><a href="#" onclick="abrirPagina('entrevista'); return false;" class="hover:text-white transition">Dominar a Entrevista</a></li>
                 </ul>
@@ -489,31 +448,26 @@
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function solicitarOrcamento() {
-            const paginas = document.getElementById('sim-paginas').value || 1;
-            const idioma = document.getElementById('sim-idioma').value;
-            
-            const modal = document.getElementById('modal-geral');
-            const conteudo = document.getElementById('conteudo-modal');
-            
-            conteudo.innerHTML = `
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Solicitação de Orçamento</h3>
-                <p class="mb-3">Simulação para <strong>${paginas} página(s)</strong> (${idioma}).</p>
-                <p>Para concluir o seu pedido de tradução ajuramentada, envie a cópia do seu documento para:</p>
-                <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-xl mt-3 text-xs space-y-1">
-                    <p><strong>Email:</strong> traducao@empregosmoz.com</p>
-                    <p><strong>Atendimento:</strong> Segunda a Sexta, 08h - 17h</p>
-                </div>
-            `;
-            modal.classList.remove('hidden');
-        }
-
         function abrirPagina(tipo) {
             const modal = document.getElementById('modal-geral');
             const conteudo = document.getElementById('conteudo-modal');
             let html = '';
 
-            if (tipo === 'privacidade') {
+            if (tipo === 'traducao') {
+                html = `
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-language text-emerald-600"></i> Tradução Ajuramentada (Inglês ⇄ Português)
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-3">
+                        Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal para processos de emprego e vistos?
+                    </p>
+                    <p class="mb-2 text-xs">Para solicitar o seu orçamento oficial, envie o documento legível para:</p>
+                    <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-xl text-xs space-y-1">
+                        <p><strong>Email:</strong> traducao@empregosmoz.com</p>
+                        <p><strong>Atendimento:</strong> Segunda a Sexta, 08h - 17h</p>
+                    </div>
+                `;
+            } else if (tipo === 'privacidade') {
                 html = `<h3 class="text-lg font-bold mb-2">Política de Privacidade</h3><p>O EmpregosMoz respeita a sua privacidade e protege os seus dados de candidatura.</p>`;
             } else if (tipo === 'sobre') {
                 html = `<h3 class="text-lg font-bold mb-2">Sobre o EmpregosMoz</h3><p>A plataforma líder de oportunidades e carreiras em Moçambique.</p>`;
