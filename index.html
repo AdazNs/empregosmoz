@@ -16,6 +16,11 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
 
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,55 +32,89 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-200">
 
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <!-- Header Principal -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50 transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
                 <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold text-blue-600 flex items-center gap-2">
-                        <i class="fa-solid fa-briefcase text-blue-600"></i>
+                    <a href="index.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2">
+                        <i class="fa-solid fa-briefcase"></i>
                         <span>Empregos<span class="text-emerald-500">Moz</span></span>
                     </a>
                 </div>
 
-                <nav class="hidden md:flex space-x-6 text-sm font-medium">
-                    <a href="index.html" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Vagas de Emprego</a>
-                    <a href="#categorias-seccao" class="text-gray-600 hover:text-blue-600 transition">Categorias</a>
-                    <a href="#traducao-seccao" class="text-emerald-600 font-semibold hover:text-emerald-700 transition flex items-center gap-1">
+                <!-- Navegação Desktop -->
+                <nav class="hidden lg:flex space-x-6 text-sm font-medium">
+                    <a href="index.html" class="text-blue-600 dark:text-blue-400 font-semibold border-b-2 border-blue-600 pb-1">Vagas</a>
+                    <a href="#categorias-seccao" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Categorias</a>
+                    <a href="#traducao-seccao" class="text-emerald-600 dark:text-emerald-400 font-semibold hover:opacity-85 transition flex items-center gap-1">
                         <i class="fa-solid fa-language"></i> Tradução Ajuramentada
                     </a>
-                    <a href="#ultimas-vagas" class="text-gray-600 hover:text-blue-600 transition">Recentes</a>
+                    <a href="#ultimas-vagas" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Recentes</a>
                 </nav>
 
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="#" onclick="alert('Funcionalidade de login em breve!'); return false;" class="text-sm font-medium text-gray-600 hover:text-blue-600">Entrar</a>
-                    <a href="#" onclick="alert('Para publicar vagas, contacte o suporte ou use o painel administrativo.'); return false;" class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition shadow-sm">
-                        + Publicar Vaga
-                    </a>
-                </div>
+                <!-- Botões à Direita (Modo Escuro + Menu de Traços Diferente) -->
+                <div class="flex items-center space-x-3">
+                    <!-- Botão Dark Mode -->
+                    <button onclick="toggleDarkMode()" aria-label="Alternar Tema" class="p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                        <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+                    </button>
 
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" aria-label="Abrir Menu" class="text-gray-600 focus:outline-none p-2">
-                        <i id="mobile-menu-icon" class="fa-solid fa-bars text-xl"></i>
+                    <!-- Botão Menu com Barras de Traços Diferente -->
+                    <button id="menu-drawer-btn" aria-label="Abrir Menu Lateral" class="bg-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400 p-2.5 rounded-xl hover:bg-blue-100 dark:hover:bg-gray-600 transition flex items-center gap-2 font-medium text-sm">
+                        <div class="space-y-1 w-5 flex flex-col items-end">
+                            <span class="block h-0.5 w-5 bg-current rounded-full"></span>
+                            <span class="block h-0.5 w-3.5 bg-current rounded-full"></span>
+                            <span class="block h-0.5 w-5 bg-current rounded-full"></span>
+                        </div>
+                        <span class="hidden sm:inline">Menu</span>
                     </button>
                 </div>
             </div>
         </div>
+    </header>
 
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-4 space-y-2">
-            <a href="index.html" class="block py-2 text-blue-600 font-semibold">Vagas de Emprego</a>
-            <a href="#categorias-seccao" class="block py-2 text-gray-600 hover:text-blue-600">Categorias</a>
-            <a href="#traducao-seccao" class="block py-2 text-emerald-600 font-semibold flex items-center gap-1"><i class="fa-solid fa-language"></i> Tradução Ajuramentada</a>
-            <a href="#ultimas-vagas" class="block py-2 text-gray-600 hover:text-blue-600">Recentes</a>
-            <hr class="my-2 border-gray-100">
-            <a href="#" class="block py-2 text-gray-600 hover:text-blue-600">Entrar</a>
-            <a href="#" class="block text-center bg-blue-600 text-white py-2 rounded-lg font-medium mt-2">
+    <!-- Gaveta do Menu Lateral (Sidebar Drawer) -->
+    <div id="drawer-overlay" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden transition-opacity"></div>
+    <div id="drawer-menu" class="fixed top-0 right-0 z-50 h-full w-80 bg-white dark:bg-gray-800 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col justify-between p-6">
+        <div>
+            <div class="flex items-center justify-between pb-6 border-b dark:border-gray-700">
+                <span class="text-xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2">
+                    <i class="fa-solid fa-bars-staggered"></i> Menu EmpregosMoz
+                </span>
+                <button id="drawer-close-btn" class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-xl p-2">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="py-6 space-y-4 text-sm font-medium">
+                <a href="index.html" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-600 dark:text-blue-400">
+                    <i class="fa-solid fa-house mr-2"></i> Página Inicial
+                </a>
+                <a href="#categorias-seccao" onclick="fecharDrawer()" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="fa-solid fa-layer-group mr-2"></i> Categorias de Vagas
+                </a>
+                <a href="#traducao-seccao" onclick="fecharDrawer()" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 text-emerald-600 dark:text-emerald-400">
+                    <i class="fa-solid fa-language mr-2"></i> Tradução Ajuramentada
+                </a>
+                <a href="#ultimas-vagas" onclick="fecharDrawer()" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="fa-solid fa-clock-rotate-left mr-2"></i> Vagas Recentes
+                </a>
+                <a href="#" onclick="alert('Funcionalidade de login em breve!'); return false;" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="fa-solid fa-user mr-2"></i> Entrar / Minha Conta
+                </a>
+            </div>
+        </div>
+        <div class="pt-6 border-t dark:border-gray-700">
+            <a href="#" onclick="alert('Para publicar vagas, contacte via WhatsApp ou suporte.'); return false;" class="block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-medium shadow-sm transition">
                 + Publicar Vaga
             </a>
         </div>
-    </header>
+    </div>
 
+    <!-- Hero Section -->
     <section class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 text-white py-12 lg:py-16 px-4">
         <div class="max-w-4xl mx-auto text-center space-y-4">
             <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">
@@ -85,24 +124,24 @@
                 Oportunidades de emprego diárias e serviços profissionais para impulsionar a sua carreira.
             </p>
 
-            <!-- Formulário de Busca Ativo -->
-            <form id="search-form" class="bg-white p-3 md:p-4 rounded-2xl shadow-xl flex flex-col md:flex-row gap-3 mt-6 text-gray-700">
-                <div class="flex-1 flex items-center bg-gray-100 px-3 py-2 rounded-xl">
+            <!-- Formulário de Busca -->
+            <form id="search-form" class="bg-white dark:bg-gray-800 p-3 md:p-4 rounded-2xl shadow-xl flex flex-col md:flex-row gap-3 mt-6 text-gray-700 dark:text-gray-200">
+                <div class="flex-1 flex items-center bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-xl">
                     <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2"></i>
-                    <input type="text" id="search-keyword" placeholder="Cargo, empresa ou palavra-chave..." class="bg-transparent w-full focus:outline-none text-sm">
+                    <input type="text" id="search-keyword" placeholder="Cargo, empresa ou palavra-chave..." class="bg-transparent w-full focus:outline-none text-sm dark:text-white">
                 </div>
 
-                <div class="flex-1 flex items-center bg-gray-100 px-3 py-2 rounded-xl">
+                <div class="flex-1 flex items-center bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-xl">
                     <i class="fa-solid fa-location-dot text-gray-400 mr-2"></i>
-                    <select id="search-location" class="bg-transparent w-full focus:outline-none text-sm text-gray-600">
-                        <option value="">Todas as Localizações</option>
-                        <option value="Maputo">Cidade de Maputo</option>
-                        <option value="Matola">Província de Maputo (Matola)</option>
-                        <option value="Beira">Sofala (Beira)</option>
-                        <option value="Nampula">Nampula</option>
-                        <option value="Tete">Tete</option>
-                        <option value="Pemba">Cabo Delgado (Pemba)</option>
-                        <option value="Remoto">Trabalho Remoto</option>
+                    <select id="search-location" class="bg-transparent w-full focus:outline-none text-sm text-gray-600 dark:text-gray-300">
+                        <option value="" class="dark:bg-gray-800">Todas as Localizações</option>
+                        <option value="Maputo" class="dark:bg-gray-800">Cidade de Maputo</option>
+                        <option value="Matola" class="dark:bg-gray-800">Província de Maputo (Matola)</option>
+                        <option value="Beira" class="dark:bg-gray-800">Sofala (Beira)</option>
+                        <option value="Nampula" class="dark:bg-gray-800">Nampula</option>
+                        <option value="Tete" class="dark:bg-gray-800">Tete</option>
+                        <option value="Pemba" class="dark:bg-gray-800">Cabo Delgado (Pemba)</option>
+                        <option value="Remoto" class="dark:bg-gray-800">Trabalho Remoto</option>
                     </select>
                 </div>
 
@@ -111,51 +150,76 @@
                     <span>Buscar Vagas</span>
                 </button>
             </form>
+
+            <!-- Filtros Rápidos por Tipo de Contrato (Inovação) -->
+            <div class="flex flex-wrap items-center justify-center gap-2 pt-3 text-xs">
+                <span class="text-blue-100 font-medium">Filtro Rápido:</span>
+                <button onclick="filtrarPorTipoContrato('Tempo Inteiro')" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition">Tempo Inteiro</button>
+                <button onclick="filtrarPorTipoContrato('Estágio')" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition">Estágios</button>
+                <button onclick="filtrarPorTipoContrato('Parcial')" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition">Part-time</button>
+                <button onclick="filtrarPorTipoContrato('Remoto')" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition">Remoto</button>
+            </div>
         </div>
     </section>
 
     <!-- Estatísticas -->
-    <section class="bg-white border-b border-gray-200 py-6">
+    <section class="bg-white dark:bg-gray-800 border-b dark:border-gray-700 py-6 transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
-                <p id="stat-vagas" class="text-2xl md:text-3xl font-bold text-blue-600">0</p>
-                <p class="text-xs text-gray-500">Vagas Ativas</p>
+                <p id="stat-vagas" class="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400">0</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Vagas Ativas</p>
             </div>
             <div>
-                <p id="stat-empresas" class="text-2xl md:text-3xl font-bold text-blue-600">0</p>
-                <p class="text-xs text-gray-500">Empresas Anunciantes</p>
+                <p id="stat-empresas" class="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400">0</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Empresas Anunciantes</p>
             </div>
             <div>
-                <p id="stat-candidatos" class="text-2xl md:text-3xl font-bold text-blue-600">100%</p>
-                <p class="text-xs text-gray-500">Gratuito para Candidatos</p>
+                <p id="stat-candidatos" class="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400">100%</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Gratuito para Candidatos</p>
             </div>
             <div>
-                <p class="text-2xl md:text-3xl font-bold text-blue-600">24/7</p>
-                <p class="text-xs text-gray-500">Atualizações Diárias</p>
+                <p class="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400">24/7</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Atualizações Diárias</p>
             </div>
         </div>
     </section>
 
-    <!-- Secção em Destaque: Tradução Ajuramentada -->
+    <!-- Secção em Destaque: Tradução Ajuramentada com Simulador Interativo -->
     <section id="traducao-seccao" class="max-w-7xl mx-auto px-4 py-8">
-        <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-3xl p-6 md:p-8 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="space-y-3 max-w-2xl">
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-3xl p-6 md:p-8 text-white shadow-lg flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div class="space-y-3 max-w-xl">
                 <span class="bg-emerald-500/40 text-emerald-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1">
                     <i class="fa-solid fa-certificate"></i> Serviço Profissional
                 </span>
                 <h2 class="text-2xl md:text-3xl font-bold">Tradução Ajuramentada de Documentos</h2>
                 <p class="text-emerald-100 text-sm md:text-base leading-relaxed">
-                    Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal para processos de emprego ou vistos em Moçambique e no estrangeiro? Garantimos rapidez e reconhecimento oficial.
+                    Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal para processos de emprego e vistos? Simule o seu pedido e envie direto para o nosso WhatsApp.
                 </p>
-                <div class="flex flex-wrap gap-3 pt-2 text-xs">
+                <div class="flex flex-wrap gap-3 pt-1 text-xs">
                     <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Inglês / Português</span>
-                    <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Outros Idiomas</span>
                     <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Entrega Rápida</span>
                 </div>
             </div>
-            <div>
-                <button onclick="abrirPagina('traducao')" class="bg-white text-emerald-800 hover:bg-emerald-50 font-semibold px-6 py-3.5 rounded-xl shadow-md transition whitespace-nowrap flex items-center gap-2 cursor-pointer">
-                    <i class="fa-solid fa-file-contract"></i> Solicitar Orçamento
+
+            <!-- Simulador Interativo de Tradução (Inovação) -->
+            <div class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-5 rounded-2xl shadow-xl w-full max-w-md space-y-3">
+                <h3 class="text-sm font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-2">
+                    <i class="fa-solid fa-calculator"></i> Simulador & Orçamento Rápido
+                </h3>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Nº de Páginas do Documento:</label>
+                    <input type="number" id="sim-paginas" min="1" value="1" class="w-full bg-gray-100 dark:bg-gray-800 border dark:border-gray-700 px-3 py-2 rounded-xl text-sm focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Direção da Tradução:</label>
+                    <select id="sim-idioma" class="w-full bg-gray-100 dark:bg-gray-800 border dark:border-gray-700 px-3 py-2 rounded-xl text-sm focus:outline-none">
+                        <option value="Inglês para Português">Inglês ➔ Português</option>
+                        <option value="Português para Inglês">Português ➔ Inglês</option>
+                        <option value="Outro Idioma">Outro Idioma (Francês/Espanhol)</option>
+                    </select>
+                </div>
+                <button onclick="enviarSimulacaoWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl text-xs md:text-sm transition flex items-center justify-center gap-2 shadow-sm cursor-pointer">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Solicitar Orçamento via WhatsApp
                 </button>
             </div>
         </div>
@@ -163,31 +227,31 @@
 
     <!-- Categorias em Destaque -->
     <section id="categorias-seccao" class="max-w-7xl mx-auto px-4 py-4">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">Categorias em Destaque</h2>
+        <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Categorias em Destaque</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-            <button onclick="filtrarPorCategoria('ONGs')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
-                <i class="fa-solid fa-hand-holding-heart text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
-                <h3 class="text-xs font-semibold text-gray-700">ONGs & Humanitário</h3>
+            <button onclick="filtrarPorCategoria('ONGs')" class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
+                <i class="fa-solid fa-hand-holding-heart text-2xl text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition"></i>
+                <h3 class="text-xs font-semibold text-gray-700 dark:text-gray-200">ONGs & Humanitário</h3>
             </button>
-            <button onclick="filtrarPorCategoria('Tecnologia')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
-                <i class="fa-solid fa-laptop-code text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
-                <h3 class="text-xs font-semibold text-gray-700">Tecnologia & TI</h3>
+            <button onclick="filtrarPorCategoria('Tecnologia')" class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
+                <i class="fa-solid fa-laptop-code text-2xl text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition"></i>
+                <h3 class="text-xs font-semibold text-gray-700 dark:text-gray-200">Tecnologia & TI</h3>
             </button>
-            <button onclick="filtrarPorCategoria('Finanças')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
-                <i class="fa-solid fa-calculator text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
-                <h3 class="text-xs font-semibold text-gray-700">Contabilidade & Finanças</h3>
+            <button onclick="filtrarPorCategoria('Finanças')" class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
+                <i class="fa-solid fa-calculator text-2xl text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition"></i>
+                <h3 class="text-xs font-semibold text-gray-700 dark:text-gray-200">Contabilidade & Finanças</h3>
             </button>
-            <button onclick="filtrarPorCategoria('Logística')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
-                <i class="fa-solid fa-truck-fast text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
-                <h3 class="text-xs font-semibold text-gray-700">Logística & Frota</h3>
+            <button onclick="filtrarPorCategoria('Logística')" class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
+                <i class="fa-solid fa-truck-fast text-2xl text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition"></i>
+                <h3 class="text-xs font-semibold text-gray-700 dark:text-gray-200">Logística & Frota</h3>
             </button>
-            <button onclick="filtrarPorCategoria('Administração')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
-                <i class="fa-solid fa-user-tie text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
-                <h3 class="text-xs font-semibold text-gray-700">Administração</h3>
+            <button onclick="filtrarPorCategoria('Administração')" class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
+                <i class="fa-solid fa-user-tie text-2xl text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition"></i>
+                <h3 class="text-xs font-semibold text-gray-700 dark:text-gray-200">Administração</h3>
             </button>
-            <button onclick="filtrarPorCategoria('Engenharia')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
-                <i class="fa-solid fa-toolbox text-2xl text-blue-600 mb-2 group-hover:scale-110 transition"></i>
-                <h3 class="text-xs font-semibold text-gray-700">Engenharia & Minas</h3>
+            <button onclick="filtrarPorCategoria('Engenharia')" class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
+                <i class="fa-solid fa-toolbox text-2xl text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition"></i>
+                <h3 class="text-xs font-semibold text-gray-700 dark:text-gray-200">Engenharia & Minas</h3>
             </button>
         </div>
     </section>
@@ -196,31 +260,36 @@
     <main id="ultimas-vagas" class="max-w-7xl mx-auto px-4 py-4 flex-grow w-full">
         <div class="flex justify-between items-center mb-6">
             <div>
-                <h2 id="titulo-seccao-vagas" class="text-2xl font-bold text-gray-900">Últimas Vagas Anunciadas</h2>
-                <p class="text-sm text-gray-500">Atualizado diariamente em Moçambique</p>
+                <h2 id="titulo-seccao-vagas" class="text-2xl font-bold text-gray-900 dark:text-white">Últimas Vagas Anunciadas</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Atualizado diariamente em Moçambique</p>
             </div>
-            <button onclick="reverterFiltros()" class="text-sm font-semibold text-blue-600 hover:underline hidden" id="btn-limpar-filtro">Ver todas</button>
+            <button onclick="reverterFiltros()" class="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline hidden" id="btn-limpar-filtro">Ver todas</button>
         </div>
 
         <div id="lista-vagas" class="space-y-4">
-            <p class="text-center text-gray-500 py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>A carregar vagas...</p>
+            <p class="text-center text-gray-500 dark:text-gray-400 py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>A carregar vagas...</p>
         </div>
 
-        <!-- Botão Carregar Mais Ativo -->
+        <!-- Botão Carregar Mais -->
         <div class="text-center mt-8" id="div-carregar-mais">
-            <button id="btn-carregar-mais" onclick="carregarMaisVagas()" class="inline-block bg-white border border-gray-300 text-gray-700 font-medium px-6 py-3 rounded-xl hover:bg-gray-50 transition shadow-sm cursor-pointer">
+            <button id="btn-carregar-mais" onclick="carregarMaisVagas()" class="inline-block bg-white dark:bg-gray-800 border dark:border-gray-700 text-gray-700 dark:text-gray-200 font-medium px-6 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition shadow-sm cursor-pointer">
                 Carregar mais vagas...
             </button>
         </div>
     </main>
 
+    <!-- Botão Flutuante do WhatsApp / Comunidade (Inovação) -->
+    <a href="https://wa.me/258848255417?text=Olá!%20Gostaria%20de%20entrar%20no%20canal%20de%20vagas%20do%20EmpregosMoz." target="_blank" aria-label="Canal WhatsApp" class="fixed bottom-6 right-6 z-40 bg-emerald-600 hover:bg-emerald-500 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-2xl transition hover:scale-110">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
     <!-- Modal Geral -->
     <div id="modal-geral" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="fecharModalGeral()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-lg">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="fecharModalGeral()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-lg">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div id="conteudo-modal" class="space-y-3 text-xs md:text-sm text-gray-700">
+            <div id="conteudo-modal" class="space-y-3 text-xs md:text-sm text-gray-700 dark:text-gray-200">
                 <!-- Conteúdo injetado via JS -->
             </div>
             <div class="mt-6 text-right">
@@ -259,10 +328,10 @@
                 </ul>
             </div>
             <div>
-                <h4 class="text-white text-sm font-semibold mb-3">Para Recrutadores</h4>
+                <h4 class="text-white text-sm font-semibold mb-3">Comunidade</h4>
                 <ul class="space-y-2 text-xs">
-                    <li><a href="#" onclick="alert('Funcionalidade em desenvolvimento'); return false;" class="hover:text-white transition">Publicar Anúncio</a></li>
-                    <li><a href="#" onclick="alert('Planos gratuitos ativos'); return false;" class="hover:text-white transition">Planos e Preços</a></li>
+                    <li><a href="https://wa.me/258848255417" target="_blank" class="hover:text-white transition flex items-center gap-1"><i class="fa-brands fa-whatsapp text-emerald-400"></i> Grupo WhatsApp</a></li>
+                    <li><a href="#" onclick="alert('Canal Telegram em breve'); return false;" class="hover:text-white transition flex items-center gap-1"><i class="fa-brands fa-telegram text-blue-400"></i> Canal Telegram</a></li>
                 </ul>
             </div>
         </div>
@@ -278,6 +347,47 @@
 
         let todasVagas = [];
         let limiteExibicao = 5;
+
+        // Gestão da Gaveta do Menu Lateral
+        const drawerMenu = document.getElementById('drawer-menu');
+        const drawerOverlay = document.getElementById('drawer-overlay');
+        const menuDrawerBtn = document.getElementById('menu-drawer-btn');
+        const drawerCloseBtn = document.getElementById('drawer-close-btn');
+
+        function abrirDrawer() {
+            drawerMenu.classList.remove('translate-x-full');
+            drawerOverlay.classList.remove('hidden');
+        }
+
+        function fecharDrawer() {
+            drawerMenu.classList.add('translate-x-full');
+            drawerOverlay.classList.add('hidden');
+        }
+
+        menuDrawerBtn.addEventListener('click', abrirDrawer);
+        drawerCloseBtn.addEventListener('click', fecharDrawer);
+        drawerOverlay.addEventListener('click', fecharDrawer);
+
+        // Modo Escuro (Dark Mode)
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            const icon = document.getElementById('theme-icon');
+            if (document.documentElement.classList.contains('dark')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Verificar preferência guardada de tema
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+        }
 
         async function carregarPortal() {
             try {
@@ -309,14 +419,14 @@
             const btnCarregarMais = document.getElementById('div-carregar-mais');
 
             if (vagas.length === 0) {
-                listaVagas.innerHTML = '<p class="text-gray-500 text-center py-6">Nenhuma vaga encontrada com estes critérios.</p>';
+                listaVagas.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-6">Nenhuma vaga encontrada com estes critérios.</p>';
                 if(btnCarregarMais) btnCarregarMais.style.display = 'none';
                 return;
             }
 
             const vagasParaMostrar = filtrarAteLimite ? vagas.slice(0, limiteExibicao) : vagas;
 
-            listaVagas.innerHTML = vagasParaMostrar.map(vaga => {
+            listaVagas.innerHTML = vagasParaMostrar.map((vaga, index) => {
                 const id = vaga.id || '#';
                 const titulo = vaga.titulo || vaga.title || 'Vaga Sem Título';
                 const empresa = vaga.empresa || vaga.company || 'Empresa Privada';
@@ -336,29 +446,33 @@
                     }
                 }
 
+                // Contador simulado de visualizações por popularidade
+                const visualizacoes = (index + 4) * 7;
+
                 return `
-                    <div class="bg-white p-5 rounded-2xl border ${seloRecente ? 'border-emerald-300 shadow-sm bg-gradient-to-r from-emerald-50/20 to-white' : 'border-gray-200'} hover:border-blue-400 hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border ${seloRecente ? 'border-emerald-300 dark:border-emerald-600 shadow-sm bg-gradient-to-r from-emerald-50/20 to-white dark:from-emerald-950/20 dark:to-gray-800' : 'border-gray-200 dark:border-gray-700'} hover:border-blue-400 hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg flex-shrink-0">
+                            <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-lg flex-shrink-0">
                                 ${inicial}
                             </div>
                             <div>
                                 <div class="flex items-center gap-2 flex-wrap mb-1">
-                                    <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white hover:text-blue-600">
                                         <a href="candidatar.html?id=${id}">${titulo}</a>
                                     </h3>
                                     ${seloRecente}
                                 </div>
-                                <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500 mt-2">
+                                <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500 dark:text-gray-400 mt-2">
                                     <span><i class="fa-solid fa-building mr-1"></i> ${empresa}</span>
                                     <span><i class="fa-solid fa-location-dot mr-1"></i> ${localizacao}</span>
                                     <span><i class="fa-solid fa-clock mr-1"></i> ${tipoTrabalho}</span>
+                                    <span class="text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-eye mr-1"></i> ${visualizacoes} visualizações hoje</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-0 border-gray-100">
-                            <span class="text-xs text-gray-500">Prazo: ${prazo}</span>
-                            <a href="candidatar.html?id=${id}" class="bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition">
+                        <div class="flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-0 border-gray-100 dark:border-gray-700">
+                            <span class="text-xs text-gray-500 dark:text-gray-400">Prazo: ${prazo}</span>
+                            <a href="candidatar.html?id=${id}" class="bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition">
                                 Candidatar-se
                             </a>
                         </div>
@@ -378,69 +492,40 @@
             renderizarVagas(todasVagas);
         }
 
+        function filtrarPorTipoContrato(tipo) {
+            const filtradas = todasVagas.filter(v => {
+                const tipoVaga = v.tipo_trabalho ? v.tipo_trabalho.toLowerCase() : '';
+                return tipoVaga.includes(tipo.toLowerCase());
+            });
+            document.getElementById('titulo-seccao-vagas').textContent = `Vagas: ${tipo}`;
+            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
+            renderizarVagas(filtradas, false);
+            document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function enviarSimulacaoWhatsApp() {
+            const paginas = document.getElementById('sim-paginas').value || 1;
+            const idioma = document.getElementById('sim-idioma').value;
+            const texto = `Olá! Gostaria de solicitar um orçamento para tradução ajuramentada de ${paginas} página(s) (${idioma}).`;
+            const urlWhatsApp = `https://wa.me/258848255417?text=${encodeURIComponent(texto)}`;
+            window.open(urlWhatsApp, '_blank');
+        }
+
         function abrirPagina(tipo) {
             const modal = document.getElementById('modal-geral');
             const conteudo = document.getElementById('conteudo-modal');
-
             let html = '';
 
-            if (tipo === 'traducao') {
-                html = `
-                    <h3 class="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-language text-emerald-600"></i> Tradução Ajuramentada em Moçambique
-                    </h3>
-                    <p class="text-gray-600 mb-4">
-                        Precisa de traduzir documentos oficiais com fé pública para processos de emprego, vistos, universidades ou concursos públicos? Estamos aqui para ajudar.
-                    </p>
-                    <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl space-y-3">
-                        <h4 class="font-semibold text-emerald-900 text-sm">Como solicitar um orçamento rápido:</h4>
-                        <ol class="list-decimal pl-4 space-y-1 text-xs text-emerald-800">
-                            <li>Envie uma cópia legível do documento via WhatsApp ou E-mail.</li>
-                            <li>Indique os idiomas de origem e de destino (Ex: Inglês para Português).</li>
-                            <li>Receba o orçamento e prazo de entrega em poucos minutos.</li>
-                        </ol>
-                    </div>
-                    <div class="mt-4 space-y-2 text-xs bg-gray-50 p-4 rounded-xl">
-                        <p><i class="fa-solid fa-envelope text-blue-600 mr-2"></i><strong>Email:</strong> traducao@empregosmoz.com</p>
-                        <p><i class="fa-brands fa-whatsapp text-emerald-600 mr-2 text-base"></i><strong>WhatsApp:</strong> <a href="https://wa.me/258848255417" target="_blank" class="text-blue-600 underline font-semibold">+258 84 82 55 417</a></p>
-                    </div>
-                `;
-            } else if (tipo === 'privacidade') {
-                html = `
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Política de Privacidade para EmpregosMoz</h3>
-                    <p>A sua privacidade é importante para nós. No <strong>EmpregosMoz</strong>, recolhemos e utilizamos informações conforme descrito abaixo para garantir o funcionamento do portal.</p>
-                `;
+            if (tipo === 'privacidade') {
+                html = `<h3 class="text-lg font-bold mb-2">Política de Privacidade</h3><p>O EmpregosMoz respeita a sua privacidade e protege os seus dados de candidatura.</p>`;
             } else if (tipo === 'sobre') {
-                html = `
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Sobre o EmpregosMoz</h3>
-                    <p>O <strong>EmpregosMoz</strong> é a plataforma líder dedicada a ligar profissionais qualificados a oportunidades de emprego, estágios e serviços de carreira em Moçambique.</p>
-                `;
+                html = `<h3 class="text-lg font-bold mb-2">Sobre o EmpregosMoz</h3><p>A plataforma líder de oportunidades e carreiras em Moçambique.</p>`;
             } else if (tipo === 'contacto') {
-                html = `
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Contacto</h3>
-                    <p>Entre em contacto connosco para suporte, parcerias ou serviços de tradução:</p>
-                    <div class="bg-gray-50 p-4 rounded-xl mt-3 space-y-2 text-xs">
-                        <p><i class="fa-solid fa-envelope text-blue-600 mr-2"></i><strong>Email:</strong> suporte@empregosmoz.com</p>
-                        <p><i class="fa-brands fa-whatsapp text-emerald-600 mr-2 text-base"></i><strong>WhatsApp:</strong> <a href="https://wa.me/258848255417" target="_blank" class="text-blue-600 underline font-semibold">+258 84 82 55 417</a></p>
-                        <p><i class="fa-solid fa-location-dot text-blue-600 mr-2"></i><strong>Localização:</strong> Maputo / Beira, Moçambique</p>
-                    </div>
-                `;
+                html = `<h3 class="text-lg font-bold mb-2">Contacto</h3><p>WhatsApp: +258 84 82 55 417 | Email: suporte@empregosmoz.com</p>`;
             } else if (tipo === 'curriculo') {
-                html = `
-                    <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-file-lines text-blue-600"></i> Como Criar um Currículo Vencedor</h3>
-                    <ul class="space-y-2 list-disc pl-4 text-xs">
-                        <li><strong>Seja Conciso:</strong> O CV ideal em Moçambique deve ter no máximo 2 páginas.</li>
-                        <li><strong>Informações de Contacto:</strong> Certifique-se de que o seu número e email estão ativos.</li>
-                    </ul>
-                `;
+                html = `<h3 class="text-lg font-bold mb-2">Como Criar um Currículo</h3><p>Mantenha conciso, foque em resultados e envie sempre em formato PDF.</p>`;
             } else if (tipo === 'entrevista') {
-                html = `
-                    <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-handshake text-emerald-600"></i> Dicas para a Entrevista de Emprego</h3>
-                    <ul class="space-y-2 list-disc pl-4 text-xs">
-                        <li><strong>Pesquise a Empresa:</strong> Conheça a missão e projetos recentes da organização.</li>
-                        <li><strong>Pontualidade:</strong> Chegue 10 a 15 minutos antes da hora marcada.</li>
-                    </ul>
-                `;
+                html = `<h3 class="text-lg font-bold mb-2">Dicas para Entrevista</h3><p>Pesquise sobre a empresa e chegue sempre com 15 minutos de antecedência.</p>`;
             }
 
             conteudo.innerHTML = html;
@@ -465,18 +550,15 @@
             document.getElementById('titulo-seccao-vagas').textContent = `Resultados da Busca (${filtradas.length})`;
             document.getElementById('btn-limpar-filtro').classList.remove('hidden');
             renderizarVagas(filtradas, false);
-            
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         });
 
         function filtrarPorCategoria(categoria) {
             const termoBusca = categoria.toLowerCase();
-            
             const filtradas = todasVagas.filter(v => {
                 const catVaga = v.categoria ? v.categoria.toLowerCase() : '';
                 const tituloVaga = v.titulo ? v.titulo.toLowerCase() : '';
                 const descVaga = v.descricao ? v.descricao.toLowerCase() : '';
-
                 return catVaga.includes(termoBusca) || tituloVaga.includes(termoBusca) || descVaga.includes(termoBusca);
             });
 
@@ -496,18 +578,6 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             carregarPortal();
-
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('mobile-menu-icon');
-
-            if (btn && menu && icon) {
-                btn.addEventListener('click', () => {
-                    menu.classList.toggle('hidden');
-                    icon.classList.toggle('fa-bars');
-                    icon.classList.toggle('fa-xmark');
-                });
-            }
         });
     </script>
 </body>
