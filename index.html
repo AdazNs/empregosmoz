@@ -297,16 +297,30 @@
                 const prazo = vaga.prazo || 'Aberto';
                 const inicial = empresa.substring(0, 3).toUpperCase();
 
+                // Destaque para vagas recentes (menos de 48 horas)
+                let seloRecente = '';
+                if (vaga.created_at) {
+                    const dataCriacao = new Date(vaga.created_at);
+                    const agora = new Date();
+                    const horasDiferenca = Math.abs(agora - dataCriacao) / 36e5; // conversão para horas
+                    if (horasDiferenca <= 48) {
+                        seloRecente = '<span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide inline-flex items-center gap-1"><i class="fa-solid fa-fire text-emerald-500"></i> Novo</span>';
+                    }
+                }
+
                 return `
-                    <div class="bg-white p-5 rounded-2xl border border-gray-200 hover:border-blue-400 hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="bg-white p-5 rounded-2xl border ${seloRecente ? 'border-emerald-300 shadow-sm bg-gradient-to-r from-emerald-50/20 to-white' : 'border-gray-200'} hover:border-blue-400 hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg flex-shrink-0">
                                 ${inicial}
                             </div>
                             <div>
-                                <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600">
-                                    <a href="candidatar.html?id=${id}">${titulo}</a>
-                                </h3>
+                                <div class="flex items-center gap-2 flex-wrap mb-1">
+                                    <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600">
+                                        <a href="candidatar.html?id=${id}">${titulo}</a>
+                                    </h3>
+                                    ${seloRecente}
+                                </div>
                                 <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500 mt-2">
                                     <span><i class="fa-solid fa-building mr-1"></i> ${empresa}</span>
                                     <span><i class="fa-solid fa-location-dot mr-1"></i> ${localizacao}</span>
