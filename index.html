@@ -46,7 +46,7 @@
                     </a>
                 </div>
 
-                <!-- Navegação Desktop (Sem Tradução Ajuramentada no topo) -->
+                <!-- Navegação Desktop -->
                 <nav class="hidden lg:flex space-x-6 text-sm font-medium">
                     <a href="index.html" class="text-blue-600 dark:text-blue-400 font-semibold border-b-2 border-blue-600 pb-1">Vagas</a>
                     <a href="#categorias-seccao" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Categorias</a>
@@ -74,7 +74,7 @@
         </div>
     </header>
 
-    <!-- Gaveta do Menu Lateral (Sidebar Drawer com Tradução Ajuramentada) -->
+    <!-- Gaveta do Menu Lateral (Sidebar Drawer) -->
     <div id="drawer-overlay" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden transition-opacity"></div>
     <div id="drawer-menu" class="fixed top-0 right-0 z-50 h-full w-80 bg-white dark:bg-gray-800 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col justify-between p-6">
         <div>
@@ -106,7 +106,7 @@
             </div>
         </div>
         <div class="pt-6 border-t dark:border-gray-700">
-            <a href="#" onclick="alert('Para publicar vagas, contacte o suporte.'); return false;" class="block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-medium shadow-sm transition">
+            <a href="https://wa.me/258848255417?text=Olá!%20Gostaria%20de%20publicar%20uma%20vaga." target="_blank" class="block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-medium shadow-sm transition">
                 + Publicar Vaga
             </a>
         </div>
@@ -252,7 +252,7 @@
         </div>
     </div>
 
-    <!-- Rodapé (Com Tradução Ajuramentada) -->
+    <!-- Rodapé -->
     <footer class="bg-gray-900 text-gray-400 py-10 mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
@@ -266,7 +266,6 @@
                 <h4 class="text-white text-sm font-semibold mb-3">Para Candidatos</h4>
                 <ul class="space-y-2 text-xs">
                     <li><a href="#ultimas-vagas" class="hover:text-white transition">Procurar Vagas</a></li>
-                    <!-- Tradução Ajuramentada no Rodapé -->
                     <li><a href="#" onclick="abrirPagina('traducao'); return false;" class="hover:text-emerald-400 text-emerald-500 transition font-medium"><i class="fa-solid fa-language mr-1"></i> Tradução Ajuramentada</a></li>
                     <li><a href="#" onclick="abrirPagina('curriculo'); return false;" class="hover:text-white transition">Como Criar um Currículo Vencedor</a></li>
                     <li><a href="#" onclick="abrirPagina('entrevista'); return false;" class="hover:text-white transition">Dominar a Entrevista</a></li>
@@ -277,7 +276,7 @@
                 <ul class="space-y-2 text-xs">
                     <li><a href="#" onclick="abrirPagina('sobre'); return false;" class="hover:text-white transition">Sobre Nós</a></li>
                     <li><a href="#" onclick="abrirPagina('privacidade'); return false;" class="hover:text-white transition">Política de Privacidade</a></li>
-                    <li><a href="#" onclick="abrirPagina('contacto'); return false;" class="hover:text-white transition">Contacto</a></li>
+                    <li><a href="#" onclick="abrirPagina('contacto'); return false;" class="hover:text-white transition">Contacto & Suporte</a></li>
                 </ul>
             </div>
         </div>
@@ -458,12 +457,12 @@
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
                         <i class="fa-solid fa-language text-emerald-600"></i> Tradução Ajuramentada (Inglês ⇄ Português)
                     </h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-3">
+                    <p class="text-gray-600 dark:text-gray-300 mb-3 text-xs md:text-sm">
                         Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal para processos de emprego e vistos?
                     </p>
-                    <p class="mb-2 text-xs">Para solicitar o seu orçamento oficial, envie o documento legível para:</p>
-                    <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-xl text-xs space-y-1">
+                    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-xl text-xs space-y-2">
                         <p><strong>Email:</strong> traducao@empregosmoz.com</p>
+                        <p><strong>WhatsApp / Chamadas:</strong> <a href="https://wa.me/258848255417" target="_blank" class="text-emerald-600 dark:text-emerald-400 font-semibold underline">+258 84 82 55 417</a></p>
                         <p><strong>Atendimento:</strong> Segunda a Sexta, 08h - 17h</p>
                     </div>
                 `;
@@ -472,7 +471,15 @@
             } else if (tipo === 'sobre') {
                 html = `<h3 class="text-lg font-bold mb-2">Sobre o EmpregosMoz</h3><p>A plataforma líder de oportunidades e carreiras em Moçambique.</p>`;
             } else if (tipo === 'contacto') {
-                html = `<h3 class="text-lg font-bold mb-2">Contacto</h3><p>Email: suporte@empregosmoz.com</p>`;
+                html = `
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Contacto & Suporte</h3>
+                    <p class="text-xs md:text-sm text-gray-600 dark:text-gray-300 mb-3">Entre em contacto connosco para dúvidas, suporte ou envio de propostas:</p>
+                    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-xl text-xs space-y-2">
+                        <p><i class="fa-solid fa-envelope text-blue-600 mr-2"></i><strong>Email:</strong> suporte@empregosmoz.com</p>
+                        <p><i class="fa-brands fa-whatsapp text-emerald-600 mr-2 text-base"></i><strong>WhatsApp / Chamadas:</strong> <a href="https://wa.me/258848255417" target="_blank" class="text-blue-600 dark:text-blue-400 font-semibold underline">+258 84 82 55 417</a></p>
+                        <p><i class="fa-solid fa-location-dot text-blue-600 mr-2"></i><strong>Localização:</strong> Maputo / Beira, Moçambique</p>
+                    </div>
+                `;
             } else if (tipo === 'curriculo') {
                 html = `<h3 class="text-lg font-bold mb-2">Como Criar um Currículo</h3><p>Mantenha conciso, foque em resultados e envie sempre em formato PDF.</p>`;
             } else if (tipo === 'entrevista') {
