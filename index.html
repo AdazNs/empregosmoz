@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EmpregosMoz - O Seu Portal de Emprego e Serviços em Moçambique</title>
+    <title>EmpregosMoz - O Seu Portal de Emprego e Serviços em Maputo, Moçambique</title>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9QNPMMY82T"></script>
@@ -116,10 +116,10 @@
     <section class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 text-white py-12 lg:py-16 px-4">
         <div class="max-w-4xl mx-auto text-center space-y-4">
             <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">
-                Encontre as Melhores Vagas em Moçambique
+                Encontre Vagas em Maputo, Moçambique
             </h1>
             <p class="text-blue-100 text-base md:text-lg max-w-2xl mx-auto">
-                Oportunidades de emprego diárias e serviços profissionais para impulsionar a sua carreira.
+                Oportunidades de emprego diárias e serviços profissionais em Maputo para impulsionar a sua carreira.
             </p>
 
             <!-- Formulário de Busca -->
@@ -132,14 +132,7 @@
                 <div class="flex-1 flex items-center bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-xl">
                     <i class="fa-solid fa-location-dot text-gray-400 mr-2"></i>
                     <select id="search-location" class="bg-transparent w-full focus:outline-none text-sm text-gray-600 dark:text-gray-300">
-                        <option value="" class="dark:bg-gray-800">Todas as Localizações</option>
-                        <option value="Maputo" class="dark:bg-gray-800">Cidade de Maputo</option>
-                        <option value="Matola" class="dark:bg-gray-800">Província de Maputo (Matola)</option>
-                        <option value="Beira" class="dark:bg-gray-800">Sofala (Beira)</option>
-                        <option value="Nampula" class="dark:bg-gray-800">Nampula</option>
-                        <option value="Tete" class="dark:bg-gray-800">Tete</option>
-                        <option value="Pemba" class="dark:bg-gray-800">Cabo Delgado (Pemba)</option>
-                        <option value="Remoto" class="dark:bg-gray-800">Trabalho Remoto</option>
+                        <option value="Maputo" class="dark:bg-gray-800">Maputo, Moçambique</option>
                     </select>
                 </div>
 
@@ -217,8 +210,8 @@
     <main id="ultimas-vagas" class="max-w-7xl mx-auto px-4 py-4 flex-grow w-full">
         <div class="flex justify-between items-center mb-6">
             <div>
-                <h2 id="titulo-seccao-vagas" class="text-2xl font-bold text-gray-900 dark:text-white">Últimas Vagas Anunciadas</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Atualizado diariamente em Moçambique</p>
+                <h2 id="titulo-seccao-vagas" class="text-2xl font-bold text-gray-900 dark:text-white">Últimas Vagas em Maputo</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Atualizado diariamente em Maputo, Moçambique</p>
             </div>
             <button onclick="reverterFiltros()" class="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline hidden" id="btn-limpar-filtro">Ver todas</button>
         </div>
@@ -252,15 +245,15 @@
         </div>
     </div>
 
-    <!-- Rodapé -->
+    <!-- Rodapé Completo -->
     <footer class="bg-gray-900 text-gray-400 py-10 mt-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
                 <a href="index.html" class="text-2xl font-bold text-white flex items-center gap-2 mb-3">
                     <i class="fa-solid fa-briefcase text-blue-500"></i>
                     <span>Empregos<span class="text-emerald-500">Moz</span></span>
                 </a>
-                <p class="text-xs leading-relaxed">O portal líder em oportunidades de emprego, estágios e carreiras em Moçambique.</p>
+                <p class="text-xs leading-relaxed">O portal líder em oportunidades de emprego, estágios e carreiras em Maputo, Moçambique.</p>
             </div>
             <div>
                 <h4 class="text-white text-sm font-semibold mb-3">Para Candidatos</h4>
@@ -279,9 +272,16 @@
                     <li><a href="#" onclick="abrirPagina('contacto'); return false;" class="hover:text-white transition">Contacto & Suporte</a></li>
                 </ul>
             </div>
+            <div>
+                <h4 class="text-white text-sm font-semibold mb-3">Para Recrutadores</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="https://wa.me/258848255417?text=Olá!%20Gostaria%20de%20anunciar%20uma%20vaga." target="_blank" class="hover:text-white transition">Publicar Anúncio</a></li>
+                    <li><a href="#" onclick="alert('Planos gratuitos ativos'); return false;" class="hover:text-white transition">Planos e Preços</a></li>
+                </ul>
+            </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
-            &copy; 2026 EmpregosMoz. Todos os direitos reservados. Moçambique.
+            &copy; 2026 EmpregosMoz. Todos os direitos reservados. Maputo, Moçambique.
         </div>
     </footer>
 
@@ -375,7 +375,7 @@
                 const id = vaga.id || '#';
                 const titulo = vaga.titulo || vaga.title || 'Vaga Sem Título';
                 const empresa = vaga.empresa || vaga.company || 'Empresa Privada';
-                const localizacao = vaga.localizacao || vaga.cidade || 'Moçambique';
+                const localizacao = vaga.localizacao || vaga.cidade || 'Maputo';
                 const tipoTrabalho = vaga.tipo_trabalho || 'Tempo Inteiro';
                 const prazo = vaga.prazo || 'Aberto';
                 const inicial = empresa.substring(0, 3).toUpperCase();
@@ -441,7 +441,7 @@
                 const tipoVaga = v.tipo_trabalho ? v.tipo_trabalho.toLowerCase() : '';
                 return tipoVaga.includes(tipo.toLowerCase());
             });
-            document.getElementById('titulo-seccao-vagas').textContent = `Vagas: ${tipo}`;
+            document.getElementById('titulo-seccao-vagas').textContent = `Vagas em Maputo: ${tipo}`;
             document.getElementById('btn-limpar-filtro').classList.remove('hidden');
             renderizarVagas(filtradas, false);
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
@@ -458,30 +458,30 @@
                         <i class="fa-solid fa-language text-emerald-600"></i> Tradução Ajuramentada (Inglês ⇄ Português)
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300 mb-3 text-xs md:text-sm">
-                        Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal para processos de emprego e vistos?
+                        Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal em Maputo para processos de emprego e vistos?
                     </p>
                     <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-xl text-xs space-y-2">
                         <p><strong>Email:</strong> traducao@empregosmoz.com</p>
                         <p><strong>WhatsApp / Chamadas:</strong> <a href="https://wa.me/258848255417" target="_blank" class="text-emerald-600 dark:text-emerald-400 font-semibold underline">+258 84 82 55 417</a></p>
-                        <p><strong>Atendimento:</strong> Segunda a Sexta, 08h - 17h</p>
+                        <p><strong>Atendimento:</strong> Maputo, Segunda a Sexta, 08h - 17h</p>
                     </div>
                 `;
             } else if (tipo === 'privacidade') {
-                html = `<h3 class="text-lg font-bold mb-2">Política de Privacidade</h3><p>O EmpregosMoz respeita a sua privacidade e protege os seus dados de candidatura.</p>`;
+                html = `<h3 class="text-lg font-bold mb-2">Política de Privacidade</h3><p>O EmpregosMoz respeita a sua privacidade e protege os seus dados de candidatura em Maputo.</p>`;
             } else if (tipo === 'sobre') {
-                html = `<h3 class="text-lg font-bold mb-2">Sobre o EmpregosMoz</h3><p>A plataforma líder de oportunidades e carreiras em Moçambique.</p>`;
+                html = `<h3 class="text-lg font-bold mb-2">Sobre o EmpregosMoz</h3><p>A plataforma líder de oportunidades e carreiras sediada em Maputo, Moçambique.</p>`;
             } else if (tipo === 'contacto') {
                 html = `
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Contacto & Suporte</h3>
-                    <p class="text-xs md:text-sm text-gray-600 dark:text-gray-300 mb-3">Entre em contacto connosco para dúvidas, suporte ou envio de propostas:</p>
+                    <p class="text-xs md:text-sm text-gray-600 dark:text-gray-300 mb-3">Entre em contacto connosco em Maputo para dúvidas, suporte ou envio de propostas:</p>
                     <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-xl text-xs space-y-2">
                         <p><i class="fa-solid fa-envelope text-blue-600 mr-2"></i><strong>Email:</strong> suporte@empregosmoz.com</p>
                         <p><i class="fa-brands fa-whatsapp text-emerald-600 mr-2 text-base"></i><strong>WhatsApp / Chamadas:</strong> <a href="https://wa.me/258848255417" target="_blank" class="text-blue-600 dark:text-blue-400 font-semibold underline">+258 84 82 55 417</a></p>
-                        <p><i class="fa-solid fa-location-dot text-blue-600 mr-2"></i><strong>Localização:</strong> Maputo / Beira, Moçambique</p>
+                        <p><i class="fa-solid fa-location-dot text-blue-600 mr-2"></i><strong>Localização:</strong> Maputo, Moçambique</p>
                     </div>
                 `;
             } else if (tipo === 'curriculo') {
-                html = `<h3 class="text-lg font-bold mb-2">Como Criar um Currículo</h3><p>Mantenha conciso, foque em resultados e envie sempre em formato PDF.</p>`;
+                html = `<h3 class="text-lg font-bold mb-2">Como Criar um Currículo</h3><p>Mantenha conciso, foque em resultados e envie sempre em formato PDF para as vagas em Maputo.</p>`;
             } else if (tipo === 'entrevista') {
                 html = `<h3 class="text-lg font-bold mb-2">Dicas para Entrevista</h3><p>Pesquise sobre a empresa e chegue sempre com 15 minutos de antecedência.</p>`;
             }
@@ -497,15 +497,13 @@
         document.getElementById('search-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const termo = document.getElementById('search-keyword').value.toLowerCase();
-            const local = document.getElementById('search-location').value.toLowerCase();
 
             const filtradas = todasVagas.filter(v => {
                 const matchTermo = !termo || (v.titulo && v.titulo.toLowerCase().includes(termo)) || (v.empresa && v.empresa.toLowerCase().includes(termo));
-                const matchLocal = !local || (v.localizacao && v.localizacao.toLowerCase().includes(local));
-                return matchTermo && matchLocal;
+                return matchTermo;
             });
 
-            document.getElementById('titulo-seccao-vagas').textContent = `Resultados da Busca (${filtradas.length})`;
+            document.getElementById('titulo-seccao-vagas').textContent = `Resultados da Busca em Maputo (${filtradas.length})`;
             document.getElementById('btn-limpar-filtro').classList.remove('hidden');
             renderizarVagas(filtradas, false);
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
@@ -520,7 +518,7 @@
                 return catVaga.includes(termoBusca) || tituloVaga.includes(termoBusca) || descVaga.includes(termoBusca);
             });
 
-            document.getElementById('titulo-seccao-vagas').textContent = `Vagas em: ${categoria}`;
+            document.getElementById('titulo-seccao-vagas').textContent = `Vagas em Maputo: ${categoria}`;
             document.getElementById('btn-limpar-filtro').classList.remove('hidden');
             renderizarVagas(filtradas, false);
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
@@ -528,7 +526,7 @@
 
         function reverterFiltros() {
             limiteExibicao = 5;
-            document.getElementById('titulo-seccao-vagas').textContent = 'Últimas Vagas Anunciadas';
+            document.getElementById('titulo-seccao-vagas').textContent = 'Últimas Vagas em Maputo';
             document.getElementById('btn-limpar-filtro').classList.add('hidden');
             document.getElementById('search-form').reset();
             renderizarVagas(todasVagas);
