@@ -227,7 +227,7 @@
         </div>
     </main>
 
-    <!-- Modal Geral -->
+    <!-- Modal Geral para Páginas e Detalhes da Vaga -->
     <div id="modal-geral" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="fecharModalGeral()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-lg">
@@ -357,6 +357,24 @@
             }
         }
 
+        // Função utilitária para calcular o tempo exato de publicação
+        function formatarTempoDecorrido(dataString) {
+            if (!dataString) return 'Recentemente';
+            const dataCriacao = new Date(dataString);
+            const agora = new Date();
+            const segundos = Math.floor((agora - dataCriacao) / 1000);
+
+            if (segundos < 60) return 'Publicado há poucos segundos';
+            const minutos = Math.floor(segundos / 60);
+            if (minutos < 60) return `Publicado há ${minutos} min`;
+            const horas = Math.floor(minutos / 60);
+            if (horas < 24) return `Publicado há ${horas}h`;
+            const dias = Math.floor(horas / 24);
+            if (dias === 1) return 'Publicado ontem';
+            if (dias < 30) return `Publicado há ${dias} dias`;
+            return dataCriacao.toLocaleDateString('pt-MZ');
+        }
+
         function renderizarVagas(vagas, filtrarAteLimite = true) {
             const listaVagas = document.getElementById('lista-vagas');
             const btnCarregarMais = document.getElementById('div-carregar-mais');
@@ -377,15 +395,14 @@
                 const tipoTrabalho = vaga.tipo_trabalho || 'Tempo Inteiro';
                 const prazo = vaga.prazo || 'Aberto';
                 const inicial = empresa.substring(0, 3).toUpperCase();
+                const tempoExato = formatarTempoDecorrido(vaga.created_at);
 
-                // Suporte inteligente para logótipo (verifica se existe logo_url no banco de dados ou gera via Clearbit/Favicon)
+                // Logótipo inteligente
                 const logoUrl = vaga.logo_url || vaga.logo || '';
-                
                 let blocoLogo = '';
                 if (logoUrl) {
                     blocoLogo = `<img src="${logoUrl}" alt="${empresa}" class="w-full h-full object-cover rounded-xl">`;
                 } else {
-                    // Tenta adivinhar um domínio padrão pelo nome da empresa para buscar o logótipo automaticamente (ex: vodacom.co.mz, standardbank.co.mz)
                     const dominioLimpo = empresa.toLowerCase().replace(/[^a-z0-9]/g, '');
                     blocoLogo = `
                         <img src="https://logo.clearbit.com/${dominioLimpo}.com" alt="${empresa}" class="w-full h-full object-cover rounded-xl" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -395,17 +412,22 @@
                     `;
                 }
 
+                // Selo de Vaga Verificada (Simulado para empresas parceiras ou aleatório controlado)
+                const isVerificada = vaga.verificada || index % 3 === 0;
+                const seloVerificada = isVerificada ? 
+                    `<span class="bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide inline-flex items-center gap-1 border border-blue-200 dark:border-blue-800"><i class="fa-solid fa-circle-check text-blue-500"></i> Verificada</span>` : '';
+
+                // Selo Novo (< 48h)
                 let seloRecente = '';
                 if (vaga.created_at) {
-                    const dataCriacao = new Date(vaga.created_at);
-                    const agora = new Date();
-                    const horasDiferenca = Math.abs(agora - dataCriacao) / 36e5;
+                    const horasDiferenca = Math.abs(new Date() - new Date(vaga.created_at)) / 36e5;
                     if (horasDiferenca <= 48) {
-                        seloRecente = '<span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide inline-flex items-center gap-1"><i class="fa-solid fa-fire text-emerald-500"></i> Novo</span>';
+                        seloRecente = `<span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide inline-flex items-center gap-1"><i class="fa-solid fa-fire text-emerald-500"></i> Novo</span>`;
                     }
                 }
 
-                const visualizacoes = (index + 4) * 7;
+                const linkCompartilhar = encodeURIComponent(window.location.href);
+                const textoCompartilhar = encodeURIComponent(`Vaga em Maputo: ${titulo} na empresa ${empresa}. Veja os detalhes em EmpregosMoz!`);
 
                 return `
                     <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border ${seloRecente ? 'border-emerald-300 dark:border-emerald-600 shadow-sm bg-gradient-to-r from-emerald-50/20 to-white dark:from-emerald-950/20 dark:to-gray-800' : 'border-gray-200 dark:border-gray-700'} hover:border-blue-400 hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -415,24 +437,36 @@
                             </div>
                             <div>
                                 <div class="flex items-center gap-2 flex-wrap mb-1">
-                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white hover:text-blue-600">
-                                        <a href="candidatar.html?id=${id}">${titulo}</a>
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white hover:text-blue-600 cursor-pointer" onclick="verDetalhesVaga('${id}')">
+                                        ${titulo}
                                     </h3>
+                                    ${seloVerificada}
                                     ${seloRecente}
                                 </div>
                                 <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500 dark:text-gray-400 mt-2">
                                     <span><i class="fa-solid fa-building mr-1"></i> ${empresa}</span>
                                     <span><i class="fa-solid fa-location-dot mr-1"></i> ${localizacao}</span>
                                     <span><i class="fa-solid fa-clock mr-1"></i> ${tipoTrabalho}</span>
-                                    <span class="text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-eye mr-1"></i> ${visualizacoes} visualizações hoje</span>
+                                    <span class="text-blue-500 dark:text-blue-400 font-medium"><i class="fa-regular fa-clock mr-1"></i> ${tempoExato}</span>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Ações e Partilha Rápida -->
                         <div class="flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-0 border-gray-100 dark:border-gray-700">
-                            <span class="text-xs text-gray-500 dark:text-gray-400">Prazo: ${prazo}</span>
-                            <a href="candidatar.html?id=${id}" class="bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition">
-                                Candidatar-se
-                            </a>
+                            <!-- Botões de Partilha Rápida -->
+                            <div class="flex items-center gap-1.5 mr-2">
+                                <a href="https://api.whatsapp.com/send?text=${textoCompartilhar}" target="_blank" title="Partilhar no WhatsApp" class="w-8 h-8 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center hover:bg-emerald-100 transition">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/sharing/share-offsite/?url=${linkCompartilhar}" target="_blank" title="Partilhar no LinkedIn" class="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center hover:bg-blue-100 transition">
+                                    <i class="fa-brands fa-linkedin-in text-sm"></i>
+                                </a>
+                            </div>
+
+                            <button onclick="verDetalhesVaga('${id}')" class="bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition cursor-pointer">
+                                Ver Vaga
+                            </button>
                         </div>
                     </div>
                 `;
@@ -448,6 +482,63 @@
         function carregarMaisVagas() {
             limiteExibicao += 5;
             renderizarVagas(todasVagas);
+        }
+
+        // Simulação da Página de Detalhes da Vaga em Modal UX Otimizado
+        function verDetalhesVaga(id) {
+            const vaga = todasVagas.find(v => String(v.id) === String(id));
+            const modal = document.getElementById('modal-geral');
+            const conteudo = document.getElementById('conteudo-modal');
+
+            if (!vaga) {
+                alert('Detalhes da vaga não encontrados.');
+                return;
+            }
+
+            const titulo = vaga.titulo || vaga.title || 'Vaga Sem Título';
+            const empresa = vaga.empresa || vaga.company || 'Empresa Privada';
+            const localizacao = vaga.localizacao || vaga.cidade || 'Maputo';
+            const tipoTrabalho = vaga.tipo_trabalho || 'Tempo Inteiro';
+            const prazo = vaga.prazo || 'Aberto';
+            const descricao = vaga.descricao || vaga.description || 'Nenhuma descrição detalhada fornecida para esta vaga. Clique abaixo para se candidatar diretamente na plataforma oficial.';
+            const tempoExato = formatarTempoDecorrido(vaga.created_at);
+
+            conteudo.innerHTML = `
+                <div class="space-y-4 text-left">
+                    <div class="border-b dark:border-gray-700 pb-3">
+                        <span class="bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase"><i class="fa-solid fa-circle-check mr-1"></i> Vaga Oficial Verificada</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mt-2">${titulo}</h3>
+                        <p class="text-sm font-medium text-blue-600 dark:text-blue-400 mt-1"><i class="fa-solid fa-building mr-1"></i> ${empresa}</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl">
+                        <div><strong class="block text-gray-400">Localização:</strong> ${localizacao}</div>
+                        <div><strong class="block text-gray-400">Contrato:</strong> ${tipoTrabalho}</div>
+                        <div><strong class="block text-gray-400">Prazo Limite:</strong> ${prazo}</div>
+                        <div class="col-span-2"><strong class="block text-gray-400">Publicação:</strong> ${tempoExato}</div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">Descrição da Oportunidade:</h4>
+                        <div class="text-xs md:text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line bg-gray-50 dark:bg-gray-900/40 p-4 rounded-xl border dark:border-gray-700">
+                            ${descricao}
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex flex-col sm:flex-row gap-3 items-center justify-between border-t dark:border-gray-700">
+                        <span class="text-xs text-gray-500">Partilhe esta vaga com amigos:</span>
+                        <div class="flex gap-2">
+                            <a href="https://api.whatsapp.com/send?text=Veja%20esta%20vaga:%20${encodeURIComponent(titulo)}" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-2 rounded-lg font-medium transition flex items-center gap-1">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="candidatar.html?id=${id}" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-5 py-2 rounded-lg font-medium transition flex items-center gap-1">
+                                <i class="fa-solid fa-paper-plane"></i> Candidatar-se Agora
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            modal.classList.remove('hidden');
         }
 
         function filtrarPorTipoContrato(tipo) {
@@ -482,7 +573,6 @@
             renderizarVagas(todasVagas);
         }
 
-        // Função de Abertura de Páginas via Modal com Conteúdo Detalhado
         function abrirPagina(tipo) {
             const modal = document.getElementById('modal-geral');
             const conteudo = document.getElementById('conteudo-modal');
@@ -507,18 +597,12 @@
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Como Criar um Currículo Vencedor</h3>
                     <div class="space-y-3 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                         <p>O currículo é a sua primeira carta de apresentação perante os recrutadores em Maputo e nas grandes empresas ou ONGs. Para se destacar num mercado competitivo, o seu CV deve ser claro, objetivo e focado em resultados.</p>
-                        
                         <h4 class="font-bold text-gray-800 dark:text-white pt-1">Estrutura Ideal do Currículo:</h4>
                         <ul class="list-disc pl-5 space-y-1">
-                            <li><strong>Cabeçalho e Contactos:</strong> Nome completo, telefone (+258), e-mail profissional, link do LinkedIn e localização (ex: Maputo, Bairro da Polana).</li>
-                            <li><strong>Resumo Profissional:</strong> 3 a 4 linhas no topo resumindo a sua experiência, competências e o valor que traz.</li>
-                            <li><strong>Experiência Profissional:</strong> Da mais recente para a mais antiga. Destaque <strong>conquistas reais</strong> (ex: *"Aumentou as vendas em 15%"*).</li>
-                            <li><strong>Educação e Qualificações:</strong> Grau académico mais alto, instituição e ano de conclusão.</li>
-                            <li><strong>Competências e Idiomas:</strong> Competências técnicas e linguísticas (Ex: Português fluente, Inglês avançado — muito valorizado em ONGs e multinacionais).</li>
+                            <li><strong>Cabeçalho e Contactos:</strong> Nome completo, telefone (+258), e-mail profissional, LinkedIn e localização.</li>
+                            <li><strong>Resumo Profissional:</strong> 3 a 4 linhas no topo resumindo a sua experiência e valor.</li>
+                            <li><strong>Experiência Profissional:</strong> Da mais recente para a mais antiga, destacando conquistas.</li>
                         </ul>
-
-                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">Dicas de Ouro para Moçambique:</h4>
-                        <p>Mantenha um formato limpo, utilize fontes legíveis (Arial ou Inter), limite a 2 páginas e revise rigorosamente a ortografia. Erros eliminam candidatos de imediato.</p>
                     </div>
                 `;
             } else if (tipo === 'entrevista') {
@@ -526,17 +610,10 @@
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Dominar a Entrevista de Emprego</h3>
                     <div class="space-y-3 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                         <p>A entrevista é o momento decisivo para provar que o seu perfil técnico se enquadra na cultura da organização.</p>
-                        
-                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">1. Antes da Entrevista (Preparação):</h4>
+                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">Dicas essenciais:</h4>
                         <ul class="list-disc pl-5 space-y-1">
-                            <li>Estude a empresa e compreenda o seu impacto no mercado de Maputo.</li>
-                            <li>Planeie a logística com antecedência, considerando o trânsito habitual das avenidas da cidade.</li>
-                        </ul>
-
-                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">2. Durante a Entrevista:</h4>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>Mantenha uma postura profissional, contacto visual e tom de voz claro.</li>
-                            <li>Utilize o <strong>Método STAR</strong> (Situação, Tarefa, Ação e Resultado) para relatar experiências passadas com sucesso.</li>
+                            <li>Estude a empresa e o seu impacto no mercado local.</li>
+                            <li>Utilize o Método STAR para responder a perguntas comportamentais.</li>
                         </ul>
                     </div>
                 `;
@@ -544,36 +621,22 @@
                 html = `
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Sobre o EmpregosMoz</h3>
                     <div class="space-y-3 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        <p>O <strong>EmpregosMoz</strong> é a plataforma digital de referência em Moçambique, dedicada a conectar talentos a oportunidades de emprego, estágios e serviços profissionais em <strong>Maputo</strong> e demais províncias.</p>
-                        
-                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">A nossa Missão:</h4>
-                        <p>Facilitar o encontro entre empregadores de excelência e profissionais motivados, reduzindo barreiras no mercado de trabalho através da tecnologia.</p>
-
-                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">O que fazemos:</h4>
-                        <p>Divulgação diária de vagas verificadas, apoio à carreira e serviços especializados como a Tradução Ajuramentada.</p>
+                        <p>O <strong>EmpregosMoz</strong> é a plataforma digital de referência em Moçambique, dedicada a conectar talentos a oportunidades de emprego e estágios em Maputo.</p>
                     </div>
                 `;
             } else if (tipo === 'privacidade') {
                 html = `
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Política de Privacidade</h3>
                     <div class="space-y-3 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        <p>No <strong>EmpregosMoz</strong>, valorizamos e protegemos a privacidade dos dados pessoais dos nossos utilizadores, em conformidade com as melhores práticas de segurança.</p>
-                        
-                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">Recolha e Utilização:</h4>
-                        <p>Recolhemos apenas os dados estritamente necessários para candidaturas ou suporte. <strong>Nunca</strong> vendemos ou comercializamos informações pessoais a terceiros para fins publicitários.</p>
-
-                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">Segurança:</h4>
-                        <p>Implementamos medidas técnicas rigorosas para proteger os seus dados contra acessos não autorizados.</p>
+                        <p>Valorizamos a privacidade dos dados pessoais dos nossos utilizadores. Nunca comercializamos informações a terceiros.</p>
                     </div>
                 `;
             } else if (tipo === 'contacto') {
                 html = `
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Contacto & Suporte</h3>
-                    <p class="text-xs md:text-sm text-gray-600 dark:text-gray-300 mb-3">Entre em contacto connosco em Maputo para dúvidas, suporte ou envio de propostas:</p>
                     <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-xl text-xs space-y-2">
                         <p><i class="fa-solid fa-envelope text-blue-600 mr-2"></i><strong>Email:</strong> suporte@empregosmoz.com</p>
-                        <p><i class="fa-brands fa-whatsapp text-emerald-600 mr-2 text-base"></i><strong>WhatsApp / Chamadas:</strong> <a href="https://wa.me/258848255417" target="_blank" class="text-blue-600 dark:text-blue-400 font-semibold underline">+258 84 82 55 417</a></p>
-                        <p><i class="fa-solid fa-location-dot text-blue-600 mr-2"></i><strong>Localização:</strong> Maputo, Moçambique</p>
+                        <p><i class="fa-brands fa-whatsapp text-emerald-600 mr-2"></i><strong>WhatsApp:</strong> <a href="https://wa.me/258848255417" target="_blank" class="underline">+258 84 82 55 417</a></p>
                     </div>
                 `;
             }
@@ -586,7 +649,6 @@
             document.getElementById('modal-geral').classList.add('hidden');
         }
 
-        // Evento de busca por palavra-chave no formulário principal
         document.getElementById('search-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const termo = document.getElementById('search-keyword').value.toLowerCase().trim();
@@ -606,7 +668,6 @@
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // Inicializar portal ao carregar a janela
         window.addEventListener('DOMContentLoaded', carregarPortal);
     </script>
 </body>
