@@ -196,12 +196,12 @@
                     Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal para processos de emprego e vistos? Faça uma simulação rápida e solicite o seu orçamento.
                 </p>
                 <div class="flex flex-wrap gap-3 pt-1 text-xs">
-                    <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Inglês / Português</span>
+                    <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Inglês ⇄ Português</span>
                     <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Entrega Rápida</span>
                 </div>
             </div>
 
-            <!-- Simulador Interativo de Tradução -->
+            <!-- Simulador Interativo de Tradução (Limitado a Inglês / Português) -->
             <div class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-5 rounded-2xl shadow-xl w-full max-w-md space-y-3">
                 <h3 class="text-sm font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-2">
                     <i class="fa-solid fa-calculator"></i> Simulador & Orçamento Rápido
@@ -215,7 +215,6 @@
                     <select id="sim-idioma" class="w-full bg-gray-100 dark:bg-gray-800 border dark:border-gray-700 px-3 py-2 rounded-xl text-sm focus:outline-none">
                         <option value="Inglês para Português">Inglês ➔ Português</option>
                         <option value="Português para Inglês">Português ➔ Inglês</option>
-                        <option value="Outro Idioma">Outro Idioma (Francês/Espanhol)</option>
                     </select>
                 </div>
                 <button onclick="solicitarOrcamento()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl text-xs md:text-sm transition flex items-center justify-center gap-2 shadow-sm cursor-pointer">
@@ -434,7 +433,6 @@
                     }
                 }
 
-                // Contador de visualizações
                 const visualizacoes = (index + 4) * 7;
 
                 return `
