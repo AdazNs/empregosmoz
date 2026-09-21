@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EmpregosMoz - O Seu Portal de Emprego em Moçambique</title>
+    <title>EmpregosMoz - O Seu Portal de Emprego e Serviços em Moçambique</title>
 
-    <!-- Google Analytics (Substitua G-XXXXXXXXXX pelo seu ID real do Analytics) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9QNPMMY82T"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-XXXXXXXXXX');
     </script>
 
@@ -40,9 +39,12 @@
                     </a>
                 </div>
 
-                <nav class="hidden md:flex space-x-8 text-sm font-medium">
+                <nav class="hidden md:flex space-x-6 text-sm font-medium">
                     <a href="index.html" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Vagas de Emprego</a>
                     <a href="#categorias-seccao" class="text-gray-600 hover:text-blue-600 transition">Categorias</a>
+                    <a href="#traducao-seccao" class="text-emerald-600 font-semibold hover:text-emerald-700 transition flex items-center gap-1">
+                        <i class="fa-solid fa-language"></i> Tradução Ajuramentada
+                    </a>
                     <a href="#ultimas-vagas" class="text-gray-600 hover:text-blue-600 transition">Recentes</a>
                 </nav>
 
@@ -64,6 +66,7 @@
         <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-4 space-y-2">
             <a href="index.html" class="block py-2 text-blue-600 font-semibold">Vagas de Emprego</a>
             <a href="#categorias-seccao" class="block py-2 text-gray-600 hover:text-blue-600">Categorias</a>
+            <a href="#traducao-seccao" class="block py-2 text-emerald-600 font-semibold flex items-center gap-1"><i class="fa-solid fa-language"></i> Tradução Ajuramentada</a>
             <a href="#ultimas-vagas" class="block py-2 text-gray-600 hover:text-blue-600">Recentes</a>
             <hr class="my-2 border-gray-100">
             <a href="#" class="block py-2 text-gray-600 hover:text-blue-600">Entrar</a>
@@ -79,7 +82,7 @@
                 Encontre as Melhores Vagas em Moçambique
             </h1>
             <p class="text-blue-100 text-base md:text-lg max-w-2xl mx-auto">
-                Oportunidades de emprego diárias em Maputo, Beira, Nampula e em todo o país.
+                Oportunidades de emprego diárias e serviços profissionais para impulsionar a sua carreira.
             </p>
 
             <!-- Formulário de Busca Ativo -->
@@ -133,8 +136,33 @@
         </div>
     </section>
 
+    <!-- Secção em Destaque: Tradução Ajuramentada -->
+    <section id="traducao-seccao" class="max-w-7xl mx-auto px-4 py-8">
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-3xl p-6 md:p-8 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="space-y-3 max-w-2xl">
+                <span class="bg-emerald-500/40 text-emerald-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1">
+                    <i class="fa-solid fa-certificate"></i> Serviço Profissional
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold">Tradução Ajuramentada de Documentos</h2>
+                <p class="text-emerald-100 text-sm md:text-base leading-relaxed">
+                    Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal para processos de emprego ou vistos em Moçambique e no estrangeiro? Garantimos rapidez e reconhecimento oficial.
+                </p>
+                <div class="flex flex-wrap gap-3 pt-2 text-xs">
+                    <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Inglês / Português</span>
+                    <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Outros Idiomas</span>
+                    <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Entrega Rápida</span>
+                </div>
+            </div>
+            <div>
+                <button onclick="abrirPagina('traducao')" class="bg-white text-emerald-800 hover:bg-emerald-50 font-semibold px-6 py-3.5 rounded-xl shadow-md transition whitespace-nowrap flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-file-contract"></i> Solicitar Orçamento
+                </button>
+            </div>
+        </div>
+    </section>
+
     <!-- Categorias em Destaque -->
-    <section id="categorias-seccao" class="max-w-7xl mx-auto px-4 py-8">
+    <section id="categorias-seccao" class="max-w-7xl mx-auto px-4 py-4">
         <h2 class="text-xl font-bold text-gray-800 mb-4">Categorias em Destaque</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
             <button onclick="filtrarPorCategoria('ONGs')" class="bg-white p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
@@ -217,9 +245,9 @@
                 <h4 class="text-white text-sm font-semibold mb-3">Para Candidatos</h4>
                 <ul class="space-y-2 text-xs">
                     <li><a href="#ultimas-vagas" class="hover:text-white transition">Procurar Vagas</a></li>
+                    <li><a href="#traducao-seccao" class="hover:text-white transition">Tradução Ajuramentada</a></li>
                     <li><a href="#" onclick="abrirPagina('curriculo'); return false;" class="hover:text-white transition">Como Criar um Currículo Vencedor</a></li>
                     <li><a href="#" onclick="abrirPagina('entrevista'); return false;" class="hover:text-white transition">Dominar a Entrevista</a></li>
-                    <li><a href="#" onclick="abrirPagina('cursos'); return false;" class="hover:text-white transition">Cursos Técnicos Recomendados</a></li>
                 </ul>
             </div>
             <div>
@@ -297,12 +325,12 @@
                 const prazo = vaga.prazo || 'Aberto';
                 const inicial = empresa.substring(0, 3).toUpperCase();
 
-                // Destaque para vagas recentes (menos de 48 horas)
+                // Selo para vagas recentes (menos de 48 horas)
                 let seloRecente = '';
                 if (vaga.created_at) {
                     const dataCriacao = new Date(vaga.created_at);
                     const agora = new Date();
-                    const horasDiferenca = Math.abs(agora - dataCriacao) / 36e5; // conversão para horas
+                    const horasDiferenca = Math.abs(agora - dataCriacao) / 36e5;
                     if (horasDiferenca <= 48) {
                         seloRecente = '<span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide inline-flex items-center gap-1"><i class="fa-solid fa-fire text-emerald-500"></i> Novo</span>';
                     }
@@ -356,28 +384,41 @@
 
             let html = '';
 
-            if (tipo === 'privacidade') {
+            if (tipo === 'traducao') {
+                html = `
+                    <h3 class="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-language text-emerald-600"></i> Tradução Ajuramentada em Moçambique
+                    </h3>
+                    <p class="text-gray-600 mb-4">
+                        Precisa de traduzir documentos oficiais com fé pública para processos de emprego, vistos, universidades ou concursos públicos? Estamos aqui para ajudar.
+                    </p>
+                    <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl space-y-3">
+                        <h4 class="font-semibold text-emerald-900 text-sm">Como solicitar um orçamento rápido:</h4>
+                        <ol class="list-decimal pl-4 space-y-1 text-xs text-emerald-800">
+                            <li>Envie uma cópia legível do documento via WhatsApp ou E-mail.</li>
+                            <li>Indique os idiomas de origem e de destino (Ex: Inglês para Português).</li>
+                            <li>Receba o orçamento e prazo de entrega em poucos minutos.</li>
+                        </ol>
+                    </div>
+                    <div class="mt-4 space-y-2 text-xs bg-gray-50 p-4 rounded-xl">
+                        <p><i class="fa-solid fa-envelope text-blue-600 mr-2"></i><strong>Email:</strong> traducao@empregosmoz.com</p>
+                        <p><i class="fa-solid fa-phone text-blue-600 mr-2"></i><strong>WhatsApp / Contacto:</strong> +258 84 000 0000</p>
+                    </div>
+                `;
+            } else if (tipo === 'privacidade') {
                 html = `
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Política de Privacidade para EmpregosMoz</h3>
                     <p>A sua privacidade é importante para nós. No <strong>EmpregosMoz</strong>, recolhemos e utilizamos informações conforme descrito abaixo para garantir o funcionamento do portal.</p>
-                    <h4 class="font-semibold text-gray-900 mt-3">1. Cookies e Publicidade (Google AdSense)</h4>
-                    <p>O EmpregosMoz utiliza serviços de publicidade de terceiros, incluindo o <strong>Google AdSense</strong>, para exibir anúncios quando visita o nosso site. Estes fornecedores podem utilizar cookies (incluindo o cookie DART) para exibir anúncios com base nas suas visitas anteriores ao EmpregosMoz ou a outros sítios Web.</p>
-                    <p>Pode optar por desativar a utilização do cookie DART visitando a política de privacidade da rede de conteúdo e dos anúncios do Google.</p>
-                    <h4 class="font-semibold text-gray-900 mt-3">2. Recolha de Dados</h4>
-                    <p>Não armazenamos dados pessoais sensíveis sem o seu consentimento explícito. Os formulários de candidatura redirecionam ou processam apenas as informações necessárias para as vagas de emprego.</p>
-                    <h4 class="font-semibold text-gray-900 mt-3">3. Contacto</h4>
-                    <p>Se tiver dúvidas sobre esta Política de Privacidade, entre em contacto connosco através da nossa página de suporte.</p>
                 `;
             } else if (tipo === 'sobre') {
                 html = `
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Sobre o EmpregosMoz</h3>
-                    <p>O <strong>EmpregosMoz</strong> é a plataforma líder dedicada a ligar profissionais qualificados a oportunidades de emprego, estágios e carreiras em Moçambique.</p>
-                    <p class="mt-2">A nossa missão é democratizar o acesso à informação sobre o mercado de trabalho moçambicano, reunindo diariamente vagas em Maputo, Beira, Nampula e demais províncias, de forma 100% gratuita para os candidatos.</p>
+                    <p>O <strong>EmpregosMoz</strong> é a plataforma líder dedicada a ligar profissionais qualificados a oportunidades de emprego, estágios e serviços de carreira em Moçambique.</p>
                 `;
             } else if (tipo === 'contacto') {
                 html = `
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Contacto</h3>
-                    <p>Tem alguma dúvida, sugestão ou empresa que deseja publicar vagas no EmpregosMoz? Entre em contacto connosco:</p>
+                    <p>Entre em contacto connosco para suporte, parcerias ou serviços de tradução:</p>
                     <div class="bg-gray-50 p-4 rounded-xl mt-3 space-y-2 text-xs">
                         <p><i class="fa-solid fa-envelope text-blue-600 mr-2"></i><strong>Email:</strong> suporte@empregosmoz.com</p>
                         <p><i class="fa-solid fa-location-dot text-blue-600 mr-2"></i><strong>Localização:</strong> Maputo / Beira, Moçambique</p>
@@ -389,8 +430,6 @@
                     <ul class="space-y-2 list-disc pl-4 text-xs">
                         <li><strong>Seja Conciso:</strong> O CV ideal em Moçambique deve ter no máximo 2 páginas.</li>
                         <li><strong>Informações de Contacto:</strong> Certifique-se de que o seu número e email estão ativos.</li>
-                        <li><strong>Foco em Resultados:</strong> Destaque realizações e impacto nas funções anteriores.</li>
-                        <li><strong>Formato PDF:</strong> Envie sempre em PDF para preservar a formatação profissional.</li>
                     </ul>
                 `;
             } else if (tipo === 'entrevista') {
@@ -399,16 +438,6 @@
                     <ul class="space-y-2 list-disc pl-4 text-xs">
                         <li><strong>Pesquise a Empresa:</strong> Conheça a missão e projetos recentes da organização.</li>
                         <li><strong>Pontualidade:</strong> Chegue 10 a 15 minutos antes da hora marcada.</li>
-                        <li><strong>Linguagem Corporal:</strong> Mantenha postura firme e contacto visual.</li>
-                    </ul>
-                `;
-            } else if (tipo === 'cursos') {
-                html = `
-                    <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-indigo-600"></i> Cursos Técnicos Recomendados</h3>
-                    <ul class="space-y-2 list-disc pl-4 text-xs">
-                        <li><strong>Microsoft Excel Avançado:</strong> Essencial para vagas administrativas e financeiras.</li>
-                        <li><strong>Contabilidade Prática e Fiscalidade:</strong> Altamente procurado no comércio e serviços.</li>
-                        <li><strong>Inglês Comercial:</strong> Diferencial enorme em multinacionais e ONGs.</li>
                     </ul>
                 `;
             }
