@@ -96,7 +96,6 @@
                 <a href="#ultimas-vagas" onclick="fecharDrawer()" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa-solid fa-clock-rotate-left mr-2"></i> Vagas Recentes
                 </a>
-                <!-- Tradução Ajuramentada no Menu Lateral -->
                 <a href="#" onclick="fecharDrawer(); abrirPagina('traducao'); return false;" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 text-emerald-600 dark:text-emerald-400 font-semibold">
                     <i class="fa-solid fa-language mr-2"></i> Tradução Ajuramentada
                 </a>
@@ -230,7 +229,7 @@
 
     <!-- Modal Geral -->
     <div id="modal-geral" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="fecharModalGeral()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-lg">
                 <i class="fa-solid fa-xmark"></i>
             </button>
@@ -328,7 +327,6 @@
             }
         }
 
-        // Verificar preferência guardada de tema
         if (localStorage.getItem('theme') === 'dark') {
             document.documentElement.classList.add('dark');
             document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
@@ -467,6 +465,7 @@
             renderizarVagas(todasVagas);
         }
 
+        // Função de Abertura de Páginas via Modal com Conteúdo Detalhado
         function abrirPagina(tipo) {
             const modal = document.getElementById('modal-geral');
             const conteudo = document.getElementById('conteudo-modal');
@@ -474,7 +473,7 @@
 
             if (tipo === 'traducao') {
                 html = `
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
                         <i class="fa-solid fa-language text-emerald-600"></i> Tradução Ajuramentada (Inglês ⇄ Português)
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300 mb-3 text-xs md:text-sm">
@@ -486,10 +485,70 @@
                         <p><strong>Atendimento:</strong> Maputo, Segunda a Sexta, 08h - 17h</p>
                     </div>
                 `;
-            } else if (tipo === 'privacidade') {
-                html = `<h3 class="text-lg font-bold mb-2">Política de Privacidade</h3><p>O EmpregosMoz respeita a sua privacidade e protege os seus dados de candidatura em Maputo.</p>`;
+            } else if (tipo === 'curriculo') {
+                html = `
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Como Criar um Currículo Vencedor</h3>
+                    <div class="space-y-3 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        <p>O currículo é a sua primeira carta de apresentação perante os recrutadores em Maputo e nas grandes empresas ou ONGs. Para se destacar num mercado competitivo, o seu CV deve ser claro, objetivo e focado em resultados.</p>
+                        
+                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">Estrutura Ideal do Currículo:</h4>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li><strong>Cabeçalho e Contactos:</strong> Nome completo, telefone (+258), e-mail profissional, link do LinkedIn e localização (ex: Maputo, Bairro da Polana).</li>
+                            <li><strong>Resumo Profissional:</strong> 3 a 4 linhas no topo resumindo a sua experiência, competências e o valor que traz.</li>
+                            <li><strong>Experiência Profissional:</strong> Da mais recente para a mais antiga. Destaque <strong>conquistas reais</strong> (ex: *"Aumentou as vendas em 15%"*).</li>
+                            <li><strong>Educação e Qualificações:</strong> Grau académico mais alto, instituição e ano de conclusão.</li>
+                            <li><strong>Competências e Idiomas:</strong> Competências técnicas e linguísticas (Ex: Português fluente, Inglês avançado — muito valorizado em ONGs e multinacionais).</li>
+                        </ul>
+
+                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">Dicas de Ouro para Moçambique:</h4>
+                        <p>Mantenha um formato limpo, utilize fontes legíveis (Arial ou Inter), limite a 2 páginas e revise rigorosamente a ortografia. Erros eliminam candidatos de imediato.</p>
+                    </div>
+                `;
+            } else if (tipo === 'entrevista') {
+                html = `
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Dominar a Entrevista de Emprego</h3>
+                    <div class="space-y-3 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        <p>A entrevista é o momento decisivo para provar que o seu perfil técnico se enquadra na cultura da organização.</p>
+                        
+                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">1. Antes da Entrevista (Preparação):</h4>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Estude a empresa e compreenda o seu impacto no mercado de Maputo.</li>
+                            <li>Planeie a logística com antecedência, considerando o trânsito habitual das avenidas da cidade.</li>
+                        </ul>
+
+                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">2. Durante a Entrevista:</h4>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Mantenha uma postura profissional, contacto visual e tom de voz claro.</li>
+                            <li>Utilize o <strong>Método STAR</strong> (Situação, Tarefa, Ação e Resultado) para relatar experiências passadas com sucesso.</li>
+                        </ul>
+                    </div>
+                `;
             } else if (tipo === 'sobre') {
-                html = `<h3 class="text-lg font-bold mb-2">Sobre o EmpregosMoz</h3><p>A plataforma líder de oportunidades e carreiras sediada em Maputo, Moçambique.</p>`;
+                html = `
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Sobre o EmpregosMoz</h3>
+                    <div class="space-y-3 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        <p>O <strong>EmpregosMoz</strong> é a plataforma digital de referência em Moçambique, dedicada a conectar talentos a oportunidades de emprego, estágios e serviços profissionais em <strong>Maputo</strong> e demais províncias.</p>
+                        
+                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">A nossa Missão:</h4>
+                        <p>Facilitar o encontro entre empregadores de excelência e profissionais motivados, reduzindo barreiras no mercado de trabalho através da tecnologia.</p>
+
+                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">O que fazemos:</h4>
+                        <p>Divulgação diária de vagas verificadas, apoio à carreira e serviços especializados como a Tradução Ajuramentada.</p>
+                    </div>
+                `;
+            } else if (tipo === 'privacidade') {
+                html = `
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Política de Privacidade</h3>
+                    <div class="space-y-3 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        <p>No <strong>EmpregosMoz</strong>, valorizamos e protegemos a privacidade dos dados pessoais dos nossos utilizadores, em conformidade com as melhores práticas de segurança.</p>
+                        
+                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">Recolha e Utilização:</h4>
+                        <p>Recolhemos apenas os dados estritamente necessários para candidaturas ou suporte. <strong>Nunca</strong> vendemos ou comercializamos informações pessoais a terceiros para fins publicitários.</p>
+
+                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">Segurança:</h4>
+                        <p>Implementamos medidas técnicas rigorosas para proteger os seus dados contra acessos não autorizados.</p>
+                    </div>
+                `;
             } else if (tipo === 'contacto') {
                 html = `
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Contacto & Suporte</h3>
@@ -500,10 +559,6 @@
                         <p><i class="fa-solid fa-location-dot text-blue-600 mr-2"></i><strong>Localização:</strong> Maputo, Moçambique</p>
                     </div>
                 `;
-            } else if (tipo === 'curriculo') {
-                html = `<h3 class="text-lg font-bold mb-2">Como Criar um Currículo Vencedor</h3><p>Dicas práticas para destacar o seu perfil profissional perante os recrutadores em Maputo.</p>`;
-            } else if (tipo === 'entrevista') {
-                html = `<h3 class="text-lg font-bold mb-2">Dominar a Entrevista</h3><p>Orientações sobre postura, perguntas frequentes e como causar uma excelente impressão.</p>`;
             }
 
             conteudo.innerHTML = html;
