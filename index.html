@@ -380,7 +380,6 @@
                 const prazo = vaga.prazo || 'Aberto';
                 const inicial = empresa.substring(0, 3).toUpperCase();
 
-                // Selo para vagas recentes (menos de 48 horas)
                 let seloRecente = '';
                 if (vaga.created_at) {
                     const dataCriacao = new Date(vaga.created_at);
@@ -447,6 +446,27 @@
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         }
 
+        function filtrarPorCategoria(cat) {
+            const filtradas = todasVagas.filter(v => {
+                const tituloVaga = (v.titulo || v.title || '').toLowerCase();
+                const descVaga = (v.descricao || v.description || '').toLowerCase();
+                const categoriaVaga = (v.categoria || '').toLowerCase();
+                const termoCat = cat.toLowerCase();
+                return tituloVaga.includes(termoCat) || descVaga.includes(termoCat) || categoriaVaga.includes(termoCat);
+            });
+            document.getElementById('titulo-seccao-vagas').textContent = `Vagas em Maputo: ${cat}`;
+            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
+            renderizarVagas(filtradas, false);
+            document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function reverterFiltros() {
+            document.getElementById('titulo-seccao-vagas').textContent = 'Últimas Vagas em Maputo';
+            document.getElementById('btn-limpar-filtro').classList.add('hidden');
+            document.getElementById('search-keyword').value = '';
+            renderizarVagas(todasVagas);
+        }
+
         function abrirPagina(tipo) {
             const modal = document.getElementById('modal-geral');
             const conteudo = document.getElementById('conteudo-modal');
@@ -494,47 +514,26 @@
             document.getElementById('modal-geral').classList.add('hidden');
         }
 
+        // Evento do Formulário de Busca por Palavra-Chave
         document.getElementById('search-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const termo = document.getElementById('search-keyword').value.toLowerCase();
+            const termo = document.getElementById('search-keyword').value.toLowerCase().trim();
 
             const filtradas = todasVagas.filter(v => {
-                const matchTermo = !termo || (v.titulo && v.titulo.toLowerCase().includes(termo)) || (v.empresa && v.empresa.toLowerCase().includes(termo));
-                return matchTermo;
+                const titulo = (v.titulo || v.title || '').toLowerCase();
+                const empresa = (v.empresa || v.company || '').toLowerCase();
+                const descricao = (v.descricao || v.description || '').toLowerCase();
+                return !termo || titulo.includes(termo) || empresa.includes(termo) || descricao.includes(termo);
             });
 
-            document.getElementById('titulo-seccao-vagas').textContent = `Resultados da Busca em Maputo (${filtradas.length})`;
+            document.getElementById('titulo-seccao-vagas').textContent = termo ? `Resultados para: "${termo}"` : 'Últimas Vagas em Maputo';
             document.getElementById('btn-limpar-filtro').classList.remove('hidden');
             renderizarVagas(filtradas, false);
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         });
 
-        function filtrarPorCategoria(categoria) {
-            const termoBusca = categoria.toLowerCase();
-            const filtradas = todasVagas.filter(v => {
-                const catVaga = v.categoria ? v.categoria.toLowerCase() : '';
-                const tituloVaga = v.titulo ? v.titulo.toLowerCase() : '';
-                const descVaga = v.descricao ? v.descricao.toLowerCase() : '';
-                return catVaga.includes(termoBusca) || tituloVaga.includes(termoBusca) || descVaga.includes(termoBusca);
-            });
-
-            document.getElementById('titulo-seccao-vagas').textContent = `Vagas em Maputo: ${categoria}`;
-            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
-            renderizarVagas(filtradas, false);
-            document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function reverterFiltros() {
-            limiteExibicao = 5;
-            document.getElementById('titulo-seccao-vagas').textContent = 'Últimas Vagas em Maputo';
-            document.getElementById('btn-limpar-filtro').classList.add('hidden');
-            document.getElementById('search-form').reset();
-            renderizarVagas(todasVagas);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            carregarPortal();
-        });
+        // Inicializar portal ao carregar a página
+        window.addEventListener('DOMContentLoaded', carregarPortal);
     </script>
 </body>
 </html>
