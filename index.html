@@ -56,14 +56,14 @@
                     <a href="#ultimas-vagas" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Recentes</a>
                 </nav>
 
-                <!-- Botões à Direita (Modo Escuro + Menu de Traços Diferente) -->
+                <!-- Botões à Direita (Modo Escuro + Menu de Traços) -->
                 <div class="flex items-center space-x-3">
                     <!-- Botão Dark Mode -->
                     <button onclick="toggleDarkMode()" aria-label="Alternar Tema" class="p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
                         <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
                     </button>
 
-                    <!-- Botão Menu com Barras de Traços Diferente -->
+                    <!-- Botão Menu com Barras de Traços -->
                     <button id="menu-drawer-btn" aria-label="Abrir Menu Lateral" class="bg-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400 p-2.5 rounded-xl hover:bg-blue-100 dark:hover:bg-gray-600 transition flex items-center gap-2 font-medium text-sm">
                         <div class="space-y-1 w-5 flex flex-col items-end">
                             <span class="block h-0.5 w-5 bg-current rounded-full"></span>
@@ -108,7 +108,7 @@
             </div>
         </div>
         <div class="pt-6 border-t dark:border-gray-700">
-            <a href="#" onclick="alert('Para publicar vagas, contacte via WhatsApp ou suporte.'); return false;" class="block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-medium shadow-sm transition">
+            <a href="#" onclick="alert('Para publicar vagas, contacte o suporte.'); return false;" class="block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-medium shadow-sm transition">
                 + Publicar Vaga
             </a>
         </div>
@@ -193,7 +193,7 @@
                 </span>
                 <h2 class="text-2xl md:text-3xl font-bold">Tradução Ajuramentada de Documentos</h2>
                 <p class="text-emerald-100 text-sm md:text-base leading-relaxed">
-                    Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal para processos de emprego e vistos? Simule o seu pedido e envie direto para o nosso WhatsApp.
+                    Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal para processos de emprego e vistos? Faça uma simulação rápida e solicite o seu orçamento.
                 </p>
                 <div class="flex flex-wrap gap-3 pt-1 text-xs">
                     <span class="bg-white/10 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-check text-emerald-300 mr-1"></i> Inglês / Português</span>
@@ -218,8 +218,8 @@
                         <option value="Outro Idioma">Outro Idioma (Francês/Espanhol)</option>
                     </select>
                 </div>
-                <button onclick="enviarSimulacaoWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl text-xs md:text-sm transition flex items-center justify-center gap-2 shadow-sm cursor-pointer">
-                    <i class="fa-brands fa-whatsapp text-lg"></i> Solicitar Orçamento via WhatsApp
+                <button onclick="solicitarOrcamento()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl text-xs md:text-sm transition flex items-center justify-center gap-2 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-file-contract"></i> Solicitar Orçamento
                 </button>
             </div>
         </div>
@@ -277,11 +277,6 @@
             </button>
         </div>
     </main>
-
-    <!-- Botão Flutuante do WhatsApp -->
-    <a href="https://wa.me/258848255417?text=Olá!%20Gostaria%20de%20obter%20mais%20informações." target="_blank" aria-label="Contacto WhatsApp" class="fixed bottom-6 right-6 z-40 bg-emerald-600 hover:bg-emerald-500 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-2xl transition hover:scale-110">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
 
     <!-- Modal Geral -->
     <div id="modal-geral" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
@@ -439,7 +434,7 @@
                     }
                 }
 
-                // Contador simulado de visualizações por popularidade
+                // Contador de visualizações
                 const visualizacoes = (index + 4) * 7;
 
                 return `
@@ -496,12 +491,23 @@
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function enviarSimulacaoWhatsApp() {
+        function solicitarOrcamento() {
             const paginas = document.getElementById('sim-paginas').value || 1;
             const idioma = document.getElementById('sim-idioma').value;
-            const texto = `Olá! Gostaria de solicitar um orçamento para tradução ajuramentada de ${paginas} página(s) (${idioma}).`;
-            const urlWhatsApp = `https://wa.me/258848255417?text=${encodeURIComponent(texto)}`;
-            window.open(urlWhatsApp, '_blank');
+            
+            const modal = document.getElementById('modal-geral');
+            const conteudo = document.getElementById('conteudo-modal');
+            
+            conteudo.innerHTML = `
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Solicitação de Orçamento</h3>
+                <p class="mb-3">Simulação para <strong>${paginas} página(s)</strong> (${idioma}).</p>
+                <p>Para concluir o seu pedido de tradução ajuramentada, envie a cópia do seu documento para:</p>
+                <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-xl mt-3 text-xs space-y-1">
+                    <p><strong>Email:</strong> traducao@empregosmoz.com</p>
+                    <p><strong>Atendimento:</strong> Segunda a Sexta, 08h - 17h</p>
+                </div>
+            `;
+            modal.classList.remove('hidden');
         }
 
         function abrirPagina(tipo) {
@@ -514,7 +520,7 @@
             } else if (tipo === 'sobre') {
                 html = `<h3 class="text-lg font-bold mb-2">Sobre o EmpregosMoz</h3><p>A plataforma líder de oportunidades e carreiras em Moçambique.</p>`;
             } else if (tipo === 'contacto') {
-                html = `<h3 class="text-lg font-bold mb-2">Contacto</h3><p>WhatsApp: +258 84 82 55 417 | Email: suporte@empregosmoz.com</p>`;
+                html = `<h3 class="text-lg font-bold mb-2">Contacto</h3><p>Email: suporte@empregosmoz.com</p>`;
             } else if (tipo === 'curriculo') {
                 html = `<h3 class="text-lg font-bold mb-2">Como Criar um Currículo</h3><p>Mantenha conciso, foque em resultados e envie sempre em formato PDF.</p>`;
             } else if (tipo === 'entrevista') {
