@@ -96,7 +96,6 @@
                 <a href="#ultimas-vagas" onclick="fecharDrawer()" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa-solid fa-clock-rotate-left mr-2"></i> Vagas Recentes
                 </a>
-                <!-- Tradução Ajuramentada no Menu Lateral -->
                 <a href="#" onclick="fecharDrawer(); abrirPagina('traducao'); return false;" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 text-emerald-600 dark:text-emerald-400 font-semibold">
                     <i class="fa-solid fa-language mr-2"></i> Tradução Ajuramentada
                 </a>
@@ -228,7 +227,7 @@
         </div>
     </main>
 
-    <!-- Modal Geral -->
+    <!-- Modal Geral para Páginas do Rodapé e Afins -->
     <div id="modal-geral" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="fecharModalGeral()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-lg">
@@ -245,9 +244,10 @@
         </div>
     </div>
 
-    <!-- Rodapé Completo -->
+    <!-- Rodapé Completo e Corrigido -->
     <footer class="bg-gray-900 text-gray-400 py-10 mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Coluna 1: Sobre / Identidade -->
             <div>
                 <a href="index.html" class="text-2xl font-bold text-white flex items-center gap-2 mb-3">
                     <i class="fa-solid fa-briefcase text-blue-500"></i>
@@ -255,6 +255,8 @@
                 </a>
                 <p class="text-xs leading-relaxed">O portal líder em oportunidades de emprego, estágios e carreiras em Moçambique.</p>
             </div>
+
+            <!-- Coluna 2: Para Candidatos (Corrigido links vazios) -->
             <div>
                 <h4 class="text-white text-sm font-semibold mb-3">Para Candidatos</h4>
                 <ul class="space-y-2 text-xs">
@@ -264,6 +266,8 @@
                     <li><a href="#" onclick="abrirPagina('entrevista'); return false;" class="hover:text-white transition">Dominar a Entrevista</a></li>
                 </ul>
             </div>
+
+            <!-- Coluna 3: Institucional (Corrigido links vazios) -->
             <div>
                 <h4 class="text-white text-sm font-semibold mb-3">Institucional</h4>
                 <ul class="space-y-2 text-xs">
@@ -272,11 +276,13 @@
                     <li><a href="#" onclick="abrirPagina('contacto'); return false;" class="hover:text-white transition">Contacto & Suporte</a></li>
                 </ul>
             </div>
+
+            <!-- Coluna 4: Recrutadores (Informação Corrigida) -->
             <div>
                 <h4 class="text-white text-sm font-semibold mb-3">Para Recrutadores</h4>
                 <ul class="space-y-2 text-xs">
-                    <li><a href="https://wa.me/258848255417?text=Olá!%20Gostaria%20de%20anunciar%20uma%20vaga." target="_blank" class="hover:text-white transition">Publicar Anúncio</a></li>
-                    <li><a href="#" onclick="alert('Planos gratuitos ativos'); return false;" class="hover:text-white transition">Planos e Preços</a></li>
+                    <li><a href="https://wa.me/258848255417?text=Olá!%20Gostaria%20de%20anunciar%20uma%20vaga." target="_blank" class="hover:text-white transition"><i class="fa-brands fa-whatsapp text-emerald-400 mr-1"></i> Publicar Vaga (WhatsApp)</a></li>
+                    <li><p class="text-gray-400 text-[11px] leading-relaxed mt-2">Para anunciar oportunidades na nossa plataforma ou destacar vagas urgentes, entre em contacto direto com a nossa equipa administrativa via WhatsApp.</p></li>
                 </ul>
             </div>
         </div>
@@ -420,7 +426,6 @@
                 const prazo = vaga.prazo || 'Aberto';
                 const inicial = empresa.substring(0, 3).toUpperCase();
 
-                // Aplicação da função de tempo relativo na data de publicação
                 let tempoPublicacao = '';
                 let seloRecente = '';
                 if (vaga.created_at) {
@@ -512,6 +517,7 @@
             renderizarVagas(todasVagas);
         }
 
+        // Funções para abrir as janelas modais informativas (Rodapé e Menu)
         function abrirPagina(tipo) {
             const modal = document.getElementById('modal-geral');
             const conteudo = document.getElementById('conteudo-modal');
@@ -523,30 +529,77 @@
                         <i class="fa-solid fa-language text-emerald-600"></i> Tradução Ajuramentada (Inglês ⇄ Português)
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300 mb-3 text-xs md:text-sm">
-                        Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade legal em Moçambique para processos de emprego e vistos?
+                        Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade oficial e reconhecimento legal em Moçambique? Oferecemos serviços rápidos e certificados por tradutores ajuramentados.
                     </p>
-                    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-xl text-xs space-y-2">
-                        <p><strong>Email:</strong> traducao@empregosmoz.com</p>
-                        <p><strong>WhatsApp / Chamadas:</strong> <a href="https://wa.me/258848255417" target="_blank" class="text-emerald-600 dark:text-emerald-400 font-semibold underline">+258 84 82 55 417</a></p>
-                        <p><strong>Atendimento:</strong> Segunda a Sexta, 08h - 17h</p>
+                    <div class="bg-blue-50 dark:bg-gray-700/50 p-3 rounded-xl border border-blue-100 dark:border-gray-600 space-y-2">
+                        <p class="font-semibold text-gray-800 dark:text-gray-200">Como solicitar?</p>
+                        <p class="text-xs text-gray-600 dark:text-gray-300">Envie o documento escaneado diretamente via WhatsApp para orçamentos imediatos e prazos de entrega reduzidos.</p>
+                        <a href="https://wa.me/258848255417?text=Olá!%20Gostaria%20de%20informações%20sobre%20Tradução%20Ajuramentada." target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-xl text-xs transition">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> Falar com Tradutor via WhatsApp
+                        </a>
                     </div>
                 `;
             } else if (tipo === 'curriculo') {
                 html = `
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Guia Definitivo: Como Criar um Currículo Vencedor em Moçambique</h3>
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-file-lines text-blue-600"></i> Como Criar um Currículo Vencedor
+                    </h3>
+                    <div class="space-y-2 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        <p><strong>1. Clareza e Concisão:</strong> O seu CV não deve ultrapassar 2 páginas. Destaque primeiro as suas competências principais e histórico recente.</p>
+                        <p><strong>2. Foco nos Resultados:</strong> Em vez de apenas listar tarefas nas experiências anteriores, mencione conquistas mensuráveis e impacto gerado.</p>
+                        <p><strong>3. Dados de Contacto Atualizados:</strong> Certifique-se de que o seu número de telemóvel em Moçambique e email profissional estão corretos e ativos.</p>
+                        <p><strong>4. Formato Limpo:</strong> Evite gráficos excessivos ou fotografias desnecessárias, a menos que a vaga especificamente exija.</p>
+                    </div>
+                `;
+            } else if (tipo === 'entrevista') {
+                html = `
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-blue-600"></i> Dominar a Entrevista de Emprego
+                    </h3>
+                    <div class="space-y-2 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        <p><strong>Pesquise sobre a Empresa:</strong> Conheça a área de atuação da organização e os projetos recentes antes de comparecer à entrevista.</p>
+                        <p><strong>Pratique Perguntas Comuns:</strong> Prepare respostas claras sobre os seus pontos fortes, desafios superados e metas de carreira a médio prazo.</p>
+                        <p><strong>Pontualidade e Apresentação:</strong> Chegue sempre com 10 a 15 minutos de antecedência e vista-se de acordo com a cultura corporativa da instituição.</p>
+                        <p><strong>Demonstre Proatividade:</strong> No final, faça perguntas pertinentes sobre a equipa e o funcionamento diário da função pretendida.</p>
+                    </div>
+                `;
+            } else if (tipo === 'sobre') {
+                html = `
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-blue-600"></i> Sobre Nós - EmpregosMoz
+                    </h3>
+                    <div class="space-y-2 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        <p>A <strong>EmpregosMoz</strong> nasceu com o compromisso firme de simplificar e democratizar a busca por oportunidades profissionais e estágios em todo o território de Moçambique.</p>
+                        <p>A nossa missão é aproximar talentos qualificados das melhores empresas, ONGs e instituições do país, promovendo o desenvolvimento de carreiras de forma transparente, rápida e totalmente acessível aos candidatos.</p>
+                    </div>
+                `;
+            } else if (tipo === 'privacidade') {
+                html = `
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-blue-600"></i> Política de Privacidade
+                    </h3>
+                    <div class="space-y-2 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        <p>Na <strong>EmpregosMoz</strong>, respeitamos profundamente a sua privacidade e assumimos o compromisso de proteger os dados pessoais partilhados na nossa plataforma.</p>
+                        <p><strong>Recolha de Informações:</strong> As vagas e dados publicados são obtidos diretamente de fontes oficiais de recrutamento ou submetidos por parceiros autorizados com o objetivo estrito de facilitar o acesso ao mercado de trabalho.</p>
+                        <p><strong>Utilização:</strong> Os dados de navegação e contacto servem unicamente para otimizar a experiência do utilizador e estabelecer pontes seguras entre candidatos e empregadores.</p>
+                    </div>
+                `;
+            } else if (tipo === 'contacto') {
+                html = `
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-headset text-blue-600"></i> Contacto & Suporte
+                    </h3>
                     <div class="space-y-3 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        <p>O mercado de trabalho em Moçambique — especialmente nos polos corporativos e centros urbanos do país — é altamente competitivo. O seu currículo (CV) é a sua primeira vitrina perante os departamentos de Recursos Humanos e consultorias de recrutamento.</p>
-                        
-                        <h4 class="font-bold text-gray-800 dark:text-white pt-1">1. Estrutura Estratégica do CV:</h4>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li><strong>Cabeçalho e Contactos Reais:</strong> Indique o seu nome completo, número de telemóvel ativo em Moçambique com o prefixo correto (+258), e-mail profissional (evite alcunhas ou e-mails informais antigos), link atualizado do perfil do LinkedIn e a sua residência atual.</li>
-                            <li><strong>Resumo Executivo / Perfil Profissional:</strong> Em 3 a 4 linhas no topo, resuma a sua trajetória, anos de experiência no setor e as suas maiores valências técnicas.</li>
-                        </ul>
+                        <p>Precisa de assistência com o portal, tem dúvidas sobre alguma vaga ou deseja reportar algum problema técnico? Estamos sempre prontos a ajudar.</p>
+                        <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl border border-gray-200 dark:border-gray-600 space-y-1">
+                            <p><strong>Email de Suporte:</strong> <a href="mailto:suporte@empregosmoz.com" class="text-blue-600 dark:text-blue-400 underline font-semibold">suporte@empregosmoz.com</a></p>
+                            <p><strong>Atendimento Geral / WhatsApp:</strong> <a href="https://wa.me/258848255417" target="_blank" class="text-emerald-600 dark:text-emerald-400 font-semibold underline">+258 84 825 5417</a></p>
+                            <p><strong>Horário:</strong> Segunda a Sexta-feira, das 08:00 às 17:00.</p>
+                        </div>
                     </div>
                 `;
             }
-            // ... (restante do código das modais)
-            
+
             conteudo.innerHTML = html;
             modal.classList.remove('hidden');
         }
@@ -555,8 +608,35 @@
             document.getElementById('modal-geral').classList.add('hidden');
         }
 
-        // Executar carregamento ao abrir a página
-        window.addEventListener('DOMContentLoaded', carregarPortal);
+        // Event listener de busca do formulário principal
+        document.getElementById('search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const termo = document.getElementById('search-keyword').value.toLowerCase().trim();
+            
+            if (!termo) {
+                renderizarVagas(todasVagas);
+                document.getElementById('titulo-seccao-vagas').textContent = 'Últimas Vagas em Moçambique';
+                document.getElementById('btn-limpar-filtro').classList.add('hidden');
+                return;
+            }
+
+            const filtradas = todasVagas.filter(v => {
+                const titulo = (v.titulo || v.title || '').toLowerCase();
+                const empresa = (v.empresa || v.company || '').toLowerCase();
+                const descricao = (v.descricao || v.description || '').toLowerCase();
+                const localizacao = (v.localizacao || v.cidade || '').toLowerCase();
+                
+                return titulo.includes(termo) || empresa.includes(termo) || descricao.includes(termo) || localizacao.includes(termo);
+            });
+
+            document.getElementById('titulo-seccao-vagas').textContent = `Resultados da busca por: "${termo}"`;
+            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
+            renderizarVagas(filtradas, false);
+            document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Inicializar carregamento ao abrir a página
+        document.addEventListener('DOMContentLoaded', carregarPortal);
     </script>
 </body>
 </html>
