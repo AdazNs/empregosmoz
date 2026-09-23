@@ -65,12 +65,50 @@
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
 
+        // Função para formatar o tempo relativo de publicação da vaga
+        function formatarTempoRelativo(dataIso) {
+            if (!dataIso) return '';
+            const agora = new Date();
+            const dataPost = new Date(dataIso);
+            const segundos = Math.floor((agora - dataPost) / 1000);
+
+            if (segundos < 60) {
+                return segundos <= 1 ? "há 1 segundo" : `há ${segundos} segundos`;
+            }
+            
+            const minutos = Math.floor(segundos / 60);
+            if (minutos < 60) {
+                return `há ${minutos} ${minutos === 1 ? 'minuto' : 'minutos'}`;
+            }
+            
+            const horas = Math.floor(minutos / 60);
+            if (horas < 24) {
+                return `há ${horas} ${horas === 1 ? 'hora' : 'horas'}`;
+            }
+            
+            const dias = Math.floor(horas / 24);
+            if (dias < 7) {
+                return `há ${dias} ${dias === 1 ? 'dia' : 'dias'}`;
+            }
+            
+            const semanas = Math.floor(dias / 7);
+            if (semanas < 4) {
+                return `há ${semanas} ${semanas === 1 ? 'semana' : 'semanas'}`;
+            }
+            
+            const meses = Math.floor(dias / 30);
+            if (meses < 12) {
+                return `há ${meses} ${meses === 1 ? 'mês' : 'meses'}`;
+            }
+            
+            const anos = Math.floor(dias / 365);
+            return `há ${anos} ${anos === 1 ? 'ano' : 'anos'}`;
+        }
+
         // Função para transformar URLs e emails em links clicáveis automaticamente
         function formatarLinksNaDescricao(texto) {
             if (!texto) return '';
 
-            // Escapar HTML básico para segurança, mantendo quebras de linha limpas
-            // (Opcional, mas substitui caracteres perigosos se necessário)
             let textoFormatado = texto;
 
             // Regex para detetar URLs web
@@ -139,21 +177,42 @@
                 const tagInfo = vaga.tag && vaga.tag.trim() !== '' ? vaga.tag : 'Nenhuma instrução detalhada disponível para esta vaga.';
                 const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
 
+                // Cálculo do tempo relativo e selo de "Novo"
+                let tempoPublicacao = '';
+                let seloRecente = '';
+                if (vaga.created_at) {
+                    tempoPublicacao = formatarTempoRelativo(vaga.created_at);
+                    
+                    const dataCriacao = new Date(vaga.created_at);
+                    const agora = new Date();
+                    const horasDiferenca = Math.abs(agora - dataCriacao) / 36e5;
+                    if (horasDiferenca <= 48) {
+                        seloRecente = '<span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide inline-flex items-center gap-1"><i class="fa-solid fa-fire text-emerald-500"></i> Novo</span>';
+                    }
+                }
+
+                const visualizacoes = 52; // Simulação de visualizações
+
                 // Renderiza o layout
                 container.innerHTML = `
                     <div class="space-y-6">
                         <!-- Cabeçalho da Vaga -->
-                        <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex items-center gap-4">
+                        <div class="bg-white rounded-2xl border ${seloRecente ? 'border-emerald-300 shadow-sm bg-gradient-to-r from-emerald-50/20 to-white' : 'border-gray-200'} p-6 shadow-sm flex items-start gap-4">
                             <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xl flex-shrink-0">
                                 ${inicialEmpresa}
                             </div>
-                            <div>
-                                <h1 class="text-xl font-bold text-gray-900" id="txt-titulo"></h1>
-                                <p class="text-sm text-gray-600 font-medium" id="txt-empresa"></p>
-                                <div class="text-xs text-gray-500 mt-1">
-                                    <span><i class="fa-solid fa-location-dot mr-1"></i> ${localizacao}</span> &bull; 
-                                    <span><i class="fa-solid fa-clock mr-1"></i> ${tipoTrabalho}</span> &bull; 
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-1">
+                                    <h1 class="text-xl font-bold text-gray-900" id="txt-titulo"></h1>
+                                    ${seloRecente}
+                                    ${tempoPublicacao ? `<span class="text-xs font-medium text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full"><i class="fa-regular fa-clock mr-1"></i> ${tempoPublicacao}</span>` : ''}
+                                </div>
+                                <p class="text-sm text-gray-600 font-medium mb-2" id="txt-empresa"></p>
+                                <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500">
+                                    <span><i class="fa-solid fa-location-dot mr-1"></i> ${localizacao}</span>
+                                    <span><i class="fa-solid fa-clock mr-1"></i> ${tipoTrabalho}</span>
                                     <span>Prazo: ${prazo}</span>
+                                    <span class="text-emerald-600"><i class="fa-solid fa-eye mr-1"></i> ${visualizacoes} visualizações hoje</span>
                                 </div>
                             </div>
                         </div>
