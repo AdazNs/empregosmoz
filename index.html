@@ -140,15 +140,6 @@
                     <span>Buscar Vagas</span>
                 </button>
             </form>
-
-            <!-- Filtros Rápidos por Tipo de Contrato -->
-            <div class="flex flex-wrap items-center justify-center gap-2 pt-3 text-xs">
-                <span class="text-blue-100 font-medium">Filtro Rápido:</span>
-                <button onclick="filtrarPorTipoContrato('Tempo Inteiro')" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition">Tempo Inteiro</button>
-                <button onclick="filtrarPorTipoContrato('Estágio')" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition">Estágios</button>
-                <button onclick="filtrarPorTipoContrato('Parcial')" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition">Part-time</button>
-                <button onclick="filtrarPorTipoContrato('Remoto')" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition">Remoto</button>
-            </div>
         </div>
     </section>
 
@@ -174,7 +165,7 @@
         </div>
     </section>
 
-    <!-- Categorias em Destaque (Adaptadas e Sem Erros Ortográficos) -->
+    <!-- Categorias em Destaque -->
     <section id="categorias-seccao" class="max-w-7xl mx-auto px-4 py-8">
         <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Categorias em Destaque</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
@@ -484,17 +475,6 @@
         function carregarMaisVagas() {
             limiteExibicao += 5;
             renderizarVagas(todasVagas);
-        }
-
-        function filtrarPorTipoContrato(tipo) {
-            const filtradas = todasVagas.filter(v => {
-                const tipoVaga = v.tipo_trabalho ? v.tipo_trabalho.toLowerCase() : '';
-                return tipoVaga.includes(tipo.toLowerCase());
-            });
-            document.getElementById('titulo-seccao-vagas').textContent = `Vagas em Moçambique: ${tipo}`;
-            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
-            renderizarVagas(filtradas, false);
-            document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         }
 
         function filtrarPorCategoria(cat) {
