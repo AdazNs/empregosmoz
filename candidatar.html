@@ -65,7 +65,7 @@
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
 
-        // Função para formatar a data exata do Supabase no padrão local
+        // Função para formatar apenas a data real do Supabase (sem as horas)
         function formatarDataRealSupabase(dataIso) {
             if (!dataIso) return '';
             const data = new Date(dataIso);
@@ -76,9 +76,7 @@
             return data.toLocaleDateString('pt-MZ', {
                 day: '2-digit',
                 month: 'long',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
+                year: 'numeric'
             });
         }
 
