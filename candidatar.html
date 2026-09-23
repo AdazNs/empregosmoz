@@ -65,44 +65,21 @@
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
 
-        // Função para formatar o tempo relativo de publicação da vaga
-        function formatarTempoRelativo(dataIso) {
+        // Função para formatar a data exata do Supabase no padrão local
+        function formatarDataRealSupabase(dataIso) {
             if (!dataIso) return '';
-            const agora = new Date();
-            const dataPost = new Date(dataIso);
-            const segundos = Math.floor((agora - dataPost) / 1000);
+            const data = new Date(dataIso);
+            
+            // Verifica se a data é válida
+            if (isNaN(data.getTime())) return '';
 
-            if (segundos < 60) {
-                return segundos <= 1 ? "há 1 segundo" : `há ${segundos} segundos`;
-            }
-            
-            const minutos = Math.floor(segundos / 60);
-            if (minutos < 60) {
-                return `há ${minutos} ${minutos === 1 ? 'minuto' : 'minutos'}`;
-            }
-            
-            const horas = Math.floor(minutos / 60);
-            if (horas < 24) {
-                return `há ${horas} ${horas === 1 ? 'hora' : 'horas'}`;
-            }
-            
-            const dias = Math.floor(horas / 24);
-            if (dias < 7) {
-                return `há ${dias} ${dias === 1 ? 'dia' : 'dias'}`;
-            }
-            
-            const semanas = Math.floor(dias / 7);
-            if (semanas < 4) {
-                return `há ${semanas} ${semanas === 1 ? 'semana' : 'semanas'}`;
-            }
-            
-            const meses = Math.floor(dias / 30);
-            if (meses < 12) {
-                return `há ${meses} ${meses === 1 ? 'mês' : 'meses'}`;
-            }
-            
-            const anos = Math.floor(dias / 365);
-            return `há ${anos} ${anos === 1 ? 'ano' : 'anos'}`;
+            return data.toLocaleDateString('pt-MZ', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
         }
 
         // Função para transformar URLs e emails em links clicáveis automaticamente
@@ -177,11 +154,11 @@
                 const tagInfo = vaga.tag && vaga.tag.trim() !== '' ? vaga.tag : 'Nenhuma instrução detalhada disponível para esta vaga.';
                 const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
 
-                // Cálculo do tempo relativo e selo de "Novo"
-                let tempoPublicacao = '';
+                // Tratamento da data real do Supabase e verificação do selo de "Novo" (48h)
+                let dataFormatada = '';
                 let seloRecente = '';
                 if (vaga.created_at) {
-                    tempoPublicacao = formatarTempoRelativo(vaga.created_at);
+                    dataFormatada = formatarDataRealSupabase(vaga.created_at);
                     
                     const dataCriacao = new Date(vaga.created_at);
                     const agora = new Date();
@@ -205,7 +182,7 @@
                                 <div class="flex items-center gap-2 flex-wrap mb-1">
                                     <h1 class="text-xl font-bold text-gray-900" id="txt-titulo"></h1>
                                     ${seloRecente}
-                                    ${tempoPublicacao ? `<span class="text-xs font-medium text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full"><i class="fa-regular fa-clock mr-1"></i> ${tempoPublicacao}</span>` : ''}
+                                    ${dataFormatada ? `<span class="text-xs font-medium text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full"><i class="fa-regular fa-calendar-days mr-1"></i> ${dataFormatada}</span>` : ''}
                                 </div>
                                 <p class="text-sm text-gray-600 font-medium mb-2" id="txt-empresa"></p>
                                 <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-gray-500">
@@ -245,8 +222,6 @@
                 // Atribuição de textos normais e inserção da tag formatada com links clicáveis
                 document.getElementById('txt-titulo').textContent = titulo;
                 document.getElementById('txt-empresa').textContent = empresa;
-                
-                // Aplicar a função que converte links e emails em elementos clicáveis
                 document.getElementById('txt-tag').innerHTML = formatarLinksNaDescricao(tagInfo);
 
             } catch (err) {
