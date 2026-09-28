@@ -70,7 +70,6 @@
             if (!dataIso) return '';
             const data = new Date(dataIso);
             
-            // Verifica se a data é válida
             if (isNaN(data.getTime())) return '';
 
             return data.toLocaleDateString('pt-MZ', {
@@ -86,19 +85,66 @@
 
             let textoFormatado = texto;
 
-            // Regex para detetar URLs web
             const urlRegex = /(https?:\/\/[^\s]+)/g;
             textoFormatado = textoFormatado.replace(urlRegex, function(url) {
                 return `<a href="${url}" target="_blank" class="text-blue-600 underline hover:text-blue-800 break-all font-semibold" rel="noopener noreferrer">${url}</a>`;
             });
 
-            // Regex para detetar endereços de email
             const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
             textoFormatado = textoFormatado.replace(emailRegex, function(email) {
                 return `<a href="mailto:${email}" class="text-blue-600 underline hover:text-blue-800 font-semibold">${email}</a>`;
             });
 
             return textoFormatado;
+        }
+
+        // Função universal e infalível para copiar texto para a área de transferência
+        function copiarLinkAtual(feedbackElementId) {
+            const textoParaCopiar = window.location.href;
+
+            // Tenta usar a API moderna se disponível
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(textoParaCopiar).then(() => {
+                    mostrarFeedback(feedbackElementId);
+                }).catch(() => {
+                    copiarFallback(textoParaCopiar, feedbackElementId);
+                });
+            } else {
+                copiarFallback(textoParaCopiar, feedbackElementId);
+            }
+        }
+
+        // Método alternativo (Fallback) compatível com qualquer navegador/servidor
+        function copiarFallback(texto, feedbackElementId) {
+            const textArea = document.createElement("textarea");
+            textArea.value = texto;
+            textArea.style.position = "fixed";  // Evita scroll para o fundo
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.opacity = "0";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const sucesso = document.execCommand('copy');
+                if (sucesso) {
+                    mostrarFeedback(feedbackElementId);
+                }
+            } catch (err) {
+                console.error('Erro ao copiar link', err);
+            }
+
+            document.body.removeChild(textArea);
+        }
+
+        // Mostra a mensagem de sucesso temporária
+        function mostrarFeedback(feedbackId) {
+            const feedback = document.getElementById(feedbackId);
+            if (feedback) {
+                feedback.classList.remove('hidden');
+                setTimeout(() => feedback.classList.add('hidden'), 2500);
+            }
         }
 
         async function carregarDetalhesVaga() {
@@ -152,7 +198,6 @@
                 const tagInfo = vaga.tag && vaga.tag.trim() !== '' ? vaga.tag : 'Nenhuma instrução detalhada disponível para esta vaga.';
                 const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
 
-                // Tratamento da data real do Supabase e verificação do selo de "Novo" (48h)
                 let dataFormatada = '';
                 let seloRecente = '';
                 if (vaga.created_at) {
@@ -166,7 +211,7 @@
                     }
                 }
 
-                const visualizacoes = 52; // Simulação de visualizações
+                const visualizacoes = 52;
 
                 // Renderiza o layout
                 container.innerHTML = `
@@ -191,7 +236,7 @@
                                 </div>
                             </div>
 
-                            <!-- Botões de Partilha Modernos (Posição Superior Direita) -->
+                            <!-- Botões de Partilha Modernos (Desktop) -->
                             <div class="absolute top-6 right-6 hidden md:flex flex-col items-end gap-1.5">
                                 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Partilhar</span>
                                 <div class="flex items-center gap-1.5 bg-gray-50 p-1.5 rounded-xl border border-gray-100 shadow-sm">
@@ -200,7 +245,7 @@
                                     <a href="#" id="share-facebook" target="_blank" title="Facebook" class="w-8 h-8 rounded-lg bg-[#1877F2] hover:bg-blue-700 text-white flex items-center justify-center text-xs transition"><i class="fa-brands fa-facebook-f"></i></a>
                                     <a href="#" id="share-twitter" target="_blank" title="X (Twitter)" class="w-8 h-8 rounded-lg bg-gray-900 hover:bg-black text-white flex items-center justify-center text-xs transition"><i class="fa-brands fa-x-twitter"></i></a>
                                     <a href="#" id="share-sms" title="SMS" class="w-8 h-8 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center text-xs transition"><i class="fa-solid fa-comment-sms"></i></a>
-                                    <button id="share-copy" title="Copiar Link" class="w-8 h-8 rounded-lg bg-gray-600 hover:bg-gray-700 text-white flex items-center justify-center text-xs transition cursor-pointer"><i class="fa-solid fa-link"></i></button>
+                                    <button type="button" id="share-copy" title="Copiar Link" class="w-8 h-8 rounded-lg bg-gray-600 hover:bg-gray-700 text-white flex items-center justify-center text-xs transition cursor-pointer"><i class="fa-solid fa-link"></i></button>
                                 </div>
                                 <span id="copy-feedback" class="text-[10px] text-emerald-600 font-semibold hidden">Link copiado!</span>
                             </div>
@@ -214,7 +259,7 @@
                                 <a href="#" id="share-linkedin-m" target="_blank" class="px-3 py-1.5 rounded-lg bg-[#0A66C2] text-white text-xs flex items-center gap-1.5"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
                                 <a href="#" id="share-facebook-m" target="_blank" class="px-3 py-1.5 rounded-lg bg-[#1877F2] text-white text-xs flex items-center gap-1.5"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
                                 <a href="#" id="share-sms-m" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs flex items-center gap-1.5"><i class="fa-solid fa-comment-sms"></i> SMS</a>
-                                <button id="share-copy-m" class="px-3 py-1.5 rounded-lg bg-gray-600 text-white text-xs flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-link"></i> Copiar</button>
+                                <button type="button" id="share-copy-m" class="px-3 py-1.5 rounded-lg bg-gray-600 text-white text-xs flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-link"></i> Copiar</button>
                             </div>
                             <div id="copy-feedback-m" class="text-xs text-emerald-600 font-semibold text-center mt-2 hidden">Link copiado com sucesso!</div>
                         </div>
@@ -231,7 +276,6 @@
                                 </div>
                             </div>
 
-                            <!-- Texto da Tag com formatação automática de links -->
                             <div class="bg-white border border-blue-100 p-5 rounded-xl text-gray-800 text-sm leading-relaxed whitespace-pre-line shadow-sm" id="txt-tag">
                             </div>
 
@@ -244,12 +288,10 @@
                     </div>
                 `;
 
-                // Atribuição de textos normais e inserção da tag formatada com links clicáveis
                 document.getElementById('txt-titulo').textContent = titulo;
                 document.getElementById('txt-empresa').textContent = empresa;
                 document.getElementById('txt-tag').innerHTML = formatarLinksNaDescricao(tagInfo);
 
-                // Configuração dinâmica dos links de partilha (Desktop e Mobile)
                 const currentUrl = encodeURIComponent(window.location.href);
                 const pageTitle = encodeURIComponent(`${titulo} na ${empresa} - EmpregosMoz`);
 
@@ -266,24 +308,14 @@
                 document.getElementById('share-facebook-m').href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
                 document.getElementById('share-sms-m').href = `sms:?body=${pageTitle}%20${currentUrl}`;
 
-                // Ação de Copiar Link (Desktop)
-                const copyBtn = document.getElementById('share-copy');
-                const feedback = document.getElementById('copy-feedback');
-                copyBtn.addEventListener('click', function() {
-                    navigator.clipboard.writeText(window.location.href).then(function() {
-                        feedback.classList.remove('hidden');
-                        setTimeout(() => feedback.classList.add('hidden'), 2000);
-                    });
+                // Evento de Cópia Desktop
+                document.getElementById('share-copy').addEventListener('click', function() {
+                    copiarLinkAtual('copy-feedback');
                 });
 
-                // Ação de Copiar Link (Mobile)
-                const copyBtnM = document.getElementById('share-copy-m');
-                const feedbackM = document.getElementById('copy-feedback-m');
-                copyBtnM.addEventListener('click', function() {
-                    navigator.clipboard.writeText(window.location.href).then(function() {
-                        feedbackM.classList.remove('hidden');
-                        setTimeout(() => feedbackM.classList.add('hidden'), 2000);
-                    });
+                // Evento de Cópia Mobile
+                document.getElementById('share-copy-m').addEventListener('click', function() {
+                    copiarLinkAtual('copy-feedback-m');
                 });
 
             } catch (err) {
