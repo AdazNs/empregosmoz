@@ -54,6 +54,7 @@
                     <a href="index.html" class="text-blue-600 dark:text-blue-400 font-semibold border-b-2 border-blue-600 pb-1">Vagas</a>
                     <a href="#categorias-seccao" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Categorias</a>
                     <a href="#ultimas-vagas" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Recentes</a>
+                    <a href="#links-uteis" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Links Úteis</a>
                 </nav>
 
                 <!-- Botões à Direita (Modo Escuro + Menu de Traços) -->
@@ -98,6 +99,9 @@
                 </a>
                 <a href="#ultimas-vagas" onclick="fecharDrawer()" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa-solid fa-clock-rotate-left mr-2"></i> Vagas Recentes
+                </a>
+                <a href="#links-uteis" onclick="fecharDrawer()" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="fa-solid fa-link mr-2"></i> Links Úteis
                 </a>
                 <a href="#" onclick="fecharDrawer(); abrirPagina('traducao'); return false;" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 text-emerald-600 dark:text-emerald-400 font-semibold">
                     <i class="fa-solid fa-language mr-2"></i> Tradução Ajuramentada
@@ -224,6 +228,84 @@
         </div>
     </main>
 
+    <!-- Secção de Links Úteis -->
+    <section id="links-uteis" class="max-w-7xl mx-auto px-3 sm:px-4 py-8 w-full">
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm">
+            <h2 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-link text-blue-600 dark:text-blue-400"></i> Links Úteis em Moçambique
+            </h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-6">Aceda rapidamente a portais institucionais e de serviços essenciais no país.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- NUIT -->
+                <a href="https://nuit.at.gov.mz/nuit/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
+                    <div class="p-2.5 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition flex-shrink-0">
+                        <i class="fa-solid fa-id-card text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">Consulta NUIT</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">Autoridade Tributária de Moçambique</p>
+                    </div>
+                </a>
+
+                <!-- ePBI - Pedido electrónico do BI -->
+                <a href="https://www.dnic.gov.mz/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
+                    <div class="p-2.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition flex-shrink-0">
+                        <i class="fa-solid fa-address-card text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">ePBI - Bilhete de Identidade</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">Direcção Nacional de Identificação Civil</p>
+                    </div>
+                </a>
+
+                <!-- Documentos Migratórios -->
+                <a href="https://agendamento.senami.gov.mz/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
+                    <div class="p-2.5 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition flex-shrink-0">
+                        <i class="fa-solid fa-passport text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">Documentos Migratórios</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">Portal Digital SENAMI (Passaporte, etc.)</p>
+                    </div>
+                </a>
+
+                <!-- Registos e Notariado -->
+                <a href="https://utente.srn.gov.mz/v71/Entrada" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
+                    <div class="p-2.5 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition flex-shrink-0">
+                        <i class="fa-solid fa-file-shield text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">Registos e Notariado</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">Registo Criminal, Civil e Propriedade</p>
+                    </div>
+                </a>
+
+                <!-- Portal do Munícipe -->
+                <a href="https://www.eacacia.gov.mz/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
+                    <div class="p-2.5 rounded-lg bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition flex-shrink-0">
+                        <i class="fa-solid fa-city text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">Portal do Munícipe</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">Serviços Municipais e Autárquicos</p>
+                    </div>
+                </a>
+
+                <!-- EBAU - Balcão Virtual -->
+                <a href="https://www.ebau.gov.mz/#/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
+                    <div class="p-2.5 rounded-lg bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400 group-hover:scale-110 transition flex-shrink-0">
+                        <i class="fa-solid fa-building-columns text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">Balcão Virtual (EBAU)</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">Atendimento Único e Licenciamentos</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Modal Geral para Páginas do Rodapé e Afins -->
     <div id="modal-geral" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
@@ -258,6 +340,7 @@
                 <h4 class="text-white text-xs sm:text-sm font-semibold mb-3">Para Candidatos</h4>
                 <ul class="space-y-2 text-xs">
                     <li><a href="#ultimas-vagas" class="hover:text-white transition">Procurar Vagas</a></li>
+                    <li><a href="#links-uteis" class="hover:text-white transition">Links Úteis</a></li>
                     <li><a href="#" onclick="abrirPagina('traducao'); return false;" class="hover:text-emerald-400 text-emerald-500 transition font-medium"><i class="fa-solid fa-language mr-1"></i> Tradução Ajuramentada</a></li>
                     <li><a href="#" onclick="abrirPagina('curriculo'); return false;" class="hover:text-white transition">Como Criar um Currículo Vencedor</a></li>
                     <li><a href="#" onclick="abrirPagina('entrevista'); return false;" class="hover:text-white transition">Dominar a Entrevista</a></li>
