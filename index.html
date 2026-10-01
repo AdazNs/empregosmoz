@@ -171,7 +171,7 @@
     <!-- Categorias em Destaque -->
     <section id="categorias-seccao" class="max-w-7xl mx-auto px-4 py-8">
         <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Categorias em Destaque</h2>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-3">
             <button onclick="filtrarPorCategoria('ONGs')" class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
                 <i class="fa-solid fa-hand-holding-heart text-2xl text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition"></i>
                 <h3 class="text-xs font-semibold text-gray-700 dark:text-gray-200">ONGs & Humanitário</h3>
@@ -195,6 +195,10 @@
             <button onclick="filtrarPorCategoria('Engenharia')" class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
                 <i class="fa-solid fa-toolbox text-2xl text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition"></i>
                 <h3 class="text-xs font-semibold text-gray-700 dark:text-gray-200">Engenharia & Minas</h3>
+            </button>
+            <button onclick="filtrarPorCategoria('Outros')" class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
+                <i class="fa-solid fa-ellipsis text-2xl text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition"></i>
+                <h3 class="text-xs font-semibold text-gray-700 dark:text-gray-200">Outros</h3>
             </button>
         </div>
     </section>
@@ -481,13 +485,25 @@
         }
 
         function filtrarPorCategoria(cat) {
+            const termoCat = cat.toLowerCase();
+            
             const filtradas = todasVagas.filter(v => {
                 const tituloVaga = (v.titulo || v.title || '').toLowerCase();
                 const descVaga = (v.descricao || v.description || '').toLowerCase();
-                const categoriaVaga = (v.categoria || '').toLowerCase();
-                const termoCat = cat.toLowerCase();
-                return tituloVaga.includes(termoCat) || descVaga.includes(termoCat) || categoriaVaga.includes(termoCat);
+                const categoriaVaga = (v.categoria || v.category || '').toLowerCase();
+                
+                let corresponde = categoriaVaga.includes(termoCat) || 
+                                  tituloVaga.includes(termoCat) || 
+                                  descVaga.includes(termoCat);
+
+                if (termoCat === 'tecnologia' && (categoriaVaga.includes('ti') || categoriaVaga.includes('informática'))) corresponde = true;
+                if (termoCat === 'finanças' && (categoriaVaga.includes('contabilidade') || categoriaVaga.includes('banca'))) corresponde = true;
+                if (termoCat === 'logística' && (categoriaVaga.includes('frota') || categoriaVaga.includes('transportes'))) corresponde = true;
+                if (termoCat === 'ongs' && (categoriaVaga.includes('humanitário') || categoriaVaga.includes('ong'))) corresponde = true;
+
+                return corresponde;
             });
+
             document.getElementById('titulo-seccao-vagas').textContent = `Vagas em Moçambique: ${cat}`;
             document.getElementById('btn-limpar-filtro').classList.remove('hidden');
             renderizarVagas(filtradas, false);
