@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes da Vaga - EmpregosMoz</title>
+    
+    <!-- Meta Tags Básicas de SEO -->
+    <meta name="description" content="Encontre oportunidades de emprego e estágios em Moçambique no EmpregosMoz." />
+    <meta property="og:title" content="Detalhes da Vaga - EmpregosMoz" />
+    <meta property="og:description" content="Oportunidade de emprego disponível no portal EmpregosMoz." />
+    <meta property="og:type" content="website" />
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -69,9 +75,7 @@
         function formatarDataRealSupabase(dataIso) {
             if (!dataIso) return '';
             const data = new Date(dataIso);
-            
             if (isNaN(data.getTime())) return '';
-
             return data.toLocaleDateString('pt-MZ', {
                 day: '2-digit',
                 month: 'long',
@@ -82,7 +86,6 @@
         // Função para transformar URLs e emails em links clicáveis automaticamente
         function formatarLinksNaDescricao(texto) {
             if (!texto) return '';
-
             let textoFormatado = texto;
 
             const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -98,11 +101,9 @@
             return textoFormatado;
         }
 
-        // Função universal e infalível para copiar texto para a área de transferência
+        // Função universal para copiar texto para a área de transferência
         function copiarLinkAtual(feedbackElementId) {
             const textoParaCopiar = window.location.href;
-
-            // Tenta usar a API moderna se disponível
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(textoParaCopiar).then(() => {
                     mostrarFeedback(feedbackElementId);
@@ -114,11 +115,10 @@
             }
         }
 
-        // Método alternativo (Fallback) compatível com qualquer navegador/servidor
         function copiarFallback(texto, feedbackElementId) {
             const textArea = document.createElement("textarea");
             textArea.value = texto;
-            textArea.style.position = "fixed";  // Evita scroll para o fundo
+            textArea.style.position = "fixed";
             textArea.style.top = "0";
             textArea.style.left = "0";
             textArea.style.opacity = "0";
@@ -134,11 +134,9 @@
             } catch (err) {
                 console.error('Erro ao copiar link', err);
             }
-
             document.body.removeChild(textArea);
         }
 
-        // Mostra a mensagem de sucesso temporária
         function mostrarFeedback(feedbackId) {
             const feedback = document.getElementById(feedbackId);
             if (feedback) {
@@ -147,12 +145,28 @@
             }
         }
 
+        // Extrai o ID da vaga quer venha de ?id=X ou de /vaga/X
+        function obterIdDaVaga() {
+            // 1. Tentar via Query String clássica (?id=58)
+            const urlParams = new URLSearchParams(window.location.search);
+            const idQuery = urlParams.get('id');
+            if (idQuery) return idQuery;
+
+            // 2. Tentar via Clean URL (/vaga/58 ou /candidatar/58)
+            const partesPath = window.location.pathname.split('/').filter(Boolean);
+            const ultimoSegmento = partesPath[partesPath.length - 1];
+            if (ultimoSegmento && !isNaN(ultimoSegmento)) {
+                return ultimoSegmento;
+            }
+
+            return null;
+        }
+
         async function carregarDetalhesVaga() {
             const container = document.getElementById('container-candidatura');
             
             try {
-                const urlParams = new URLSearchParams(window.location.search);
-                const vagaId = urlParams.get('id');
+                const vagaId = obterIdDaVaga();
 
                 if (!vagaId) {
                     container.innerHTML = `
@@ -198,11 +212,15 @@
                 const tagInfo = vaga.tag && vaga.tag.trim() !== '' ? vaga.tag : 'Nenhuma instrução detalhada disponível para esta vaga.';
                 const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
 
+                // Atualizar dinamicamente o título e metadados da página no navegador
+                document.title = `${titulo} na ${empresa} - EmpregosMoz`;
+                const metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc) metaDesc.setAttribute("content", `Candidate-se à vaga de ${titulo} em ${localizacao}. Saiba mais no EmpregosMoz.`);
+
                 let dataFormatada = '';
                 let seloRecente = '';
                 if (vaga.created_at) {
                     dataFormatada = formatarDataRealSupabase(vaga.created_at);
-                    
                     const dataCriacao = new Date(vaga.created_at);
                     const agora = new Date();
                     const horasDiferenca = Math.abs(agora - dataCriacao) / 36e5;
@@ -308,15 +326,9 @@
                 document.getElementById('share-facebook-m').href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
                 document.getElementById('share-sms-m').href = `sms:?body=${pageTitle}%20${currentUrl}`;
 
-                // Evento de Cópia Desktop
-                document.getElementById('share-copy').addEventListener('click', function() {
-                    copiarLinkAtual('copy-feedback');
-                });
-
-                // Evento de Cópia Mobile
-                document.getElementById('share-copy-m').addEventListener('click', function() {
-                    copiarLinkAtual('copy-feedback-m');
-                });
+                // Evento de Cópia
+                document.getElementById('share-copy').addEventListener('click', () => copiarLinkAtual('copy-feedback'));
+                document.getElementById('share-copy-m').addEventListener('click', () => copiarLinkAtual('copy-feedback-m'));
 
             } catch (err) {
                 console.error('Erro:', err);
