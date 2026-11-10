@@ -71,7 +71,7 @@
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
 
-        // Função para formatar apenas a data real do Supabase (sem as horas)
+        // Formata a data real do Supabase
         function formatarDataRealSupabase(dataIso) {
             if (!dataIso) return '';
             const data = new Date(dataIso);
@@ -83,7 +83,7 @@
             });
         }
 
-        // Função para transformar URLs e emails em links clicáveis automaticamente
+        // Transforma URLs e emails em links clicáveis
         function formatarLinksNaDescricao(texto) {
             if (!texto) return '';
             let textoFormatado = texto;
@@ -101,7 +101,7 @@
             return textoFormatado;
         }
 
-        // Função universal para copiar texto para a área de transferência
+        // Copiar link para a área de transferência
         function copiarLinkAtual(feedbackElementId) {
             const textoParaCopiar = window.location.href;
             if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -128,9 +128,7 @@
 
             try {
                 const sucesso = document.execCommand('copy');
-                if (sucesso) {
-                    mostrarFeedback(feedbackElementId);
-                }
+                if (sucesso) mostrarFeedback(feedbackElementId);
             } catch (err) {
                 console.error('Erro ao copiar link', err);
             }
@@ -145,21 +143,26 @@
             }
         }
 
-        // Extrai o ID da vaga quer venha de ?id=X ou de /vaga/X
+        // Extrai o ID numérico da vaga de qualquer estrutura de URL
         function obterIdDaVaga() {
-            // 1. Tentar via Query String clássica (?id=58)
-            const urlParams = new URLSearchParams(window.location.search);
-            const idQuery = urlParams.get('id');
-            if (idQuery) return idQuery;
-
-            // 2. Tentar via Clean URL (/vaga/58 ou /candidatar/58)
             const partesPath = window.location.pathname.split('/').filter(Boolean);
-            const ultimoSegmento = partesPath[partesPath.length - 1];
-            if (ultimoSegmento && !isNaN(ultimoSegmento)) {
-                return ultimoSegmento;
+            
+            // 1. Procura na URL por qualquer segmento que seja puramente numérico (ex: /vaga/58/engenheiro-de-seguranca/)
+            for (let parte of partesPath) {
+                if (/^\d+$/.test(parte)) {
+                    return parte;
+                }
             }
 
-            return null;
+            // 2. Procura por formato combinado (ex: /vaga/58-engenheiro-de-seguranca/)
+            for (let parte of partesPath) {
+                const match = parte.match(/^(\d+)-/);
+                if (match) return match[1];
+            }
+
+            // 3. Fallback para parâmetro clássico de query string (?id=58)
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
         }
 
         async function carregarDetalhesVaga() {
@@ -178,6 +181,7 @@
                     return;
                 }
 
+                // Consulta direta e ultra-rápida no Supabase pelo ID da vaga
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/vagas?id=eq.${vagaId}`, {
                     method: 'GET',
                     headers: {
@@ -212,7 +216,7 @@
                 const tagInfo = vaga.tag && vaga.tag.trim() !== '' ? vaga.tag : 'Nenhuma instrução detalhada disponível para esta vaga.';
                 const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
 
-                // Atualizar dinamicamente o título e metadados da página no navegador
+                // Metadados da página
                 document.title = `${titulo} na ${empresa} - EmpregosMoz`;
                 const metaDesc = document.querySelector('meta[name="description"]');
                 if (metaDesc) metaDesc.setAttribute("content", `Candidate-se à vaga de ${titulo} em ${localizacao}. Saiba mais no EmpregosMoz.`);
@@ -231,7 +235,7 @@
 
                 const visualizacoes = 52;
 
-                // Renderiza o layout
+                // Renderiza a página de detalhes
                 container.innerHTML = `
                     <div class="space-y-6">
                         <!-- Cabeçalho da Vaga -->
@@ -254,7 +258,7 @@
                                 </div>
                             </div>
 
-                            <!-- Botões de Partilha Modernos (Desktop) -->
+                            <!-- Botões de Partilha Desktop -->
                             <div class="absolute top-6 right-6 hidden md:flex flex-col items-end gap-1.5">
                                 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Partilhar</span>
                                 <div class="flex items-center gap-1.5 bg-gray-50 p-1.5 rounded-xl border border-gray-100 shadow-sm">
@@ -269,7 +273,7 @@
                             </div>
                         </div>
 
-                        <!-- Versão Responsiva para Telemóveis -->
+                        <!-- Botões de Partilha Mobile -->
                         <div class="block md:hidden bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
                             <span class="text-xs font-bold text-gray-500 block mb-2 text-center">Partilhar esta vaga:</span>
                             <div class="flex items-center justify-center gap-2 flex-wrap">
@@ -313,20 +317,18 @@
                 const currentUrl = encodeURIComponent(window.location.href);
                 const pageTitle = encodeURIComponent(`${titulo} na ${empresa} - EmpregosMoz`);
 
-                // Links Desktop
+                // Links de partilha
                 document.getElementById('share-whatsapp').href = `https://api.whatsapp.com/send?text=${pageTitle}%20${currentUrl}`;
                 document.getElementById('share-linkedin').href = `https://www.linkedin.com/sharing/share-offsite/?url=${currentUrl}`;
                 document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
                 document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?text=${pageTitle}&url=${currentUrl}`;
                 document.getElementById('share-sms').href = `sms:?body=${pageTitle}%20${currentUrl}`;
 
-                // Links Mobile
                 document.getElementById('share-whatsapp-m').href = `https://api.whatsapp.com/send?text=${pageTitle}%20${currentUrl}`;
                 document.getElementById('share-linkedin-m').href = `https://www.linkedin.com/sharing/share-offsite/?url=${currentUrl}`;
                 document.getElementById('share-facebook-m').href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
                 document.getElementById('share-sms-m').href = `sms:?body=${pageTitle}%20${currentUrl}`;
 
-                // Evento de Cópia
                 document.getElementById('share-copy').addEventListener('click', () => copiarLinkAtual('copy-feedback'));
                 document.getElementById('share-copy-m').addEventListener('click', () => copiarLinkAtual('copy-feedback-m'));
 
