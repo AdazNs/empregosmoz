@@ -14,7 +14,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
+      gtag('config', 'G-9QNPMMY82T');
     </script>
 
     <!-- Tailwind CSS -->
@@ -57,14 +57,14 @@
                     <a href="#links-uteis" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Links Úteis</a>
                 </nav>
 
-                <!-- Botões à Direita (Modo Escuro + Menu de Traços) -->
+                <!-- Botões à Direita -->
                 <div class="flex items-center space-x-2 sm:space-x-3">
                     <!-- Botão Dark Mode -->
                     <button onclick="toggleDarkMode()" aria-label="Alternar Tema" class="p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
                         <i id="theme-icon" class="fa-solid fa-moon text-base sm:text-lg"></i>
                     </button>
 
-                    <!-- Botão Menu com Barras de Traços -->
+                    <!-- Botão Menu Drawer -->
                     <button id="menu-drawer-btn" aria-label="Abrir Menu Lateral" class="bg-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400 p-2 sm:p-2.5 rounded-xl hover:bg-blue-100 dark:hover:bg-gray-600 transition flex items-center gap-2 font-medium text-xs sm:text-sm">
                         <div class="space-y-1 w-4 sm:w-5 flex flex-col items-end">
                             <span class="block h-0.5 w-4 sm:w-5 bg-current rounded-full"></span>
@@ -78,7 +78,7 @@
         </div>
     </header>
 
-    <!-- Gaveta do Menu Lateral (Sidebar Drawer) -->
+    <!-- Gaveta do Menu Lateral -->
     <div id="drawer-overlay" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden transition-opacity"></div>
     <div id="drawer-menu" class="fixed top-0 right-0 z-50 h-full w-80 bg-white dark:bg-gray-800 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col justify-between p-6">
         <div>
@@ -102,12 +102,6 @@
                 </a>
                 <a href="#links-uteis" onclick="fecharDrawer()" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa-solid fa-link mr-2"></i> Links Úteis
-                </a>
-                <a href="#" onclick="fecharDrawer(); abrirPagina('traducao'); return false;" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 text-emerald-600 dark:text-emerald-400 font-semibold">
-                    <i class="fa-solid fa-language mr-2"></i> Tradução Ajuramentada
-                </a>
-                <a href="#" onclick="alert('Funcionalidade de login em breve!'); return false;" class="block py-2.5 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <i class="fa-solid fa-user mr-2"></i> Entrar / Minha Conta
                 </a>
             </div>
         </div>
@@ -162,7 +156,7 @@
                 <p class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">Empresas Anunciantes</p>
             </div>
             <div>
-                <p id="stat-candidatos" class="text-xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400">100%</p>
+                <p class="text-xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400">100%</p>
                 <p class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">Gratuito para Candidatos</p>
             </div>
             <div>
@@ -237,7 +231,6 @@
             <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-6">Aceda rapidamente a portais institucionais e de serviços essenciais no país.</p>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- NUIT -->
                 <a href="https://nuit.at.gov.mz/nuit/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
                     <div class="p-2.5 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition flex-shrink-0">
                         <i class="fa-solid fa-id-card text-base"></i>
@@ -248,7 +241,6 @@
                     </div>
                 </a>
 
-                <!-- ePBI - Pedido electrónico do BI -->
                 <a href="https://www.dnic.gov.mz/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
                     <div class="p-2.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition flex-shrink-0">
                         <i class="fa-solid fa-address-card text-base"></i>
@@ -259,7 +251,6 @@
                     </div>
                 </a>
 
-                <!-- Documentos Migratórios -->
                 <a href="https://agendamento.senami.gov.mz/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
                     <div class="p-2.5 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition flex-shrink-0">
                         <i class="fa-solid fa-passport text-base"></i>
@@ -270,7 +261,6 @@
                     </div>
                 </a>
 
-                <!-- Registos e Notariado -->
                 <a href="https://utente.srn.gov.mz/v71/Entrada" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
                     <div class="p-2.5 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition flex-shrink-0">
                         <i class="fa-solid fa-file-shield text-base"></i>
@@ -281,7 +271,6 @@
                     </div>
                 </a>
 
-                <!-- Portal do Munícipe -->
                 <a href="https://www.eacacia.gov.mz/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
                     <div class="p-2.5 rounded-lg bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition flex-shrink-0">
                         <i class="fa-solid fa-city text-base"></i>
@@ -292,7 +281,6 @@
                     </div>
                 </a>
 
-                <!-- EBAU - Balcão Virtual -->
                 <a href="https://www.ebau.gov.mz/#/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
                     <div class="p-2.5 rounded-lg bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400 group-hover:scale-110 transition flex-shrink-0">
                         <i class="fa-solid fa-building-columns text-base"></i>
@@ -306,27 +294,9 @@
         </div>
     </section>
 
-    <!-- Modal Geral para Páginas do Rodapé e Afins -->
-    <div id="modal-geral" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="fecharModalGeral()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-lg">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div id="conteudo-modal" class="space-y-3 text-xs md:text-sm text-gray-700 dark:text-gray-200">
-                <!-- Conteúdo injetado via JS -->
-            </div>
-            <div class="mt-6 text-right">
-                <button onclick="fecharModalGeral()" class="bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-xl hover:bg-blue-700 transition cursor-pointer">
-                    Fechar
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- Rodapé Completo -->
     <footer class="bg-gray-900 text-gray-400 py-8 sm:py-10 mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8">
-            <!-- Coluna 1: Sobre / Identidade -->
             <div>
                 <a href="index.html" class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2 mb-3">
                     <i class="fa-solid fa-briefcase text-blue-500"></i>
@@ -335,35 +305,25 @@
                 <p class="text-xs leading-relaxed">O portal líder em oportunidades de emprego, estágios e carreiras em Moçambique.</p>
             </div>
 
-            <!-- Coluna 2: Para Candidatos -->
             <div>
                 <h4 class="text-white text-xs sm:text-sm font-semibold mb-3">Para Candidatos</h4>
                 <ul class="space-y-2 text-xs">
                     <li><a href="#ultimas-vagas" class="hover:text-white transition">Procurar Vagas</a></li>
                     <li><a href="#links-uteis" class="hover:text-white transition">Links Úteis</a></li>
-                    <li><a href="#" onclick="abrirPagina('traducao'); return false;" class="hover:text-emerald-400 text-emerald-500 transition font-medium"><i class="fa-solid fa-language mr-1"></i> Tradução Ajuramentada</a></li>
-                    <li><a href="#" onclick="abrirPagina('curriculo'); return false;" class="hover:text-white transition">Como Criar um Currículo Vencedor</a></li>
-                    <li><a href="#" onclick="abrirPagina('entrevista'); return false;" class="hover:text-white transition">Dominar a Entrevista</a></li>
                 </ul>
             </div>
 
-            <!-- Coluna 3: Institucional -->
             <div>
                 <h4 class="text-white text-xs sm:text-sm font-semibold mb-3">Institucional</h4>
                 <ul class="space-y-2 text-xs">
-                    <li><a href="#" onclick="abrirPagina('sobre'); return false;" class="hover:text-white transition">Sobre Nós</a></li>
-                    <li><a href="#" onclick="abrirPagina('privacidade'); return false;" class="hover:text-white transition">Política de Privacidade</a></li>
-                    <li><a href="#" onclick="abrirPagina('contacto'); return false;" class="hover:text-white transition">Contacto & Suporte</a></li>
+                    <li><a href="#" onclick="alert('Portal EmpregosMoz - Moçambique.'); return false;" class="hover:text-white transition">Sobre Nós</a></li>
                 </ul>
             </div>
 
-            <!-- Coluna 4: Recrutadores -->
             <div>
                 <h4 class="text-white text-xs sm:text-sm font-semibold mb-3">Para Recrutadores</h4>
                 <ul class="space-y-2 text-xs">
                     <li><a href="#" onclick="alert('Funcionalidades para recrutadores em desenvolvimento.'); return false;" class="hover:text-white transition">Publicar Vaga</a></li>
-                    <li><a href="#" onclick="alert('Funcionalidades para recrutadores em desenvolvimento.'); return false;" class="hover:text-white transition">Pesquisar CVs</a></li>
-                    <li><a href="#" onclick="alert('Funcionalidades para recrutadores em desenvolvimento.'); return false;" class="hover:text-white transition">Planos de Anúncios</a></li>
                 </ul>
             </div>
         </div>
@@ -380,7 +340,7 @@
         let todasVagas = [];
         let vagasFiltradas = [];
         let paginaAtual = 1;
-        const itensPorPagina = 8; // Número de vagas por página
+        const itensPorPagina = 8;
 
         // Gestão da Gaveta do Menu Lateral
         const drawerMenu = document.getElementById('drawer-menu');
@@ -420,6 +380,20 @@
         if (localStorage.getItem('theme') === 'dark') {
             document.documentElement.classList.add('dark');
             document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // Função para criar a Slug amigável para SEO
+        function criarSlug(texto) {
+            if (!texto) return 'vaga';
+            return texto
+                .toString()
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .trim()
+                .replace(/[^a-z0-9 -]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
         }
 
         // Função para formatar o tempo relativo de publicação
@@ -466,18 +440,23 @@
                 mudarPagina(1);
             } catch (err) {
                 console.error(err);
-                document.getElementById('lista-vagas').innerHTML = '<p class="text-red-500 text-center py-4">Erro ao carregar as vagas do servidor.</p>';
+                document.getElementById('lista-vagas').innerHTML = '<p class="text-red-500 text-center py-4">Erro ao carregar as vagas. Tente novamente mais tarde.</p>';
             }
         }
 
-        // Função de paginação e renderização das vagas
         function mudarPagina(pagina) {
             paginaAtual = pagina;
-            const listaVagas = document.getElementById('lista-vagas');
+            const listaContainer = document.getElementById('lista-vagas');
             const paginacaoContainer = document.getElementById('paginacao-container');
 
             if (vagasFiltradas.length === 0) {
-                listaVagas.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-6">Nenhuma vaga encontrada com estes critérios.</p>';
+                listaContainer.innerHTML = `
+                    <div class="text-center py-12 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
+                        <i class="fa-solid fa-triangle-exclamation text-3xl text-amber-500 mb-3"></i>
+                        <p class="font-bold text-gray-800 dark:text-gray-200">Nenhuma vaga encontrada.</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Tente pesquisar com outros termos ou categorias.</p>
+                    </div>
+                `;
                 paginacaoContainer.innerHTML = '';
                 return;
             }
@@ -486,249 +465,119 @@
             const fim = inicio + itensPorPagina;
             const vagasPagina = vagasFiltradas.slice(inicio, fim);
 
-            listaVagas.innerHTML = vagasPagina.map((vaga, index) => {
-                const id = vaga.id || '#';
-                const titulo = vaga.titulo || vaga.title || 'Vaga Sem Título';
-                const empresa = vaga.empresa || vaga.company || 'Empresa Privada';
-                const localizacao = vaga.localizacao || vaga.cidade || 'Moçambique';
-                const tipoTrabalho = vaga.tipo_trabalho || 'Tempo Inteiro';
-                const prazo = vaga.prazo || 'Aberto';
-                const inicial = empresa.substring(0, 3).toUpperCase();
+            listaContainer.innerHTML = vagasPagina.map(vaga => {
+                const titulo = vaga.titulo || vaga.title || vaga.cargo || 'Vaga Sem Título';
+                const empresa = vaga.empresa || vaga.empresa_nome || vaga.company || 'Empresa Privada';
+                const localizacao = vaga.localizacao || vaga.local || vaga.cidade || vaga.location || 'Moçambique';
+                const tipoTrabalho = vaga.tipo_trabalho || vaga.tipo || vaga.job_type || 'Tempo Inteiro';
+                const prazo = vaga.prazo || vaga.data_limite || vaga.deadline || 'Aberto';
+                const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
 
-                let tempoPublicacao = '';
+                // GERAÇÃO DA URL LIMPA E AMIGÁVEL PARA SEO (/vaga/ID/slug/)
+                const slug = criarSlug(titulo);
+                const urlDetalhes = `vaga/${vaga.id}/${slug}/`;
+
+                let tempoDecorrido = '';
                 let seloRecente = '';
                 if (vaga.created_at) {
-                    tempoPublicacao = formatarTempoRelativo(vaga.created_at);
+                    tempoDecorrido = formatarTempoRelativo(vaga.created_at);
                     const dataCriacao = new Date(vaga.created_at);
                     const agora = new Date();
                     const horasDiferenca = Math.abs(agora - dataCriacao) / 36e5;
                     if (horasDiferenca <= 48) {
-                        seloRecente = '<span class="bg-emerald-100 text-emerald-700 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide inline-flex items-center gap-1"><i class="fa-solid fa-fire text-emerald-500"></i> Novo</span>';
+                        seloRecente = '<span class="bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide inline-flex items-center gap-1"><i class="fa-solid fa-fire text-emerald-500"></i> Novo</span>';
                     }
                 }
 
-                const visualizacoes = (inicio + index + 4) * 7;
-
                 return `
-                    <div class="bg-white dark:bg-gray-800 p-3.5 sm:p-5 rounded-2xl border ${seloRecente ? 'border-emerald-300 dark:border-emerald-600 shadow-sm bg-gradient-to-r from-emerald-50/20 to-white dark:from-emerald-950/20 dark:to-gray-800' : 'border-gray-200 dark:border-gray-700'} hover:border-blue-400 hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+                    <a href="${urlDetalhes}" class="block bg-white dark:bg-gray-800 border ${seloRecente ? 'border-emerald-300 dark:border-emerald-600 shadow-sm bg-gradient-to-r from-emerald-50/20 to-white dark:from-emerald-950/20 dark:to-gray-800' : 'border-gray-200 dark:border-gray-700'} hover:border-blue-500 dark:hover:border-blue-400 p-4 sm:p-5 rounded-2xl shadow-sm transition group">
                         <div class="flex items-start gap-3 sm:gap-4">
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-sm sm:text-lg flex-shrink-0">
-                                ${inicial}
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-base sm:text-lg flex-shrink-0 group-hover:scale-105 transition">
+                                ${inicialEmpresa}
                             </div>
-                            <div>
+                            <div class="flex-1 min-w-0">
                                 <div class="flex items-center gap-2 flex-wrap mb-1">
-                                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white hover:text-blue-600">
-                                        <a href="candidatar.html?id=${id}">${titulo}</a>
-                                    </h3>
+                                    <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition truncate">${titulo}</h3>
                                     ${seloRecente}
-                                    ${tempoPublicacao ? `<span class="text-[10px] sm:text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded-full"><i class="fa-regular fa-clock mr-1"></i> ${tempoPublicacao}</span>` : ''}
+                                    ${tempoDecorrido ? `<span class="text-[10px] text-gray-500 dark:text-gray-400 ml-auto font-medium"><i class="fa-regular fa-clock mr-1"></i>${tempoDecorrido}</span>` : ''}
                                 </div>
-                                <div class="flex flex-wrap gap-y-1 gap-x-3 sm:gap-x-4 text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1.5 sm:mt-2">
-                                    <span><i class="fa-solid fa-building mr-1"></i> ${empresa}</span>
-                                    <span><i class="fa-solid fa-location-dot mr-1"></i> ${localizacao}</span>
-                                    <span><i class="fa-solid fa-clock mr-1"></i> ${tipoTrabalho}</span>
-                                    <span class="text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-eye mr-1"></i> ${visualizacoes} visualizações hoje</span>
+                                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-medium mb-2">${empresa}</p>
+                                <div class="flex flex-wrap gap-y-1 gap-x-3 text-[11px] sm:text-xs text-gray-500 dark:text-gray-400">
+                                    <span><i class="fa-solid fa-location-dot mr-1 text-blue-500"></i> ${localizacao}</span>
+                                    <span><i class="fa-solid fa-clock mr-1 text-emerald-500"></i> ${tipoTrabalho}</span>
+                                    <span>Prazo: ${prazo}</span>
                                 </div>
                             </div>
+                            <div class="hidden sm:flex items-center self-center text-blue-600 dark:text-blue-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition transform translate-x-1 group-hover:translate-x-0">
+                                Candidatar <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </div>
                         </div>
-                        <div class="flex items-center justify-between md:justify-end gap-3 pt-2.5 sm:pt-0 border-t md:border-0 border-gray-100 dark:border-gray-700">
-                            <span class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400">Prazo: ${prazo}</span>
-                            <a href="candidatar.html?id=${id}" class="bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-medium transition">
-                                Candidatar-se
-                            </a>
-                        </div>
-                    </div>
+                    </a>
                 `;
             }).join('');
 
-            renderizarBotoesPaginacao();
-        }
-
-        function renderizarBotoesPaginacao() {
-            const paginacaoContainer = document.getElementById('paginacao-container');
+            // Renderizar Paginação
             const totalPaginas = Math.ceil(vagasFiltradas.length / itensPorPagina);
-
-            if (totalPaginas <= 1) {
-                paginacaoContainer.innerHTML = '';
-                return;
-            }
-
-            let html = '';
-
-            // Botão Anterior
-            if (paginaAtual > 1) {
-                html += `<button onclick="mudarPagina(${paginaAtual - 1})" class="px-3 py-1.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition">Anterior</button>`;
-            }
-
-            // Números das Páginas
-            for (let i = 1; i <= totalPaginas; i++) {
-                if (i === paginaAtual) {
-                    html += `<button class="px-3.5 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-sm">${i}</button>`;
-                } else {
-                    html += `<button onclick="mudarPagina(${i})" class="px-3.5 py-1.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition">${i}</button>`;
+            if (totalPaginas > 1) {
+                let paginacaoHtml = '';
+                for (let i = 1; i <= totalPaginas; i++) {
+                    paginacaoHtml += `
+                        <button onclick="mudarPagina(${i})" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition ${i === paginaAtual ? 'bg-blue-600 text-white shadow-sm' : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}">
+                            ${i}
+                        </button>
+                    `;
                 }
+                paginacaoContainer.innerHTML = paginacaoHtml;
+            } else {
+                paginacaoContainer.innerHTML = '';
             }
-
-            // Botão Seguinte
-            if (paginaAtual < totalPaginas) {
-                html += `<button onclick="mudarPagina(${paginaAtual + 1})" class="px-3 py-1.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition">Seguinte</button>`;
-            }
-
-            paginacaoContainer.innerHTML = html;
         }
 
-        function filtrarPorCategoria(cat) {
-            const termoCat = cat.toLowerCase();
+        function filtrarPorCategoria(categoria) {
+            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
+            document.getElementById('titulo-seccao-vagas').textContent = `Vagas na Categoria: ${categoria}`;
             
             vagasFiltradas = todasVagas.filter(v => {
-                const tituloVaga = (v.titulo || v.title || '').toLowerCase();
-                const descVaga = (v.descricao || v.description || '').toLowerCase();
-                const categoriaVaga = (v.categoria || v.category || '').toLowerCase();
-                
-                let corresponde = categoriaVaga.includes(termoCat) || 
-                                  tituloVaga.includes(termoCat) || 
-                                  descVaga.includes(termoCat);
-
-                if (termoCat === 'tecnologia' && (categoriaVaga.includes('ti') || categoriaVaga.includes('informática'))) corresponde = true;
-                if (termoCat === 'finanças' && (categoriaVaga.includes('contabilidade') || categoriaVaga.includes('banca'))) corresponde = true;
-                if (termoCat === 'logística' && (categoriaVaga.includes('frota') || categoriaVaga.includes('transportes'))) corresponde = true;
-                if (termoCat === 'ongs' && (categoriaVaga.includes('humanitário') || categoriaVaga.includes('ong'))) corresponde = true;
-
-                return corresponde;
+                const textoCompleto = `${v.titulo || ''} ${v.descricao || ''} ${v.tag || ''} ${v.categoria || ''}`.toLowerCase();
+                return textoCompleto.includes(categoria.toLowerCase());
             });
 
-            document.getElementById('titulo-seccao-vagas').textContent = `Vagas em Moçambique: ${cat}`;
-            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
             mudarPagina(1);
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         }
 
         function reverterFiltros() {
-            document.getElementById('titulo-seccao-vagas').textContent = 'Últimas Vagas em Moçambique';
-            document.getElementById('btn-limpar-filtro').classList.add('hidden');
-            document.getElementById('search-keyword').value = '';
             vagasFiltradas = todasVagas;
+            document.getElementById('btn-limpar-filtro').classList.add('hidden');
+            document.getElementById('titulo-seccao-vagas').textContent = 'Últimas Vagas em Moçambique';
+            document.getElementById('search-keyword').value = '';
             mudarPagina(1);
         }
 
-        function abrirPagina(tipo) {
-            const modal = document.getElementById('modal-geral');
-            const conteudo = document.getElementById('conteudo-modal');
-            let html = '';
-
-            if (tipo === 'traducao') {
-                html = `
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-language text-emerald-600"></i> Tradução Ajuramentada (Inglês ⇄ Português)
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-3 text-xs md:text-sm">
-                        Precisa de traduzir diplomas, certificados, certidões ou cartas de condução com validade oficial e reconhecimento legal em Moçambique? Oferecemos serviços rápidos e certificados por tradutores ajuramentados.
-                    </p>
-                    <div class="bg-blue-50 dark:bg-gray-700/50 p-3 rounded-xl border border-blue-100 dark:border-gray-600 space-y-2">
-                        <p class="font-semibold text-gray-800 dark:text-gray-200">Como solicitar?</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300">Entre em contacto connosco através dos canais oficiais abaixo para obter orçamentos e prazos de entrega:</p>
-                        <p class="text-xs text-gray-700 dark:text-gray-200"><strong>Contacto telefónico:</strong> +258 84 825 5417</p>
-                        <p class="text-xs text-gray-700 dark:text-gray-200"><strong>Email:</strong> <a href="mailto:traducao@empregosmoz.com" class="text-blue-600 dark:text-blue-400 underline font-semibold">traducao@empregosmoz.com</a></p>
-                    </div>
-                `;
-            } else if (tipo === 'curriculo') {
-                html = `
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-file-lines text-blue-600"></i> Como Criar um Currículo Vencedor
-                    </h3>
-                    <div class="space-y-2 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        <p><strong>1. Clareza e Concisão:</strong> O seu CV não deve ultrapassar 2 páginas. Destaque primeiro as suas competências principais e histórico recente.</p>
-                        <p><strong>2. Foco nos Resultados:</strong> Em vez de apenas listar tarefas nas experiências anteriores, mencione conquistas mensuráveis e impacto gerado.</p>
-                        <p><strong>3. Dados de Contacto Atualizados:</strong> Certifique-se de que o seu número de telemóvel em Moçambique e email profissional estão corretos e ativos.</p>
-                        <p><strong>4. Formato Limpo:</strong> Evite gráficos excessivos ou fotografias desnecessárias, a menos que a vaga especificamente exija.</p>
-                    </div>
-                `;
-            } else if (tipo === 'entrevista') {
-                html = `
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-comments text-blue-600"></i> Dominar a Entrevista de Emprego
-                    </h3>
-                    <div class="space-y-2 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        <p><strong>Pesquise sobre a Empresa:</strong> Conheça a área de atuação da organização e os projetos recentes antes de comparecer à entrevista.</p>
-                        <p><strong>Pratique Perguntas Comuns:</strong> Prepare respostas claras sobre os seus pontos fortes, desafios superados e metas de carreira a médio prazo.</p>
-                        <p><strong>Pontualidade e Apresentação:</strong> Chegue sempre com 10 a 15 minutos de antecedência e vista-se de acordo com a cultura corporativa da instituição.</p>
-                        <p><strong>Demonstre Proatividade:</strong> No final, faça perguntas pertinentes sobre a equipa e o funcionamento diário da função pretendida.</p>
-                    </div>
-                `;
-            } else if (tipo === 'sobre') {
-                html = `
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-info text-blue-600"></i> Sobre Nós - EmpregosMoz
-                    </h3>
-                    <div class="space-y-2 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        <p>A <strong>EmpregosMoz</strong> nasceu com o compromisso firme de simplificar e democratizar a busca por oportunidades profissionais e estágios em todo o território de Moçambique.</p>
-                        <p>A nossa missão é aproximar talentos qualificados das melhores empresas, ONGs e instituições do país, promovendo o desenvolvimento de carreiras de forma transparente, rápida e totalmente acessível aos candidatos.</p>
-                    </div>
-                `;
-            } else if (tipo === 'privacidade') {
-                html = `
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-shield-halved text-blue-600"></i> Política de Privacidade
-                    </h3>
-                    <div class="space-y-2 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        <p>Na <strong>EmpregosMoz</strong>, respeitamos profundamente a sua privacidade e assumimos o compromisso de proteger os dados pessoais partilhados na nossa plataforma.</p>
-                        <p><strong>Recolha de Informações:</strong> As vagas e dados publicados são obtidos diretamente de fontes oficiais de recrutamento ou submetidos por parceiros autorizados com o objetivo estrito de facilitar o acesso ao mercado de trabalho.</p>
-                        <p><strong>Utilização:</strong> Os dados de navegação e contacto servem unicamente para otimizar a experiência do utilizador e estabelecer pontes seguras entre candidatos e empregadores.</p>
-                    </div>
-                `;
-            } else if (tipo === 'contacto') {
-                html = `
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-headset text-blue-600"></i> Contacto & Suporte
-                    </h3>
-                    <div class="space-y-3 text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        <p>Precisa de assistência com o portal, tem dúvidas sobre alguma vaga ou deseja reportar algum problema técnico? Estamos sempre prontos a ajudar.</p>
-                        <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl border border-gray-200 dark:border-gray-600 space-y-1">
-                            <p><strong>Email de Suporte:</strong> <a href="mailto:suporte@empregosmoz.com" class="text-blue-600 dark:text-blue-400 underline font-semibold">suporte@empregosmoz.com</a></p>
-                            <p><strong>Contacto telefónico:</strong> +258 84 825 5417</p>
-                            <p><strong>Horário:</strong> Segunda a Sexta-feira, das 08:00 às 17:00.</p>
-                        </div>
-                    </div>
-                `;
-            }
-
-            conteudo.innerHTML = html;
-            modal.classList.remove('hidden');
-        }
-
-        function fecharModalGeral() {
-            document.getElementById('modal-geral').classList.add('hidden');
-        }
-
-        // Event listener de busca do formulário principal
+        // Submissão do Formulário de Pesquisa
         document.getElementById('search-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const termo = document.getElementById('search-keyword').value.toLowerCase().trim();
-            
-            if (!termo) {
-                vagasFiltradas = todasVagas;
-                document.getElementById('titulo-seccao-vagas').textContent = 'Últimas Vagas em Moçambique';
-                document.getElementById('btn-limpar-filtro').classList.add('hidden');
-                mudarPagina(1);
+            const keyword = document.getElementById('search-keyword').value.toLowerCase().trim();
+
+            if (!keyword) {
+                reverterFiltros();
                 return;
             }
 
+            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
+            document.getElementById('titulo-seccao-vagas').textContent = `Resultados para: "${keyword}"`;
+
             vagasFiltradas = todasVagas.filter(v => {
-                const titulo = (v.titulo || v.title || '').toLowerCase();
-                const empresa = (v.empresa || v.company || '').toLowerCase();
-                const descricao = (v.descricao || v.description || '').toLowerCase();
-                const localizacao = (v.localizacao || v.cidade || '').toLowerCase();
-                
-                return titulo.includes(termo) || empresa.includes(termo) || descricao.includes(termo) || localizacao.includes(termo);
+                const titulo = (v.titulo || v.title || v.cargo || '').toLowerCase();
+                const empresa = (v.empresa || v.empresa_nome || '').toLowerCase();
+                const tag = (v.tag || '').toLowerCase();
+                return titulo.includes(keyword) || empresa.includes(keyword) || tag.includes(keyword);
             });
 
-            document.getElementById('titulo-seccao-vagas').textContent = `Resultados da busca por: "${termo}"`;
-            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
             mudarPagina(1);
             document.getElementById('ultimas-vagas').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // Inicializar carregamento ao abrir a página
         document.addEventListener('DOMContentLoaded', carregarPortal);
     </script>
 </body>
