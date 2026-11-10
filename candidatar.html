@@ -145,19 +145,20 @@
             }
         }
 
-        // Extrai o ID da vaga quer venha de ?id=X ou de /vaga/X
+        // Extrai o ID da vaga de rotas amigáveis (/vaga/58/nome-da-vaga) ou query string (?id=58)
         function obterIdDaVaga() {
-            // 1. Tentar via Query String clássica (?id=58)
+            // 1. Tentar via Clean URL (procurar o primeiro segmento que seja puramente numérico)
+            const partesPath = window.location.pathname.split('/').filter(Boolean);
+            for (let parte of partesPath) {
+                if (/^\d+$/.test(parte)) {
+                    return parte;
+                }
+            }
+
+            // 2. Tentar via Query String clássica (?id=58) como fallback
             const urlParams = new URLSearchParams(window.location.search);
             const idQuery = urlParams.get('id');
             if (idQuery) return idQuery;
-
-            // 2. Tentar via Clean URL (/vaga/58 ou /candidatar/58)
-            const partesPath = window.location.pathname.split('/').filter(Boolean);
-            const ultimoSegmento = partesPath[partesPath.length - 1];
-            if (ultimoSegmento && !isNaN(ultimoSegmento)) {
-                return ultimoSegmento;
-            }
 
             return null;
         }
