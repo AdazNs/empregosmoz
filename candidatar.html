@@ -31,13 +31,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold text-blue-600 flex items-center gap-2">
+                    <a href="/" class="text-2xl font-bold text-blue-600 flex items-center gap-2">
                         <i class="fa-solid fa-briefcase text-blue-600"></i>
                         <span>Empregos<span class="text-emerald-500">Moz</span></span>
                     </a>
                 </div>
                 <nav class="hidden md:flex space-x-8 text-sm font-medium">
-                    <a href="index.html" class="text-gray-600 hover:text-blue-600 transition">Início</a>
+                    <a href="/" class="text-gray-600 hover:text-blue-600 transition">Início</a>
                 </nav>
             </div>
         </div>
@@ -46,7 +46,7 @@
     <!-- Conteúdo Principal -->
     <main class="max-w-3xl mx-auto px-4 py-8 flex-grow w-full">
         <div class="mb-6">
-            <a href="index.html" class="text-sm text-blue-600 hover:underline flex items-center gap-2">
+            <a href="/" class="text-sm text-blue-600 hover:underline flex items-center gap-2">
                 <i class="fa-solid fa-arrow-left"></i> Voltar para a lista de vagas
             </a>
         </div>
@@ -71,7 +71,20 @@
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
 
-        // Formata a data real do Supabase
+        // Função para criar a Slug exatamente igual ao index.html
+        function criarSlug(texto) {
+            if (!texto) return 'vaga';
+            return texto
+                .toString()
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .trim()
+                .replace(/[^a-z0-9 -]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+        }
+
         function formatarDataRealSupabase(dataIso) {
             if (!dataIso) return '';
             const data = new Date(dataIso);
@@ -83,7 +96,6 @@
             });
         }
 
-        // Transforma URLs e emails em links clicáveis
         function formatarLinksNaDescricao(texto) {
             if (!texto) return '';
             let textoFormatado = texto;
@@ -101,7 +113,6 @@
             return textoFormatado;
         }
 
-        // Copiar link para a área de transferência
         function copiarLinkAtual(feedbackElementId) {
             const textoParaCopiar = window.location.href;
             if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -143,69 +154,75 @@
             }
         }
 
-        // Extrai o ID numérico da vaga de qualquer estrutura de URL
-        function obterIdDaVaga() {
+        // Extrai a slug da URL estilo /vaga/financial-crime-operations-supervisor/
+        function obterSlugDaVaga() {
             const partesPath = window.location.pathname.split('/').filter(Boolean);
-            
-            // 1. Procura na URL por qualquer segmento que seja puramente numérico (ex: /vaga/58/engenheiro-de-seguranca/)
-            for (let parte of partesPath) {
-                if (/^\d+$/.test(parte)) {
-                    return parte;
-                }
+            if (partesPath.length > 0) {
+                return partesPath[partesPath.length - 1];
             }
-
-            // 2. Procura por formato combinado (ex: /vaga/58-engenheiro-de-seguranca/)
-            for (let parte of partesPath) {
-                const match = parte.match(/^(\d+)-/);
-                if (match) return match[1];
-            }
-
-            // 3. Fallback para parâmetro clássico de query string (?id=58)
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('id');
+            return urlParams.get('slug') || urlParams.get('id');
         }
 
         async function carregarDetalhesVaga() {
             const container = document.getElementById('container-candidatura');
             
             try {
-                const vagaId = obterIdDaVaga();
+                const slugUrl = obterSlugDaVaga();
 
-                if (!vagaId) {
+                if (!slugUrl) {
                     container.innerHTML = `
                         <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 p-6 rounded-2xl text-center shadow-sm">
                             <p class="font-bold">Nenhuma vaga especificada.</p>
-                            <a href="index.html" class="inline-block mt-3 text-sm text-blue-600 underline">Voltar ao início</a>
+                            <a href="/" class="inline-block mt-3 text-sm text-blue-600 underline">Voltar ao início</a>
                         </div>
                     `;
                     return;
                 }
 
-                // Consulta direta e ultra-rápida no Supabase pelo ID da vaga
-                const response = await fetch(`${SUPABASE_URL}/rest/v1/vagas?id=eq.${vagaId}`, {
-                    method: 'GET',
-                    headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                        'Content-Type': 'application/json'
+                let vaga = null;
+
+                // Se por acaso vier um ID numérico antigo (fallback)
+                if (/^\d+$/.test(slugUrl)) {
+                    const resId = await fetch(`${SUPABASE_URL}/rest/v1/vagas?id=eq.${slugUrl}`, {
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                        }
+                    });
+                    const dataId = await resId.json();
+                    if (dataId && dataId.length > 0) vaga = dataId[0];
+                } else {
+                    // Busca as vagas recentes no Supabase e encontra aquela cuja slug coincide
+                    const response = await fetch(`${SUPABASE_URL}/rest/v1/vagas?select=*&order=created_at.desc&limit=100`, {
+                        method: 'GET',
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) throw new Error('Erro ao comunicar com o servidor.');
+
+                    const data = await response.json();
+                    if (data && data.length > 0) {
+                        vaga = data.find(v => {
+                            const tituloVaga = v.titulo || v.title || v.cargo || '';
+                            return criarSlug(tituloVaga) === slugUrl;
+                        });
                     }
-                });
+                }
 
-                if (!response.ok) throw new Error('Erro ao comunicar com o servidor.');
-
-                const data = await response.json();
-
-                if (!data || data.length === 0) {
+                if (!vaga) {
                     container.innerHTML = `
                         <div class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-2xl text-center shadow-sm">
                             <p class="font-bold">Vaga não encontrada.</p>
-                            <a href="index.html" class="inline-block mt-3 text-sm text-blue-600 underline">Voltar ao início</a>
+                            <a href="/" class="inline-block mt-3 text-sm text-blue-600 underline">Voltar ao início</a>
                         </div>
                     `;
                     return;
                 }
-
-                const vaga = data[0];
 
                 const titulo = vaga.titulo || vaga.title || vaga.cargo || 'Vaga Sem Título';
                 const empresa = vaga.empresa || vaga.empresa_nome || vaga.company || 'Empresa Privada';
@@ -216,7 +233,6 @@
                 const tagInfo = vaga.tag && vaga.tag.trim() !== '' ? vaga.tag : 'Nenhuma instrução detalhada disponível para esta vaga.';
                 const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
 
-                // Metadados da página
                 document.title = `${titulo} na ${empresa} - EmpregosMoz`;
                 const metaDesc = document.querySelector('meta[name="description"]');
                 if (metaDesc) metaDesc.setAttribute("content", `Candidate-se à vaga de ${titulo} em ${localizacao}. Saiba mais no EmpregosMoz.`);
@@ -235,10 +251,8 @@
 
                 const visualizacoes = 52;
 
-                // Renderiza a página de detalhes
                 container.innerHTML = `
                     <div class="space-y-6">
-                        <!-- Cabeçalho da Vaga -->
                         <div class="bg-white rounded-2xl border ${seloRecente ? 'border-emerald-300 shadow-sm bg-gradient-to-r from-emerald-50/20 to-white' : 'border-gray-200'} p-6 shadow-sm flex items-start gap-4 relative">
                             <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xl flex-shrink-0">
                                 ${inicialEmpresa}
@@ -257,36 +271,8 @@
                                     <span class="text-emerald-600"><i class="fa-solid fa-eye mr-1"></i> ${visualizacoes} visualizações hoje</span>
                                 </div>
                             </div>
-
-                            <!-- Botões de Partilha Desktop -->
-                            <div class="absolute top-6 right-6 hidden md:flex flex-col items-end gap-1.5">
-                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Partilhar</span>
-                                <div class="flex items-center gap-1.5 bg-gray-50 p-1.5 rounded-xl border border-gray-100 shadow-sm">
-                                    <a href="#" id="share-whatsapp" target="_blank" title="WhatsApp" class="w-8 h-8 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center text-xs transition"><i class="fa-brands fa-whatsapp"></i></a>
-                                    <a href="#" id="share-linkedin" target="_blank" title="LinkedIn" class="w-8 h-8 rounded-lg bg-[#0A66C2] hover:bg-blue-800 text-white flex items-center justify-center text-xs transition"><i class="fa-brands fa-linkedin-in"></i></a>
-                                    <a href="#" id="share-facebook" target="_blank" title="Facebook" class="w-8 h-8 rounded-lg bg-[#1877F2] hover:bg-blue-700 text-white flex items-center justify-center text-xs transition"><i class="fa-brands fa-facebook-f"></i></a>
-                                    <a href="#" id="share-twitter" target="_blank" title="X (Twitter)" class="w-8 h-8 rounded-lg bg-gray-900 hover:bg-black text-white flex items-center justify-center text-xs transition"><i class="fa-brands fa-x-twitter"></i></a>
-                                    <a href="#" id="share-sms" title="SMS" class="w-8 h-8 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center text-xs transition"><i class="fa-solid fa-comment-sms"></i></a>
-                                    <button type="button" id="share-copy" title="Copiar Link" class="w-8 h-8 rounded-lg bg-gray-600 hover:bg-gray-700 text-white flex items-center justify-center text-xs transition cursor-pointer"><i class="fa-solid fa-link"></i></button>
-                                </div>
-                                <span id="copy-feedback" class="text-[10px] text-emerald-600 font-semibold hidden">Link copiado!</span>
-                            </div>
                         </div>
 
-                        <!-- Botões de Partilha Mobile -->
-                        <div class="block md:hidden bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
-                            <span class="text-xs font-bold text-gray-500 block mb-2 text-center">Partilhar esta vaga:</span>
-                            <div class="flex items-center justify-center gap-2 flex-wrap">
-                                <a href="#" id="share-whatsapp-m" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500 text-white text-xs flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-                                <a href="#" id="share-linkedin-m" target="_blank" class="px-3 py-1.5 rounded-lg bg-[#0A66C2] text-white text-xs flex items-center gap-1.5"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
-                                <a href="#" id="share-facebook-m" target="_blank" class="px-3 py-1.5 rounded-lg bg-[#1877F2] text-white text-xs flex items-center gap-1.5"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
-                                <a href="#" id="share-sms-m" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs flex items-center gap-1.5"><i class="fa-solid fa-comment-sms"></i> SMS</a>
-                                <button type="button" id="share-copy-m" class="px-3 py-1.5 rounded-lg bg-gray-600 text-white text-xs flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-link"></i> Copiar</button>
-                            </div>
-                            <div id="copy-feedback-m" class="text-xs text-emerald-600 font-semibold text-center mt-2 hidden">Link copiado com sucesso!</div>
-                        </div>
-
-                        <!-- PAINEL DE DESTAQUE DO CAMPO TAG -->
                         <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 md:p-8 shadow-sm space-y-4">
                             <div class="flex items-center gap-3 border-b border-blue-200 pb-3">
                                 <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-base shadow-sm">
@@ -302,7 +288,7 @@
                             </div>
 
                             <div class="pt-2 text-center">
-                                <a href="index.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-6 rounded-xl text-sm transition shadow-sm">
+                                <a href="/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-6 rounded-xl text-sm transition shadow-sm">
                                     <i class="fa-solid fa-arrow-left mr-2"></i> Ver Outras Vagas
                                 </a>
                             </div>
@@ -314,31 +300,13 @@
                 document.getElementById('txt-empresa').textContent = empresa;
                 document.getElementById('txt-tag').innerHTML = formatarLinksNaDescricao(tagInfo);
 
-                const currentUrl = encodeURIComponent(window.location.href);
-                const pageTitle = encodeURIComponent(`${titulo} na ${empresa} - EmpregosMoz`);
-
-                // Links de partilha
-                document.getElementById('share-whatsapp').href = `https://api.whatsapp.com/send?text=${pageTitle}%20${currentUrl}`;
-                document.getElementById('share-linkedin').href = `https://www.linkedin.com/sharing/share-offsite/?url=${currentUrl}`;
-                document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
-                document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?text=${pageTitle}&url=${currentUrl}`;
-                document.getElementById('share-sms').href = `sms:?body=${pageTitle}%20${currentUrl}`;
-
-                document.getElementById('share-whatsapp-m').href = `https://api.whatsapp.com/send?text=${pageTitle}%20${currentUrl}`;
-                document.getElementById('share-linkedin-m').href = `https://www.linkedin.com/sharing/share-offsite/?url=${currentUrl}`;
-                document.getElementById('share-facebook-m').href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
-                document.getElementById('share-sms-m').href = `sms:?body=${pageTitle}%20${currentUrl}`;
-
-                document.getElementById('share-copy').addEventListener('click', () => copiarLinkAtual('copy-feedback'));
-                document.getElementById('share-copy-m').addEventListener('click', () => copiarLinkAtual('copy-feedback-m'));
-
             } catch (err) {
                 console.error('Erro:', err);
                 container.innerHTML = `
                     <div class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-2xl text-center shadow-sm">
                         <p class="font-bold">Ocorreu um erro ao carregar os detalhes.</p>
                         <p class="text-xs text-red-600 mt-1">${err.message}</p>
-                        <a href="index.html" class="inline-block mt-3 text-sm text-blue-600 underline">Voltar ao início</a>
+                        <a href="/" class="inline-block mt-3 text-sm text-blue-600 underline">Voltar ao início</a>
                     </div>
                 `;
             }
