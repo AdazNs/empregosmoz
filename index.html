@@ -422,6 +422,20 @@
             document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
         }
 
+        // Função para criar a Slug amigável para SEO
+        function criarSlug(texto) {
+            if (!texto) return 'vaga';
+            return texto
+                .toString()
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .trim()
+                .replace(/[^a-z0-9 -]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+        }
+
         // Função para formatar o tempo relativo de publicação
         function formatarTempoRelativo(dataIso) {
             if (!dataIso) return '';
@@ -470,7 +484,7 @@
             }
         }
 
-        // Função de paginação e renderização das vagas
+        // Função de paginação e renderização das vagas com URLs limpas
         function mudarPagina(pagina) {
             paginaAtual = pagina;
             const listaVagas = document.getElementById('lista-vagas');
@@ -487,13 +501,16 @@
             const vagasPagina = vagasFiltradas.slice(inicio, fim);
 
             listaVagas.innerHTML = vagasPagina.map((vaga, index) => {
-                const id = vaga.id || '#';
                 const titulo = vaga.titulo || vaga.title || 'Vaga Sem Título';
                 const empresa = vaga.empresa || vaga.company || 'Empresa Privada';
                 const localizacao = vaga.localizacao || vaga.cidade || 'Moçambique';
                 const tipoTrabalho = vaga.tipo_trabalho || 'Tempo Inteiro';
                 const prazo = vaga.prazo || 'Aberto';
                 const inicial = empresa.substring(0, 3).toUpperCase();
+
+                // Geração da URL limpa no modelo /vaga/slug/
+                const slug = criarSlug(titulo);
+                const urlDetalhes = `/vaga/${slug}/`;
 
                 let tempoPublicacao = '';
                 let seloRecente = '';
@@ -518,7 +535,7 @@
                             <div>
                                 <div class="flex items-center gap-2 flex-wrap mb-1">
                                     <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white hover:text-blue-600">
-                                        <a href="candidatar.html?id=${id}">${titulo}</a>
+                                        <a href="${urlDetalhes}">${titulo}</a>
                                     </h3>
                                     ${seloRecente}
                                     ${tempoPublicacao ? `<span class="text-[10px] sm:text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded-full"><i class="fa-regular fa-clock mr-1"></i> ${tempoPublicacao}</span>` : ''}
@@ -533,7 +550,7 @@
                         </div>
                         <div class="flex items-center justify-between md:justify-end gap-3 pt-2.5 sm:pt-0 border-t md:border-0 border-gray-100 dark:border-gray-700">
                             <span class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400">Prazo: ${prazo}</span>
-                            <a href="candidatar.html?id=${id}" class="bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-medium transition">
+                            <a href="${urlDetalhes}" class="bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-medium transition">
                                 Candidatar-se
                             </a>
                         </div>
