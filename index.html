@@ -177,4 +177,338 @@
             </button>
             <button onclick="filtrarPorCategoria('Finanças')" class="bg-white dark:bg-gray-800 p-2.5 sm:p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
                 <i class="fa-solid fa-calculator text-xl sm:text-2xl text-blue-600 dark:text-blue-400 mb-1.5 sm:mb-2 group-hover:scale-110 transition"></i>
-                <h3 class="text-[10px] sm:text-xs font-semibold text-gray-700 dark:text-gray-200 leading-tight">
+                <h3 class="text-[10px] sm:text-xs font-semibold text-gray-700 dark:text-gray-200 leading-tight">Contabilidade & Finanças</h3>
+            </button>
+            <button onclick="filtrarPorCategoria('Logística')" class="bg-white dark:bg-gray-800 p-2.5 sm:p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
+                <i class="fa-solid fa-truck-fast text-xl sm:text-2xl text-blue-600 dark:text-blue-400 mb-1.5 sm:mb-2 group-hover:scale-110 transition"></i>
+                <h3 class="text-[10px] sm:text-xs font-semibold text-gray-700 dark:text-gray-200 leading-tight">Logística & Frota</h3>
+            </button>
+            <button onclick="filtrarPorCategoria('Administração')" class="bg-white dark:bg-gray-800 p-2.5 sm:p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
+                <i class="fa-solid fa-user-tie text-xl sm:text-2xl text-blue-600 dark:text-blue-400 mb-1.5 sm:mb-2 group-hover:scale-110 transition"></i>
+                <h3 class="text-[10px] sm:text-xs font-semibold text-gray-700 dark:text-gray-200 leading-tight">Administração</h3>
+            </button>
+            <button onclick="filtrarPorCategoria('Engenharia')" class="bg-white dark:bg-gray-800 p-2.5 sm:p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
+                <i class="fa-solid fa-toolbox text-xl sm:text-2xl text-blue-600 dark:text-blue-400 mb-1.5 sm:mb-2 group-hover:scale-110 transition"></i>
+                <h3 class="text-[10px] sm:text-xs font-semibold text-gray-700 dark:text-gray-200 leading-tight">Engenharia & Minas</h3>
+            </button>
+            <button onclick="filtrarPorCategoria('Outros')" class="bg-white dark:bg-gray-800 p-2.5 sm:p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition text-center group cursor-pointer">
+                <i class="fa-solid fa-ellipsis text-xl sm:text-2xl text-blue-600 dark:text-blue-400 mb-1.5 sm:mb-2 group-hover:scale-110 transition"></i>
+                <h3 class="text-[10px] sm:text-xs font-semibold text-gray-700 dark:text-gray-200 leading-tight">Outros</h3>
+            </button>
+        </div>
+    </section>
+
+    <!-- Lista de Vagas com Paginação -->
+    <main id="ultimas-vagas" class="max-w-7xl mx-auto px-3 sm:px-4 py-4 flex-grow w-full">
+        <div class="flex justify-between items-center mb-4 sm:mb-6">
+            <div>
+                <h2 id="titulo-seccao-vagas" class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Últimas Vagas em Moçambique</h2>
+                <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Atualizado diariamente em todo o país</p>
+            </div>
+            <button onclick="reverterFiltros()" class="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline hidden" id="btn-limpar-filtro">Ver todas</button>
+        </div>
+
+        <!-- Contentor das Vagas -->
+        <div id="lista-vagas" class="space-y-3 sm:space-y-4">
+            <p class="text-center text-gray-500 dark:text-gray-400 py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>A carregar vagas...</p>
+        </div>
+
+        <!-- Controlo de Paginação -->
+        <div id="paginacao-container" class="flex justify-center items-center gap-2 mt-8 mb-4 flex-wrap">
+            <!-- Gerado via JavaScript -->
+        </div>
+    </main>
+
+    <!-- Secção de Links Úteis -->
+    <section id="links-uteis" class="max-w-7xl mx-auto px-3 sm:px-4 py-8 w-full">
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm">
+            <h2 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-link text-blue-600 dark:text-blue-400"></i> Links Úteis em Moçambique
+            </h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-6">Aceda rapidamente a portais institucionais e de serviços essenciais no país.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="https://nuit.at.gov.mz/nuit/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
+                    <div class="p-2.5 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition flex-shrink-0">
+                        <i class="fa-solid fa-id-card text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">Consulta NUIT</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">Autoridade Tributária de Moçambique</p>
+                    </div>
+                </a>
+                <a href="https://www.dnic.gov.mz/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
+                    <div class="p-2.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition flex-shrink-0">
+                        <i class="fa-solid fa-address-card text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">ePBI - Bilhete de Identidade</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">Direcção Nacional de Identificação Civil</p>
+                    </div>
+                </a>
+                <a href="https://agendamento.senami.gov.mz/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition flex items-start gap-3 group">
+                    <div class="p-2.5 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition flex-shrink-0">
+                        <i class="fa-solid fa-passport text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">Documentos Migratórios</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">Portal Digital SENAMI (Passaporte, etc.)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé Completo -->
+    <footer class="bg-gray-900 text-gray-400 py-8 sm:py-10 mt-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8">
+            <div>
+                <a href="index.html" class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2 mb-3">
+                    <i class="fa-solid fa-briefcase text-blue-500"></i>
+                    <span>Empregos<span class="text-emerald-500">Moz</span></span>
+                </a>
+                <p class="text-xs leading-relaxed">O portal líder em oportunidades de emprego, estágios e carreiras em Moçambique.</p>
+            </div>
+            <div>
+                <h4 class="text-white text-xs sm:text-sm font-semibold mb-3">Para Candidatos</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#ultimas-vagas" class="hover:text-white transition">Procurar Vagas</a></li>
+                    <li><a href="#links-uteis" class="hover:text-white transition">Links Úteis</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white text-xs sm:text-sm font-semibold mb-3">Institucional</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#" onclick="alert('Secção em desenvolvimento'); return false;" class="hover:text-white transition">Sobre Nós</a></li>
+                    <li><a href="#" onclick="alert('Secção em desenvolvimento'); return false;" class="hover:text-white transition">Política de Privacidade</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white text-xs sm:text-sm font-semibold mb-3">Para Recrutadores</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#" onclick="alert('Funcionalidades para recrutadores em desenvolvimento.'); return false;" class="hover:text-white transition">Publicar Vaga</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
+            &copy; 2026 EmpregosMoz. Todos os direitos reservados. Moçambique.
+        </div>
+    </footer>
+
+    <!-- Lógica JavaScript Dinâmica Completa e Corrigida -->
+    <script>
+        const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
+
+        let todasVagas = [];
+        let vagasFiltradas = [];
+        let paginaAtual = 1;
+        const itensPorPagina = 8;
+
+        // Função para criar a Slug a partir do título da vaga
+        function criarSlug(texto) {
+            if (!texto) return 'vaga';
+            return texto
+                .toString()
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .trim()
+                .replace(/[^a-z0-9 -]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+        }
+
+        // Gestão da Gaveta do Menu Lateral
+        const drawerMenu = document.getElementById('drawer-menu');
+        const drawerOverlay = document.getElementById('drawer-overlay');
+        const menuDrawerBtn = document.getElementById('menu-drawer-btn');
+        const drawerCloseBtn = document.getElementById('drawer-close-btn');
+
+        function abrirDrawer() {
+            drawerMenu.classList.remove('translate-x-full');
+            drawerOverlay.classList.remove('hidden');
+        }
+
+        function fecharDrawer() {
+            drawerMenu.classList.add('translate-x-full');
+            drawerOverlay.classList.add('hidden');
+        }
+
+        menuDrawerBtn.addEventListener('click', abrirDrawer);
+        drawerCloseBtn.addEventListener('click', fecharDrawer);
+        drawerOverlay.addEventListener('click', fecharDrawer);
+
+        // Modo Escuro
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            const icon = document.getElementById('theme-icon');
+            if (document.documentElement.classList.contains('dark')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // Tempo Relativo
+        function formatarTempoRelativo(dataIso) {
+            if (!dataIso) return '';
+            const agora = new Date();
+            const dataPost = new Date(dataIso);
+            const segundos = Math.floor((agora - dataPost) / 1000);
+
+            if (segundos < 60) return "há poucos segundos";
+            const minutos = Math.floor(segundos / 60);
+            if (minutos < 60) return `há ${minutos}m`;
+            const horas = Math.floor(minutos / 60);
+            if (horas < 24) return `há ${horas}h`;
+            const dias = Math.floor(horas / 24);
+            if (dias < 7) return `há ${dias}d`;
+            const semanas = Math.floor(dias / 7);
+            if (semanas < 4) return `há ${semanas}sem`;
+            const meses = Math.floor(dias / 30);
+            return `há ${meses}meses`;
+        }
+
+        async function carregarPortal() {
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/vagas?select=*&order=created_at.desc`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Falha ao comunicar com a base de dados.');
+
+                todasVagas = await response.json();
+                vagasFiltradas = todasVagas;
+                
+                document.getElementById('stat-vagas').textContent = todasVagas.length;
+                const empresasUnicas = new Set(todasVagas.map(v => v.empresa || v.company).filter(Boolean));
+                document.getElementById('stat-empresas').textContent = empresasUnicas.size;
+
+                mudarPagina(1);
+            } catch (err) {
+                console.error('Erro Supabase:', err);
+                document.getElementById('lista-vagas').innerHTML = '<p class="text-red-500 text-center py-4">Erro ao carregar as vagas do servidor. Verifique a consola.</p>';
+            }
+        }
+
+        function mudarPagina(pagina) {
+            paginaAtual = pagina;
+            renderizarVagas();
+            renderizarPaginacao();
+            window.scrollTo({ top: document.getElementById('ultimas-vagas').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function renderizarVagas() {
+            const listaContainer = document.getElementById('lista-vagas');
+            if (!vagasFiltradas || vagasFiltradas.length === 0) {
+                listaContainer.innerHTML = '<div class="text-center py-12 bg-white dark:bg-gray-800 rounded-2xl border dark:border-gray-700"><p class="text-gray-500 dark:text-gray-400">Nenhuma vaga encontrada.</p></div>';
+                return;
+            }
+
+            const inicio = (paginaAtual - 1) * itensPorPagina;
+            const fim = inicio + itensPorPagina;
+            const vagasPagina = vagasFiltradas.slice(inicio, fim);
+
+            listaContainer.innerHTML = vagasPagina.map(vaga => {
+                const titulo = vaga.titulo || vaga.title || vaga.cargo || 'Vaga Sem Título';
+                const empresa = vaga.empresa || vaga.empresa_nome || vaga.company || 'Empresa Privada';
+                const localizacao = vaga.localizacao || vaga.local || vaga.cidade || vaga.location || 'Moçambique';
+                const tipoTrabalho = vaga.tipo_trabalho || vaga.tipo || vaga.job_type || 'Tempo Inteiro';
+                const prazo = vaga.prazo || vaga.data_limite || vaga.deadline || 'Aberto';
+                const inicialEmpresa = empresa ? empresa.substring(0, 3).toUpperCase() : 'JOB';
+                
+                // Geração da URL com Slug: /vaga/ID/titulo-da-vaga
+                const slug = criarSlug(titulo);
+                const urlDetalhes = `vaga/${vaga.id}/${slug}`;
+
+                let tempoFormatado = formatarTempoRelativo(vaga.created_at);
+
+                return `
+                    <a href="${urlDetalhes}" class="block bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4 sm:p-5 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition group">
+                        <div class="flex items-start gap-3 sm:gap-4">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-base sm:text-lg flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition">
+                                ${inicialEmpresa}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between gap-2 mb-1">
+                                    <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">${titulo}</h3>
+                                    ${tempoFormatado ? `<span class="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 flex-shrink-0">${tempoFormatado}</span>` : ''}
+                                </div>
+                                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-medium mb-2">${empresa}</p>
+                                <div class="flex flex-wrap gap-y-1 gap-x-3 text-[11px] sm:text-xs text-gray-500 dark:text-gray-400">
+                                    <span><i class="fa-solid fa-location-dot mr-1"></i> ${localizacao}</span>
+                                    <span><i class="fa-solid fa-clock mr-1"></i> ${tipoTrabalho}</span>
+                                    <span>Prazo: ${prazo}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        function renderizarPaginacao() {
+            const container = document.getElementById('paginacao-container');
+            const totalPaginas = Math.ceil(vagasFiltradas.length / itensPorPagina);
+
+            if (totalPaginas <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            for (let i = 1; i <= totalPaginas; i++) {
+                const ativo = i === paginaAtual;
+                html += `
+                    <button onclick="mudarPagina(${i})" class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition ${ativo ? 'bg-blue-600 text-white shadow-sm' : 'bg-white dark:bg-gray-800 border dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}">
+                        ${i}
+                    </button>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        function filtrarPorCategoria(categoria) {
+            vagasFiltradas = todasVagas.filter(vaga => {
+                const texto = ((vaga.titulo || '') + ' ' + (vaga.tag || '') + ' ' + (vaga.categoria || '')).toLowerCase();
+                return texto.includes(categoria.toLowerCase());
+            });
+            document.getElementById('titulo-seccao-vagas').textContent = `Vagas em ${categoria}`;
+            document.getElementById('btn-limpar-filtro').classList.remove('hidden');
+            mudarPagina(1);
+        }
+
+        function reverterFiltros() {
+            vagasFiltradas = todasVagas;
+            document.getElementById('titulo-seccao-vagas').textContent = 'Últimas Vagas em Moçambique';
+            document.getElementById('btn-limpar-filtro').classList.add('hidden');
+            document.getElementById('search-keyword').value = '';
+            mudarPagina(1);
+        }
+
+        document.getElementById('search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const termo = document.getElementById('search-keyword').value.toLowerCase().trim();
+            if (!termo) {
+                reverterFiltros();
+                return;
+            }
+            vagasFiltradas = todasVagas.filter(vaga => {
+                const titulo = (vaga.titulo || '').toLowerCase();
+                const empresa = (vaga.empresa || '').toLowerCase();
+                const tag = (vaga.tag || '').toLowerCase();
+                return titulo.includes(termo) || empresa.includes(termo) || tag.includes(termo);
+            });
+            document.getElementById('titulo-seccao-vagas').
