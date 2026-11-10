@@ -71,6 +71,20 @@
         const SUPABASE_URL = 'https://esasyzjicollpvcrjyfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzYXN5emppY29sbHB2Y3JqeWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4ODYzODYsImV4cCI6MjEwNTQ2MjM4Nn0.OW2k93O6hC2psiC6-zTrBU6updMZV62h2RfitZq5yUA';
 
+        // Função para criar a Slug (deve ser idêntica à da página inicial)
+        function criarSlug(texto) {
+            if (!texto) return 'vaga';
+            return texto
+                .toString()
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .trim()
+                .replace(/[^a-z0-9 -]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+        }
+
         // Função para formatar apenas a data real do Supabase (sem as horas)
         function formatarDataRealSupabase(dataIso) {
             if (!dataIso) return '';
@@ -145,31 +159,30 @@
             }
         }
 
-        // Extrai o ID da vaga de rotas amigáveis (/vaga/58/nome-da-vaga) ou query string (?id=58)
-        function obterIdDaVaga() {
-            // 1. Tentar via Clean URL (procurar o primeiro segmento que seja puramente numérico)
+        // Extrai a Slug da vaga a partir da URL amigável (/vaga/engenheiro-de-seguranca/)
+        function obterSlugDaVaga() {
             const partesPath = window.location.pathname.split('/').filter(Boolean);
-            for (let parte of partesPath) {
-                if (/^\d+$/.test(parte)) {
-                    return parte;
+            // Procura o segmento que vem logo após 'vaga'
+            for (let i = 0; i < partesPath.length; i++) {
+                if (partesPath[i] === 'vaga' && partesPath[i + 1]) {
+                    return partesPath[i + 1];
                 }
             }
-
-            // 2. Tentar via Query String clássica (?id=58) como fallback
+            // Fallback para o último segmento caso aceda diretamente por ficheiro ou parâmetro
             const urlParams = new URLSearchParams(window.location.search);
-            const idQuery = urlParams.get('id');
-            if (idQuery) return idQuery;
+            const slugQuery = urlParams.get('slug');
+            if (slugQuery) return slugQuery;
 
-            return null;
+            return partesPath[partesPath.length - 1] || null;
         }
 
         async function carregarDetalhesVaga() {
             const container = document.getElementById('container-candidatura');
             
             try {
-                const vagaId = obterIdDaVaga();
+                const slugUrl = obterSlugDaVaga();
 
-                if (!vagaId) {
+                if (!slugUrl || slugUrl === 'vaga' || slugUrl === 'vaga.html') {
                     container.innerHTML = `
                         <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 p-6 rounded-2xl text-center shadow-sm">
                             <p class="font-bold">Nenhuma vaga especificada.</p>
@@ -179,7 +192,8 @@
                     return;
                 }
 
-                const response = await fetch(`${SUPABASE_URL}/rest/v1/vagas?id=eq.${vagaId}`, {
+                // Busca todas as vagas do Supabase para encontrar aquela cuja slug corresponde à URL
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/vagas?select=*`, {
                     method: 'GET',
                     headers: {
                         'apikey': SUPABASE_ANON_KEY,
@@ -190,9 +204,15 @@
 
                 if (!response.ok) throw new Error('Erro ao comunicar com o servidor.');
 
-                const data = await response.json();
+                const todasAsVagas = await response.json();
 
-                if (!data || data.length === 0) {
+                // Compara a slug gerada de cada vaga com a slug presente na URL
+                const vaga = todasAsVagas.find(v => {
+                    const tituloVaga = v.titulo || v.title || v.cargo || '';
+                    return criarSlug(tituloVaga) === slugUrl;
+                });
+
+                if (!vaga) {
                     container.innerHTML = `
                         <div class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-2xl text-center shadow-sm">
                             <p class="font-bold">Vaga não encontrada.</p>
@@ -201,8 +221,6 @@
                     `;
                     return;
                 }
-
-                const vaga = data[0];
 
                 const titulo = vaga.titulo || vaga.title || vaga.cargo || 'Vaga Sem Título';
                 const empresa = vaga.empresa || vaga.empresa_nome || vaga.company || 'Empresa Privada';
